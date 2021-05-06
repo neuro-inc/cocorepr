@@ -6,6 +6,7 @@ __all__ = ['logger', 'get_parser', 'main']
 
 import argparse
 import logging
+from pathlib import Path
 
 from .json_file import *
 from .json_tree import *
@@ -20,20 +21,19 @@ def get_parser():
     parser = argparse.ArgumentParser(
         description="Tool for converting datasets in COCO format between different formats"
     )
-    subparsers = parser.add_subparsers(help='mode')
-    parser_convert = subparsers.add_parser('a', help='a help')
 
     parser.add_argument("--in_json_path", type=Path, required=True)
     parser.add_argument("--in_crop_tree_path", type=Path)
     parser.add_argument("--out_path", type=Path, required=True)
-    parser.add_argument("--out_format", choice=['json_file', 'json_tree', 'crop_tree'], required=True)
+    parser.add_argument("--out_format", choices=['json_file', 'json_tree', 'crop_tree'], required=True)
     parser.add_argument("--overwrite", action='store_true')
     return parser
 
 
 # Cell
 
-def main(args):
+def main(args=None):
+    args = args or get_parser().parse_args()
     logger.info(f'Arguments: {args}')
     in_json_path = args.in_json_path
     in_crop_tree_path = args.in_crop_tree_path

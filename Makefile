@@ -4,6 +4,9 @@ SRC = $(wildcard nbs/*.ipynb)
 
 all: build docs
 
+diff:
+	nbdev_diff_nbs
+
 build: $(SRC)
 	nbdev_build_lib
 	touch cococleaner
