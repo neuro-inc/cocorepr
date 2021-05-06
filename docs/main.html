@@ -47,7 +47,7 @@ nb_path: "nbs/99_main.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_parser" class="doc_header"><code>get_parser</code><a href="https://github.neuro_inc.com/cococleaner/cococleaner/tree/master/cococleaner/main.py#L19" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_parser</code>()</p>
+<h4 id="get_parser" class="doc_header"><code>get_parser</code><a href="https://github.neuro_inc.com/cococleaner/cococleaner/tree/master/cococleaner/main.py#L20" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_parser</code>()</p>
 </blockquote>
 
 </div>
@@ -78,7 +78,7 @@ nb_path: "nbs/99_main.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="main" class="doc_header"><code>main</code><a href="https://github.neuro_inc.com/cococleaner/cococleaner/tree/master/cococleaner/main.py#L36" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>(<strong><code>args</code></strong>)</p>
+<h4 id="main" class="doc_header"><code>main</code><a href="https://github.neuro_inc.com/cococleaner/cococleaner/tree/master/cococleaner/main.py#L35" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>(<strong><code>args</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -94,6 +94,291 @@ nb_path: "nbs/99_main.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span> cococleaner <span class="err">\</span>
+    <span class="o">--</span><span class="n">in_json_path</span> <span class="o">../</span><span class="n">examples</span><span class="o">/</span><span class="n">coco_chunk</span><span class="o">/</span><span class="n">json_file</span><span class="o">/</span><span class="n">instances_train2017_chunk3x2</span><span class="o">.</span><span class="n">json</span> \
+    <span class="o">--</span><span class="n">out_path</span> <span class="err">$</span><span class="p">(</span><span class="n">mktemp</span> <span class="o">-</span><span class="n">d</span><span class="p">)</span> \
+    <span class="o">--</span><span class="n">out_format</span> <span class="n">json_tree</span> \
+    <span class="o">--</span><span class="n">overwrite</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO:root:Arguments: Namespace(in_crop_tree_path=None, in_json_path=PosixPath(&#39;../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json&#39;), out_format=&#39;json_tree&#39;, out_path=PosixPath(&#39;/tmp/tmp.CsaX2FKhsA&#39;), overwrite=True)
+INFO:root:Loading json file from file: ../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
+INFO:root:Loaded: images=6, annotations=6, categories=3
+INFO:root:Dumping json tree to dir: /tmp/tmp.CsaX2FKhsA
+WARNING:root:Destination dir exists and will be overwritten: /tmp/tmp.CsaX2FKhsA
+INFO:root:Deleting old target tree directory /tmp/tmp.CsaX2FKhsA
+DEBUG:root:Written 6 elements to /tmp/tmp.CsaX2FKhsA/images
+DEBUG:root:Written 8 elements to /tmp/tmp.CsaX2FKhsA/licenses
+DEBUG:root:Written 6 elements to /tmp/tmp.CsaX2FKhsA/annotations
+DEBUG:root:Written 3 elements to /tmp/tmp.CsaX2FKhsA/categories
+DEBUG:root:Written single element to /tmp/tmp.CsaX2FKhsA/info
+INFO:root:[+] Success: json_tree dumped to /tmp/tmp.CsaX2FKhsA: [&#39;info.json&#39;, &#39;info&#39;, &#39;categories&#39;, &#39;annotations&#39;, &#39;licenses&#39;, &#39;images&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span> cococleaner <span class="err">\</span>
+    <span class="o">--</span><span class="n">in_json_path</span> <span class="o">../</span><span class="n">examples</span><span class="o">/</span><span class="n">coco_chunk</span><span class="o">/</span><span class="n">json_tree</span> \
+    <span class="o">--</span><span class="n">out_path</span> <span class="err">$</span><span class="p">(</span><span class="n">mktemp</span> <span class="o">-</span><span class="n">d</span><span class="p">)</span> \
+    <span class="o">--</span><span class="n">out_format</span> <span class="n">json_tree</span> \
+    <span class="o">--</span><span class="n">overwrite</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO:root:Arguments: Namespace(in_crop_tree_path=None, in_json_path=PosixPath(&#39;../examples/coco_chunk/json_tree&#39;), out_format=&#39;json_tree&#39;, out_path=PosixPath(&#39;/tmp/tmp.WiC8talkFw&#39;), overwrite=True)
+INFO:root:Loading json tree from dir: ../examples/coco_chunk/json_tree
+DEBUG:root:Loaded 6 json chunks from ../examples/coco_chunk/json_tree/images
+DEBUG:root:Loaded 8 json chunks from ../examples/coco_chunk/json_tree/licenses
+DEBUG:root:Loaded 6 json chunks from ../examples/coco_chunk/json_tree/annotations
+DEBUG:root:Loaded 3 json chunks from ../examples/coco_chunk/json_tree/categories
+DEBUG:root:Loaded single-file 3 json chunk ../examples/coco_chunk/json_tree/categories
+INFO:root:Dumping json tree to dir: /tmp/tmp.WiC8talkFw
+WARNING:root:Destination dir exists and will be overwritten: /tmp/tmp.WiC8talkFw
+INFO:root:Deleting old target tree directory /tmp/tmp.WiC8talkFw
+DEBUG:root:Written 6 elements to /tmp/tmp.WiC8talkFw/images
+DEBUG:root:Written 8 elements to /tmp/tmp.WiC8talkFw/licenses
+DEBUG:root:Written 6 elements to /tmp/tmp.WiC8talkFw/annotations
+DEBUG:root:Written 3 elements to /tmp/tmp.WiC8talkFw/categories
+DEBUG:root:Written single element to /tmp/tmp.WiC8talkFw/info
+INFO:root:[+] Success: json_tree dumped to /tmp/tmp.WiC8talkFw: [&#39;info.json&#39;, &#39;info&#39;, &#39;categories&#39;, &#39;annotations&#39;, &#39;licenses&#39;, &#39;images&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">TMP</span> <span class="o">=</span> <span class="o">!</span>mktemp -d
+<span class="n">TMP</span> <span class="o">=</span> <span class="n">TMP</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="o">!</span> cococleaner <span class="err">\</span>
+    <span class="o">--</span><span class="n">in_json_path</span> <span class="o">../</span><span class="n">examples</span><span class="o">/</span><span class="n">coco_chunk</span><span class="o">/</span><span class="n">json_file</span><span class="o">/</span><span class="n">instances_train2017_chunk3x2</span><span class="o">.</span><span class="n">json</span> \
+    <span class="o">--</span><span class="n">out_path</span> <span class="p">{</span><span class="n">TMP</span><span class="p">}</span> \
+    <span class="o">--</span><span class="n">out_format</span> <span class="n">crop_tree</span> \
+    <span class="o">--</span><span class="n">overwrite</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO:root:Arguments: Namespace(in_crop_tree_path=None, in_json_path=PosixPath(&#39;../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json&#39;), out_format=&#39;crop_tree&#39;, out_path=PosixPath(&#39;/tmp/tmp.96iXXQ4rjj&#39;), overwrite=True)
+INFO:root:Loading json file from file: ../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
+INFO:root:Loaded: images=6, annotations=6, categories=3
+INFO:root:Dumping crop tree to dir: /tmp/tmp.96iXXQ4rjj
+WARNING:root:Destination and will be overwritten: /tmp/tmp.96iXXQ4rjj
+INFO:root:Deleting old target directory /tmp/tmp.96iXXQ4rjj
+Processing images: 100%|██████████████████████████| 6/6 [00:05&lt;00:00,  1.15it/s]
+INFO:root:[+] Success: crop_tree dumped to /tmp/tmp.96iXXQ4rjj: [&#39;crops&#39;, &#39;images&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cats</span> <span class="o">=</span> <span class="o">!</span>ls <span class="o">{</span>TMP<span class="o">}</span>/crops
+<span class="n">cat</span> <span class="o">=</span> <span class="n">cats</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">cat</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;bicycle--2&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">crops</span> <span class="o">=</span> <span class="o">!</span>ls <span class="o">{</span>TMP<span class="o">}</span>/crops/<span class="o">{</span>cat<span class="o">}</span>
+<span class="n">deleted_crop</span> <span class="o">=</span> <span class="n">crops</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">deleted_crop</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;124713.png&#39;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span> rm <span class="o">{</span>TMP<span class="o">}</span>/crops/<span class="o">{</span>cat<span class="o">}</span>/<span class="o">{</span>deleted_crop<span class="o">}</span>
+<span class="o">!</span> ls <span class="o">{</span>TMP<span class="o">}</span>/crops/<span class="o">{</span>cat<span class="o">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">TMP2</span> <span class="o">=</span> <span class="o">!</span>mktemp -d
+<span class="n">TMP2</span> <span class="o">=</span> <span class="n">TMP2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="o">!</span> rmdir <span class="o">{</span>TMP2<span class="o">}</span>
+<span class="o">!</span> cococleaner <span class="err">\</span>
+    <span class="o">--</span><span class="n">in_json_path</span> <span class="o">../</span><span class="n">examples</span><span class="o">/</span><span class="n">coco_chunk</span><span class="o">/</span><span class="n">json_file</span><span class="o">/</span><span class="n">instances_train2017_chunk3x2</span><span class="o">.</span><span class="n">json</span> \
+    <span class="o">--</span><span class="n">in_crop_tree_path</span> <span class="p">{</span><span class="n">TMP</span><span class="p">}</span> \
+    <span class="o">--</span><span class="n">out_path</span> <span class="p">{</span><span class="n">TMP2</span><span class="p">}</span> \
+    <span class="o">--</span><span class="n">out_format</span> <span class="n">json_tree</span>
+
+<span class="o">!</span> ls <span class="o">{</span>TMP2<span class="o">}</span>/annotations/<span class="o">{</span>deleted_crop<span class="o">}</span> <span class="o">||</span> <span class="nb">echo</span> <span class="s2">&quot;File successfully not exists&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO:root:Arguments: Namespace(in_crop_tree_path=PosixPath(&#39;/tmp/tmp.96iXXQ4rjj&#39;), in_json_path=PosixPath(&#39;../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json&#39;), out_format=&#39;json_tree&#39;, out_path=PosixPath(&#39;/tmp/tmp.LQfBh6qqKC&#39;), overwrite=False)
+INFO:root:Loading json file from file: ../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
+INFO:root:Loaded: images=6, annotations=6, categories=3
+INFO:root:Loading blob list from dir: /tmp/tmp.96iXXQ4rjj
+DEBUG:root:Loaded 2 crops from: /tmp/tmp.96iXXQ4rjj/crops/person--1
+DEBUG:root:Loaded 2 crops from: /tmp/tmp.96iXXQ4rjj/crops/car--3
+DEBUG:root:Loaded 2 crops from: /tmp/tmp.96iXXQ4rjj/crops/bicycle--2
+INFO:root:Loaded crop tree: len(annotations)=4 len(images)=4 len(categories)=2
+INFO:root:Dumping json tree to dir: /tmp/tmp.LQfBh6qqKC
+DEBUG:root:Written 4 elements to /tmp/tmp.LQfBh6qqKC/images
+DEBUG:root:Written 8 elements to /tmp/tmp.LQfBh6qqKC/licenses
+DEBUG:root:Written 4 elements to /tmp/tmp.LQfBh6qqKC/annotations
+DEBUG:root:Written 2 elements to /tmp/tmp.LQfBh6qqKC/categories
+DEBUG:root:Written single element to /tmp/tmp.LQfBh6qqKC/info
+INFO:root:[+] Success: json_tree dumped to /tmp/tmp.LQfBh6qqKC: [&#39;info.json&#39;, &#39;info&#39;, &#39;categories&#39;, &#39;annotations&#39;, &#39;licenses&#39;, &#39;images&#39;]
+ls: cannot access &#39;/tmp/tmp.LQfBh6qqKC/annotations/124713.png&#39;: No such file or directory
+File successfully not exists
+</pre>
+</div>
+</div>
+
+</div>
+</div>
 
 </div>
     {% endraw %}

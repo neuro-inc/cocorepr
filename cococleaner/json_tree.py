@@ -41,7 +41,12 @@ def load_json_tree(tree_dir: Union[str, Path], *, kind: str = "object_detection"
 
     for el_name in dataset_class.get_non_collective_elements():
         el_file = tree_dir / f'{el_name}.json'
-        el = json.loads(el_file.read_text())
+        if not el_file.is_file():
+            logger.debug(f'Chunks file not found: {el_file}')
+            el = {}
+        else:
+            el = json.loads(el_file.read_text())
+        logger.debug(f'Loaded single-file {len(el_list)} json chunk {el_dir}')
         D[el_name] = el
 
     return dataset_class.from_dict(D)

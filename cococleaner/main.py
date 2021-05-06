@@ -42,8 +42,8 @@ def main(args=None):
     out_format = args.out_format
     overwrite = args.overwrite
 
-    if in_crop_tree and out_format == 'crop_tree':
-        raise ValueError('Incompatible options: --in_crop_tree=... '
+    if in_crop_tree_path and out_format == 'crop_tree':
+        raise ValueError('Incompatible options: --in_crop_tree_path=... '
                          'and --out_format=crop_tree')
 
     coco = None
@@ -53,12 +53,12 @@ def main(args=None):
             raise ValueError(f'Expect .json file as input, got: {in_json_path}')
         coco = load_json_file(in_json_path)
     elif in_json_path.is_dir():
-        coco = load_json_tree(in_json_tree)
+        coco = load_json_tree(in_json_path)
 
     if coco is None:
         raise ValueError(f'Neither json file nor json tree found in path: {in_json_path}')
 
-    if in_crop_tree:
+    if in_crop_tree_path:
         coco = load_crop_tree(in_crop_tree_path, coco)
 
     if out_format == 'json_file':
@@ -71,4 +71,5 @@ def main(args=None):
         raise ValueError(out_format)
     dump_fun(coco, out_path, skip_nulls=True, overwrite=overwrite)
 
-    logger.info(f'[+] Success: see {out_path}: {list(out_path.iterdir())}')
+    logger.info(f'[+] Success: {out_format} dumped to {out_path}: '
+                f'{[p.name for p in out_path.iterdir()]}')
