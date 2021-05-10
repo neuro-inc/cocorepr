@@ -87,6 +87,9 @@ def cut_bbox(image, bbox):
 # Cell
 
 def write_image(image, image_path):
-    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     Path(image_path).parent.mkdir(exist_ok=True, parents=True)
-    cv2.imwrite(str(image_path), image)
+    try:
+        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+        cv2.imwrite(str(image_path), image)
+    except cv2.error as e:
+        raise ValueError(f'Could not write image {image_path}: {e}')

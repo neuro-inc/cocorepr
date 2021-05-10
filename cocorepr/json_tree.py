@@ -22,9 +22,9 @@ def load_json_tree(tree_dir: Union[str, Path], *, kind: str = "object_detection"
     from_dict_function = dataset_class.from_dict
 
     tree_dir = Path(tree_dir)
-    logger.info(f"Loading json tree from dir: {tree_dir}")
+    logger.info(f"Loading json_tree from dir: {tree_dir}")
     if not tree_dir.is_dir():
-        raise ValueError(f"Source json tree dir not found: {tree_dir}")
+        raise ValueError(f"Source json_tree dir not found: {tree_dir}")
 
     D = {}
     for el_name in dataset_class.get_collective_elements():
@@ -48,7 +48,7 @@ def load_json_tree(tree_dir: Union[str, Path], *, kind: str = "object_detection"
         D[el_name] = el
 
     coco = dataset_class.from_dict(D)
-    logger.info(f"Loaded from json tree: {coco.to_full_str()}")
+    logger.info(f"Loaded from json_tree: {coco.to_full_str()}")
 
     return coco
 
@@ -71,7 +71,7 @@ def dump_json_tree(
 
     target_dir = Path(target_dir)
     raw = to_dict_function(coco)
-    logger.info(f"Dumping json tree to dir: {target_dir}")
+    logger.info(f"Dumping json_tree to dir: {target_dir}")
 
     if overwrite:
         if target_dir.is_dir():

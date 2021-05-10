@@ -56,21 +56,28 @@ def main(args=None):
     indent = args.indent
 
     coco = None
+    coco_count = 0
     for in_json_tree in in_json_tree_list:
         coco = merge_datasets(coco, load_json_tree(in_json_tree))
+        coco_count += 1
     for in_json_file in in_json_file_list:
         coco = merge_datasets(coco, load_json_file(in_json_file))
+        coco_count += 1
 
     if coco is None:
         raise ValueError(f'Not found base dataset, please specify either of: '
                          '--in_json_tree / --in_json_file (multiple arguments allowed)')
-    logger.info(f'Loaded json dataset: {coco.to_full_str()}')
+    if coco_count > 1:
+        logger.info(f'Total loaded json dataset: {coco.to_full_str()}')
 
     coco_crop = None
+    coco_crop_count = 0
     for in_crop_tree in in_crop_tree_list:
         coco_crop = merge_datasets(coco_crop, load_crop_tree(in_crop_tree, coco))
+        coco_crop_count += 1
     if coco_crop is not None:
-        logger.info(f'Loaded coco tree dataset: {coco_crop.to_full_str()}')
+        if coco_crop_count > 1:
+            logger.info(f'Total loaded crop-tree dataset: {coco_crop.to_full_str()}')
         logger.info('Using coco_crop dataset.S')
         coco = coco_crop
 

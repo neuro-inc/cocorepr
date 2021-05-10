@@ -21,14 +21,14 @@ def load_json_file(annotations_json: Union[str, Path], *, kind: str = "object_de
     from_dict_function = get_dataset_class(kind).from_dict
 
     annotations_json = Path(annotations_json)
-    logger.info(f"Loading json file from file: {annotations_json}")
+    logger.info(f"Loading json_file from: {annotations_json}")
     ext = annotations_json.suffix
     if ext != '.json':
         raise ValueError(f'Expect .json file as input, got: {annotations_json}')
 
     D = json.loads(annotations_json.read_text())
     coco = from_dict_function(D)
-    logger.info(f"Loaded from json file: {coco.to_full_str()}")
+    logger.info(f"Loaded from json_file: {coco.to_full_str()}")
     return coco
 
 # Cell
@@ -49,10 +49,9 @@ def dump_json_file(
         to_dict_function = dataset_class.to_dict
 
     annotations_json = Path(annotations_json)
-    logger.info(f"Dumping json file to file: {annotations_json}")
     if annotations_json.is_file() and not overwrite:
-        raise ValueError(f"Destination json file already exists: {annotations_json}")
+        raise ValueError(f"Destination json_file already exists: {annotations_json}")
     raw = sort_dict(to_dict_function(coco))
-    logger.info(f"Writing dataset {coco.to_full_str()} to json file: {annotations_json}")
+    logger.info(f"Writing dataset {coco.to_full_str()} to json-file: {annotations_json}")
     annotations_json.parent.mkdir(parents=True, exist_ok=True)
     annotations_json.write_text(json.dumps(raw, indent=indent))

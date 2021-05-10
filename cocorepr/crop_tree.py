@@ -32,7 +32,7 @@ def load_crop_tree(
     dataset_class = get_dataset_class(kind)
 
     source_dir = Path(source_dir)
-    logger.info(f"Loading crop tree from dir: {source_dir}")
+    logger.info(f"Loading crop_tree from dir: {source_dir}")
     if not source_dir.is_dir():
         raise ValueError(f"Source dir not found: {source_dir}")
 
@@ -71,7 +71,7 @@ def load_crop_tree(
         'categories': list(res_cats.values()),
     }
     coco = dataset_class.from_dict(D)
-    logger.info(f"Loaded from crop tree: {coco.to_full_str()}")
+    logger.info(f"Loaded from crop_tree: {coco.to_full_str()}")
 
     return coco
 
@@ -93,7 +93,7 @@ def dump_crop_tree(
         to_dict_function = dataset_class.to_dict
 
     target_dir = Path(target_dir)
-    logger.info(f"Dumping crop tree to dir: {target_dir}")
+    logger.info(f"Dumping crop_tree to dir: {target_dir}")
 
     if overwrite:
         if target_dir.is_dir():
@@ -119,6 +119,8 @@ def dump_crop_tree(
     crops_dir = target_dir / 'crops'
     crops_dir.mkdir(exist_ok=True)
 
+    anns_failed = []
+    anns_failed_file = crops_dir / 'crops_failed.ndjson'
     for imgid, anns in tqdm(imgid2anns.items(), desc='Processing images'):
         img = imgid2img[imgid]
         assert img.file_name, f'Empty file name for img: {img}'
@@ -132,4 +134,12 @@ def dump_crop_tree(
 
             ann_file = cat_dir / f'{ann.id}.png'
             box = cut_bbox(image, ann.bbox)
-            write_image(box, ann_file)
+            try:
+                write_image(box, ann_file)
+            except ValueError as e:
+                logger.error(e)
+                anns_failed.append(ann)
+                with anns_failed_file.open('a') as f:
+                    f.write(json.dumps(ann.to_dict()) + '\n')
+    if anns_failed:
+        logger.warning(f'Failed to process {len(anns_failed)} crops, see file {anns_failed_file}')
