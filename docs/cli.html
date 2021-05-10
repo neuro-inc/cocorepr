@@ -47,7 +47,7 @@ nb_path: "nbs/90_cli.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_parser" class="doc_header"><code>get_parser</code><a href="https://invalidcocorepr/main.py#L21" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_parser</code>()</p>
+<h4 id="get_parser" class="doc_header"><code>get_parser</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/main.py#L22" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_parser</code>()</p>
 </blockquote>
 
 </div>
@@ -78,7 +78,7 @@ nb_path: "nbs/90_cli.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="main" class="doc_header"><code>main</code><a href="https://invalidcocorepr/main.py#L42" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>(<strong><code>args</code></strong>=<em><code>None</code></em>)</p>
+<h4 id="main" class="doc_header"><code>main</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/main.py#L45" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>main</code>(<strong><code>args</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -143,10 +143,53 @@ nb_path: "nbs/90_cli.ipynb"
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>INFO: Arguments: Namespace(debug=False, in_crop_tree=None, in_json_files=[PosixPath(&#39;../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json&#39;)], in_json_trees=[], indent=4, out_format=&#39;json_tree&#39;, out_path=PosixPath(&#39;/tmp/cococo/json_tree&#39;), overwrite=True)
-INFO: Loading json file from file: ../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
-INFO: Loaded: images=6, annotations=6, categories=3
-INFO: Dumping json tree to dir: /tmp/cococo/json_tree
+<pre>INFO: Arguments: Namespace(debug=False, in_crop_tree=[], in_json_file=[PosixPath(&#39;../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json&#39;)], in_json_tree=[], indent=4, max_crops_per_class=None, out_format=&#39;json_tree&#39;, out_path=PosixPath(&#39;/tmp/cococo/json_tree&#39;), overwrite=True, seed=42)
+INFO: Loading json_file from: ../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
+INFO: Loaded from json_file: CocoObjectDetectionDataset(images=6, licenses=8, annotations=6, categories=3)
+INFO: Dumping json_tree to dir: /tmp/cococo/json_tree
+INFO: [+] Success: json_tree dumped to /tmp/cococo/json_tree: [&#39;info.json&#39;, &#39;info&#39;, &#39;categories&#39;, &#39;annotations&#39;, &#39;licenses&#39;, &#39;images&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span> rm -rf /tmp/cococo/json_tree
+<span class="o">!</span> cocorepr <span class="err">\</span>
+    <span class="o">--</span><span class="n">in_json_file</span> <span class="o">../</span><span class="n">examples</span><span class="o">/</span><span class="n">coco_chunk</span><span class="o">/</span><span class="n">json_file</span><span class="o">/</span><span class="n">instances_train2017_chunk3x2</span><span class="o">.</span><span class="n">json</span> \
+    <span class="o">--</span><span class="n">out_path</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cococo</span><span class="o">/</span><span class="n">json_tree</span> \
+    <span class="o">--</span><span class="n">out_format</span> <span class="n">json_tree</span> \
+    <span class="o">--</span><span class="n">overwrite</span> \
+    <span class="o">--</span><span class="n">max_crops_per_class</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>INFO: Arguments: Namespace(debug=False, in_crop_tree=[], in_json_file=[PosixPath(&#39;../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json&#39;)], in_json_tree=[], indent=4, max_crops_per_class=1, out_format=&#39;json_tree&#39;, out_path=PosixPath(&#39;/tmp/cococo/json_tree&#39;), overwrite=True, seed=42)
+INFO: Loading json_file from: ../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
+INFO: Loaded from json_file: CocoObjectDetectionDataset(images=6, licenses=8, annotations=6, categories=3)
+INFO: Cutting off crops up to 1 per class, random seed=42
+INFO: After cutting off: CocoObjectDetectionDataset(images=3, licenses=8, annotations=3, categories=3)
+INFO: Dumping json_tree to dir: /tmp/cococo/json_tree
 INFO: [+] Success: json_tree dumped to /tmp/cococo/json_tree: [&#39;info.json&#39;, &#39;info&#39;, &#39;categories&#39;, &#39;annotations&#39;, &#39;licenses&#39;, &#39;images&#39;]
 </pre>
 </div>
@@ -183,10 +226,10 @@ INFO: [+] Success: json_tree dumped to /tmp/cococo/json_tree: [&#39;info.json&#3
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>INFO: Arguments: Namespace(debug=False, in_crop_tree=None, in_json_files=[], in_json_trees=[PosixPath(&#39;../examples/coco_chunk/json_tree&#39;)], indent=None, out_format=&#39;json_file&#39;, out_path=PosixPath(&#39;/tmp/cococo/json_file/annotations.json&#39;), overwrite=False)
-INFO: Loading json tree from dir: ../examples/coco_chunk/json_tree
-INFO: Dumping json file to file: /tmp/cococo/json_file/annotations.json
-INFO: Writing dataset to json file: /tmp/cococo/json_file/annotations.json
+<pre>INFO: Arguments: Namespace(debug=False, in_crop_tree=[], in_json_file=[], in_json_tree=[PosixPath(&#39;../examples/coco_chunk/json_tree&#39;)], indent=None, max_crops_per_class=None, out_format=&#39;json_file&#39;, out_path=PosixPath(&#39;/tmp/cococo/json_file/annotations.json&#39;), overwrite=False, seed=42)
+INFO: Loading json_tree from dir: ../examples/coco_chunk/json_tree
+INFO: Loaded from json_tree: CocoObjectDetectionDataset(images=6, licenses=8, annotations=6, categories=3)
+INFO: Writing dataset CocoObjectDetectionDataset(images=6, licenses=8, annotations=6, categories=3) to json-file: /tmp/cococo/json_file/annotations.json
 INFO: [+] Success: json_file dumped to /tmp/cococo/json_file/annotations.json
 </pre>
 </div>
@@ -223,11 +266,11 @@ INFO: [+] Success: json_file dumped to /tmp/cococo/json_file/annotations.json
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>INFO: Arguments: Namespace(debug=False, in_crop_tree=None, in_json_files=[PosixPath(&#39;../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json&#39;)], in_json_trees=[], indent=4, out_format=&#39;crop_tree&#39;, out_path=PosixPath(&#39;/tmp/cococo/crop_tree&#39;), overwrite=True)
-INFO: Loading json file from file: ../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
-INFO: Loaded: images=6, annotations=6, categories=3
-INFO: Dumping crop tree to dir: /tmp/cococo/crop_tree
-Processing images: 100%|██████████████████████████| 6/6 [00:03&lt;00:00,  1.53it/s]
+<pre>INFO: Arguments: Namespace(debug=False, in_crop_tree=[], in_json_file=[PosixPath(&#39;../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json&#39;)], in_json_tree=[], indent=4, max_crops_per_class=None, out_format=&#39;crop_tree&#39;, out_path=PosixPath(&#39;/tmp/cococo/crop_tree&#39;), overwrite=True, seed=42)
+INFO: Loading json_file from: ../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
+INFO: Loaded from json_file: CocoObjectDetectionDataset(images=6, licenses=8, annotations=6, categories=3)
+INFO: Dumping crop_tree to dir: /tmp/cococo/crop_tree
+Processing images: 100%|██████████████████████████| 6/6 [00:04&lt;00:00,  1.49it/s]
 INFO: [+] Success: crop_tree dumped to /tmp/cococo/crop_tree: [&#39;crops&#39;, &#39;images&#39;]
 </pre>
 </div>

@@ -105,7 +105,7 @@ Below you can find the detailed discussion of the COCO dataset representations.
 
 ---
 
-```python
+```
 ## Representations of COCO dataset
 ```
 

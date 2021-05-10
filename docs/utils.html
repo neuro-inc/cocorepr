@@ -47,7 +47,7 @@ nb_path: "nbs/00_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="sort_dict" class="doc_header"><code>sort_dict</code><a href="https://github.neuro_inc.com/cocorepr/cocorepr/tree/master/cocorepr/utils.py#L23" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>sort_dict</code>(<strong><code>D</code></strong>:<code>Dict</code>[<code>KT</code>, <code>VT</code>], <strong><code>sort_key</code></strong>=<em><code>'id'</code></em>)</p>
+<h4 id="sort_dict" class="doc_header"><code>sort_dict</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/utils.py#L23" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>sort_dict</code>(<strong><code>D</code></strong>:<code>Dict</code>[<code>KT</code>, <code>VT</code>], <strong><code>sort_key</code></strong>=<em><code>'id'</code></em>)</p>
 </blockquote>
 
 </div>
@@ -132,7 +132,7 @@ nb_path: "nbs/00_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="sanitize_filename" class="doc_header"><code>sanitize_filename</code><a href="https://github.neuro_inc.com/cocorepr/cocorepr/tree/master/cocorepr/utils.py#L40" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>sanitize_filename</code>(<strong><code>s</code></strong>:<code>str</code>, <strong><code>max_len</code></strong>=<em><code>256</code></em>)</p>
+<h4 id="sanitize_filename" class="doc_header"><code>sanitize_filename</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/utils.py#L39" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>sanitize_filename</code>(<strong><code>s</code></strong>:<code>str</code>, <strong><code>max_len</code></strong>=<em><code>256</code></em>)</p>
 </blockquote>
 
 </div>
@@ -159,22 +159,7 @@ nb_path: "nbs/00_utils.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">names_str</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span><span class="se">\</span>
-<span class="s1">Бреф Делюкс «Витончена магнолія» Тріопак, 3*50 г НОВИНКА!!!</span>
-<span class="s1">Бреф Делюкс «Витончена магнолія», 50 г НОВИНКА!!!</span>
-<span class="s1">ЛОСК  автомат Гірське Озеро, 6 кг, 40 циклів прання</span>
-<span class="s1">ЛОСК  автомат Гірське Озеро, 9 кг, 60 циклів прання</span>
-<span class="s1">Персіл Диски Колор, 11 циклів прання НОВИНКА!!!</span>
-<span class="s1">Персіл Диски Універсальні, 11 циклів прання НОВИНКА!!!</span>
-<span class="s1">Персіл гель Універсальний Свіжість від Сілан, 1 л, 20 циклів прання</span>
-<span class="s1">Персіл гель Універсальний, 1 л, 20 циклів прання</span>
-<span class="s1">Персіл гель Універсальний, 1,5 л, 30 циклів прання</span>
-<span class="s1">Сілан Гламур   600 мл</span>
-<span class="s1">Сілан Гламур  1200 мл</span>
-<span class="s1">&#39;&#39;&#39;</span>
-
-<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">names_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">sanitize_filename</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sanitize_filename</span><span class="p">(</span><span class="s1">&#39;a b «ccc ddd» Ef жиза, 3*50 г НОВИНКА!!!&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -186,21 +171,12 @@ nb_path: "nbs/00_utils.ipynb"
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>&#39;Бреф_Делюкс_Витончена_магнолія_Тріопак_350_г_НОВИНКА&#39;
-&#39;Бреф_Делюкс_Витончена_магнолія_50_г_НОВИНКА&#39;
-&#39;ЛОСК_автомат_Гірське_Озеро_6_кг_40_циклів_прання&#39;
-&#39;ЛОСК_автомат_Гірське_Озеро_9_кг_60_циклів_прання&#39;
-&#39;Персіл_Диски_Колор_11_циклів_прання_НОВИНКА&#39;
-&#39;Персіл_Диски_Універсальні_11_циклів_прання_НОВИНКА&#39;
-&#39;Персіл_гель_Універсальний_Свіжість_від_Сілан_1_л_20_циклів_прання&#39;
-&#39;Персіл_гель_Універсальний_1_л_20_циклів_прання&#39;
-&#39;Персіл_гель_Універсальний_15_л_30_циклів_прання&#39;
-&#39;Сілан_Гламур_600_мл&#39;
-&#39;Сілан_Гламур_1200_мл&#39;
-&#39;&#39;
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;a_b_ccc_ddd_Ef_жиза_350_г_НОВИНКА&#39;</pre>
 </div>
+
 </div>
 
 </div>
@@ -220,7 +196,7 @@ nb_path: "nbs/00_utils.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="read_image" class="doc_header"><code>read_image</code><a href="https://github.neuro_inc.com/cocorepr/cocorepr/tree/master/cocorepr/utils.py#L49" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>read_image</code>(<strong><code>image_path</code></strong>:<code>Union</code>[<code>str</code>, <code>Path</code>], <strong><code>download_url</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>)</p>
+<h4 id="read_image" class="doc_header"><code>read_image</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/utils.py#L48" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>read_image</code>(<strong><code>image_path</code></strong>:<code>Union</code>[<code>str</code>, <code>Path</code>], <strong><code>download_url</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Reads image :image_path: in RGB mode. If image file does not
 exist and :download_url: was specified, downloads the image first.</p>
@@ -253,7 +229,7 @@ exist and :download_url: was specified, downloads the image first.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="download_image" class="doc_header"><code>download_image</code><a href="https://github.neuro_inc.com/cocorepr/cocorepr/tree/master/cocorepr/utils.py#L67" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>download_image</code>(<strong><code>image_path</code></strong>:<code>Union</code>[<code>str</code>, <code>Path</code>], <strong><code>download_url</code></strong>:<code>str</code>)</p>
+<h4 id="download_image" class="doc_header"><code>download_image</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/utils.py#L66" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>download_image</code>(<strong><code>image_path</code></strong>:<code>Union</code>[<code>str</code>, <code>Path</code>], <strong><code>download_url</code></strong>:<code>str</code>)</p>
 </blockquote>
 
 </div>
@@ -284,7 +260,7 @@ exist and :download_url: was specified, downloads the image first.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="draw_image" class="doc_header"><code>draw_image</code><a href="https://github.neuro_inc.com/cocorepr/cocorepr/tree/master/cocorepr/utils.py#L76" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>draw_image</code>(<strong><code>image</code></strong>, <strong><code>figsize</code></strong>=<em><code>(24, 24)</code></em>)</p>
+<h4 id="draw_image" class="doc_header"><code>draw_image</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/utils.py#L75" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>draw_image</code>(<strong><code>image</code></strong>, <strong><code>figsize</code></strong>=<em><code>(24, 24)</code></em>)</p>
 </blockquote>
 
 </div>
@@ -315,7 +291,7 @@ exist and :download_url: was specified, downloads the image first.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="cut_bbox" class="doc_header"><code>cut_bbox</code><a href="https://github.neuro_inc.com/cocorepr/cocorepr/tree/master/cocorepr/utils.py#L83" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>cut_bbox</code>(<strong><code>image</code></strong>, <strong><code>bbox</code></strong>)</p>
+<h4 id="cut_bbox" class="doc_header"><code>cut_bbox</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/utils.py#L82" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>cut_bbox</code>(<strong><code>image</code></strong>, <strong><code>bbox</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -346,7 +322,7 @@ exist and :download_url: was specified, downloads the image first.</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="write_image" class="doc_header"><code>write_image</code><a href="https://github.neuro_inc.com/cocorepr/cocorepr/tree/master/cocorepr/utils.py#L90" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>write_image</code>(<strong><code>image</code></strong>, <strong><code>image_path</code></strong>)</p>
+<h4 id="write_image" class="doc_header"><code>write_image</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/utils.py#L89" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>write_image</code>(<strong><code>image</code></strong>, <strong><code>image_path</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -373,7 +349,7 @@ exist and :download_url: was specified, downloads the image first.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">anns</span> <span class="o">=</span> <span class="o">!</span>ls ../examples/coco_chunk/json.tree/annotations
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">anns</span> <span class="o">=</span> <span class="o">!</span>ls ../examples/coco_chunk/json_tree/annotations
 <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">anns</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 </pre></div>
@@ -388,16 +364,39 @@ exist and :download_url: was specified, downloads the image first.</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>&#39;124710.json&#39;
-&#39;124713.json&#39;
-&#39;131774.json&#39;
-&#39;131812.json&#39;
-&#39;183020.json&#39;
-&#39;183030.json&#39;
+<pre>&#34;ls: cannot access &#39;../examples/coco_chunk/json.tree/annotations&#39;: No such file or directory&#34;
 </pre>
 </div>
 </div>
 
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># import tempfile</span>
+<span class="c1"># null = None</span>
+
+<span class="c1"># BASE = Path(&#39;/home/ay/Downloads/outforz-lactalis/output/clean/2020-10-01_2020-11-01&#39;)</span>
+<span class="c1"># ann = {&quot;id&quot;: 2131512, &quot;image_id&quot;: 102237, &quot;category_id&quot;: &quot;4 823 065 722 757&quot;, &quot;bbox&quot;: [0.2347949080622348, 0.5921750663129973, 0.09335219236209336, 0.03183023872679047], &quot;supercategory&quot;: null, &quot;area&quot;: null, &quot;iscrowd&quot;: null}</span>
+<span class="c1"># img = json.loads((BASE/&#39;json_tree/images/102237.json&#39;).read_text())</span>
+<span class="c1"># print(img)</span>
+<span class="c1"># tmp = Path(tempfile.mktemp())</span>
+<span class="c1"># print(tmp)</span>
+<span class="c1"># image = read_image(tmp, img[&#39;coco_url&#39;])</span>
+<span class="c1"># image_box = cut_bbox(image, ann[&#39;bbox&#39;])</span>
+<span class="c1"># draw_image(image_box, figsize=(8, 8))</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
