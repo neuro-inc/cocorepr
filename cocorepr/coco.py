@@ -2,15 +2,17 @@
 
 __all__ = ['logger', 'CocoElement', 'CocoInfo', 'CocoLicense', 'CocoImage', 'CocoAnnotation',
            'CocoObjectDetectionAnnotation', 'CocoCategory', 'CocoObjectDetectionCategory', 'CocoDataset',
-           'CocoObjectDetectionDataset', 'get_dataset_class', 'MAP_COCO_TYPE_TO_DATASET_CLASS', 'merge_datasets']
+           'CocoObjectDetectionDataset', 'get_dataset_class', 'MAP_COCO_TYPE_TO_DATASET_CLASS', 'merge_datasets',
+           'shuffle', 'cut_annotations_per_category']
 
 # Cell
 
 import logging
+import random
 from abc import abstractmethod
 from datetime import datetime
 from dataclasses_json import dataclass_json
-from dataclasses import dataclass, fields, asdict, field
+from dataclasses import dataclass, fields, asdict, field, replace
 from dataclasses_serialization.json import JSONSerializer
 from typing import *
 
@@ -219,3 +221,29 @@ def merge_datasets(d1: CocoDataset, d2: CocoDataset) -> CocoDataset:
                 res[k] = v1
 
     return t1.from_dict(res)
+
+# Cell
+def shuffle(arr):
+    return random.sample(arr, k=len(arr))
+
+# Cell
+def cut_annotations_per_category(coco: CocoDataset, max_annotations_per_category: int) -> CocoDataset:
+    """ Returns a copy of the input dataset where each class (category)
+        contains up to `max_crops_per_class` crops (annotations)
+    """
+    imgid2img = {img.id: img for img in coco.images}
+    catid2anns = {cat.id: [] for cat in coco.categories}
+    for ann in coco.annotations:
+        catid2anns[ann.category_id].append(ann)
+
+    images = []
+    annotations = []
+    for _, anns in catid2anns.items():
+        if len(anns) > max_annotations_per_category:
+            anns = shuffle(anns)[:max_annotations_per_category]
+        annotations.extend(anns)
+        images.extend([imgid2img[ann.image_id] for ann in anns])
+    coco = replace(coco, annotations=annotations)
+    coco = replace(coco, images=images)
+
+    return coco

@@ -7,8 +7,9 @@ __all__ = ['logger', 'get_parser', 'main']
 import argparse
 import logging
 from pathlib import Path
+import random
 
-from .coco import merge_datasets
+from .coco import merge_datasets, cut_annotations_per_category
 from .json_file import *
 from .json_tree import *
 from .crop_tree import *
@@ -28,6 +29,9 @@ def get_parser():
 
     parser.add_argument("--out_path", type=Path, required=True)
     parser.add_argument("--out_format", choices=['json_file', 'json_tree', 'crop_tree'], required=True)
+
+    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--max_crops_per_class", type=int, default=None)
 
     parser.add_argument("--overwrite", action='store_true')
     parser.add_argument("--indent", default=4,
@@ -50,10 +54,15 @@ def main(args=None):
     in_json_file_list = args.in_json_file
     in_crop_tree_list = args.in_crop_tree
 
+    seed = args.seed
+    max_crops_per_class = args.max_crops_per_class
+
     out_path = args.out_path
     out_format = args.out_format
     overwrite = args.overwrite
     indent = args.indent
+
+    random.seed(args.seed)
 
     coco = None
     coco_count = 0
@@ -80,6 +89,11 @@ def main(args=None):
             logger.info(f'Total loaded crop-tree dataset: {coco_crop.to_full_str()}')
         logger.info('Using coco_crop dataset.S')
         coco = coco_crop
+
+    if max_crops_per_class:
+        logger.info(f'Cutting off crops up to {max_crops_per_class} per class, random seed={seed}')
+        coco = cut_annotations_per_category(coco, max_crops_per_class)
+        logger.info(f'After cutting off: {coco.to_full_str()}')
 
     if out_format == 'json_file':
         dump_fun = dump_json_file
