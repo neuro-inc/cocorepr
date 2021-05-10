@@ -10,12 +10,9 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: module name here
-      url: core.html
-    - output: web,pdf
       title: Title
-      url: main.html
+      url: cli.html
     output: web
-    title: cococleaner
+    title: cocorepr
   output: web
   title: Sidebar

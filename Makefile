@@ -9,7 +9,7 @@ diff:
 
 build: $(SRC)
 	nbdev_build_lib
-	touch cococleaner
+	touch cocorepr
 
 sync:
 	nbdev_update_lib

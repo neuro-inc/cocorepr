@@ -1,7 +1,7 @@
-repository: artemlops/cococleaner
+repository: artemlops/cocorepr
 output: web
-topnav_title: cococleaner
-site_title: cococleaner
+topnav_title: cocorepr
+site_title: cocorepr
 company_name: Neu.ro
 description: COCO Dataset cleaning tool
 # Set to false to disable KaTeX math
@@ -63,4 +63,4 @@ plugins:
     - jekyll-remote-theme
     
 remote_theme: fastai/nbdev-jekyll-theme
-baseurl: /cococleaner/
+baseurl: /cocorepr/

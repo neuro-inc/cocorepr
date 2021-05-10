@@ -2,7 +2,7 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"logger": "99_main.ipynb",
+index = {"logger": "99_cli.ipynb",
          "sort_dict": "00_utils.ipynb",
          "sanitize_filename": "00_utils.ipynb",
          "read_image": "00_utils.ipynb",
@@ -29,8 +29,8 @@ index = {"logger": "99_main.ipynb",
          "dump_json_tree": "03_json_tree.ipynb",
          "load_crop_tree": "04_crop_tree.ipynb",
          "dump_crop_tree": "04_crop_tree.ipynb",
-         "get_parser": "99_main.ipynb",
-         "main": "99_main.ipynb"}
+         "get_parser": "99_cli.ipynb",
+         "main": "99_cli.ipynb"}
 
 modules = ["utils.py",
            "coco.py",
@@ -41,6 +41,6 @@ modules = ["utils.py",
 
 doc_url = "https://invalid/cocorepr/"
 
-git_url = "https://github.neuro_inc.com/cocorepr/cocorepr/tree/master/"
+git_url = "https://invalid"
 
 def custom_doc_links(name): return None

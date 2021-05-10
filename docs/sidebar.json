@@ -1,7 +1,6 @@
 {
-  "cococleaner": {
+  "cocorepr": {
     "Overview": "/",
-    "module name here": "core.html",
-    "Title": "main.html"
+    "Title": "cli.html"
   }
 }

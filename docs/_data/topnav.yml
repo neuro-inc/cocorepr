@@ -2,7 +2,7 @@ topnav:
 - title: Topnav
   items:
     - title: github
-      external_url: https://github.neuro_inc.com/cococleaner/cococleaner/tree/master/
+      external_url: https://github.neuro_inc.com/cocorepr/cocorepr/tree/master/
 
 #Topnav dropdowns
 topnav_dropdowns:
