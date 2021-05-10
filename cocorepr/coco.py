@@ -165,7 +165,6 @@ def get_dataset_class(coco_kind: str):
     except KeyError:
         raise ValueError(f"Not supported dataset kind: {kind}")
 
-
 # Cell
 
 def merge_datasets(d1: CocoDataset, d2: CocoDataset) -> CocoDataset:

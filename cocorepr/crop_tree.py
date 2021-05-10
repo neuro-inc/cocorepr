@@ -75,7 +75,6 @@ def load_crop_tree(
                 f'len(categories)={len(D["categories"])}')
     return dataset_class.from_dict(D)
 
-
 # Cell
 
 def dump_crop_tree(

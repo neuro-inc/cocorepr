@@ -34,7 +34,6 @@ def load_json_file(annotations_json: Union[str, Path], *, kind: str = "object_de
     )
     return from_dict_function(D)
 
-
 # Cell
 
 def dump_json_file(
