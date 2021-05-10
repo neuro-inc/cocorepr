@@ -13,7 +13,6 @@ import json
 from .utils import sort_dict
 from .coco import *
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger()
 
 # Cell

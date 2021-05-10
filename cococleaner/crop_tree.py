@@ -16,7 +16,6 @@ from tqdm.auto import tqdm
 from .utils import *
 from .coco import *
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger()
 
 # Cell

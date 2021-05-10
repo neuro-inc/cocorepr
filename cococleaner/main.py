@@ -12,7 +12,7 @@ from .json_file import *
 from .json_tree import *
 from .crop_tree import *
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 logger = logging.getLogger()
 
 # Cell
@@ -28,6 +28,7 @@ def get_parser():
     parser.add_argument("--overwrite", action='store_true')
     parser.add_argument("--indent", default=4,
                         type=lambda x: int(x) if str(x).lower() not in ('none', 'null', '~') else None)
+    parser.add_argument("--debug", action='store_true')
     return parser
 
 
@@ -35,9 +36,20 @@ def get_parser():
 
 def main(args=None):
     args = args or get_parser().parse_args()
+
+    if args.debug:
+        logging.getLogger().setLevel(logging.DEBUG)
+
     logger.info(f'Arguments: {args}')
+
     in_json_path = args.in_json_path
     in_crop_tree_path = args.in_crop_tree_path
+
+    if in_json_path:
+        in_json_path = Path(in_json_path).resolve()
+    if in_crop_tree_path:
+        in_crop_tree_path = Path(in_crop_tree_path).resolve()
+
 
     out_path = args.out_path
     out_format = args.out_format
