@@ -21,12 +21,13 @@ def get_parser():
     parser = argparse.ArgumentParser(
         description="Tool for converting datasets in COCO format between different formats"
     )
-
     parser.add_argument("--in_json_path", type=Path, required=True)
     parser.add_argument("--in_crop_tree_path", type=Path)
     parser.add_argument("--out_path", type=Path, required=True)
     parser.add_argument("--out_format", choices=['json_file', 'json_tree', 'crop_tree'], required=True)
     parser.add_argument("--overwrite", action='store_true')
+    parser.add_argument("--indent", default=4,
+                        type=lambda x: int(x) if str(x).lower() not in ('none', 'null', '~') else None)
     return parser
 
 
@@ -41,25 +42,29 @@ def main(args=None):
     out_path = args.out_path
     out_format = args.out_format
     overwrite = args.overwrite
-
-    if in_crop_tree_path and out_format == 'crop_tree':
-        raise ValueError('Incompatible options: --in_crop_tree_path=... '
-                         'and --out_format=crop_tree')
+    indent = args.indent
 
     coco = None
+    in_format = None
     if in_json_path.is_file():
+        in_format = 'json_file'
         ext = in_json_path.suffix
         if ext != '.json':
             raise ValueError(f'Expect .json file as input, got: {in_json_path}')
         coco = load_json_file(in_json_path)
     elif in_json_path.is_dir():
+        in_format = 'json_tree'
         coco = load_json_tree(in_json_path)
-
-    if coco is None:
-        raise ValueError(f'Neither json file nor json tree found in path: {in_json_path}')
+    else:
+        raise ValueError(f'Neither json_file nor json_tree found: {in_json_path}')
+    logger.info(f'Detected input dataset type: {in_format}: {in_json_path}')
 
     if in_crop_tree_path:
-        coco = load_crop_tree(in_crop_tree_path, coco)
+        coco_merged = load_crop_tree(in_crop_tree_path, coco)
+        coco = coco_merged
+    elif in_format == out_format:
+        raise ValueError(f'Conversion not supported (without input crop_tree): '
+                         f'{in_format} -> {out_format}')
 
     if out_format == 'json_file':
         dump_fun = dump_json_file
@@ -69,7 +74,7 @@ def main(args=None):
         dump_fun = dump_crop_tree
     else:
         raise ValueError(out_format)
-    dump_fun(coco, out_path, skip_nulls=True, overwrite=overwrite)
+    dump_fun(coco, out_path, skip_nulls=True, overwrite=overwrite, indent=indent)
 
-    logger.info(f'[+] Success: {out_format} dumped to {out_path}: '
-                f'{[p.name for p in out_path.iterdir()]}')
+    details = f': {[p.name for p in out_path.iterdir()]}' if out_path.is_dir() else ''
+    logger.info(f'[+] Success: {out_format} dumped to {out_path}' + details)

@@ -55,4 +55,5 @@ def dump_json_file(
         raise ValueError(f"Destination json file already exists: {annotations_json}")
     raw = sort_dict(to_dict_function(coco))
     logger.info(f"Writing dataset to json file: {annotations_json}")
+    annotations_json.parent.mkdir(parents=True, exist_ok=True)
     annotations_json.write_text(json.dumps(raw, indent=indent))

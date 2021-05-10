@@ -38,7 +38,7 @@ def sort_dict(D: Dict, sort_key='id') -> Dict:
 # Cell
 
 def sanitize_filename(s: str, max_len=256) -> str:
-    s = re.sub(r'[-\s]+', '_', s)
+    s = re.sub(r'[-.\s]+', '_', s)
     s = re.sub(r'[^\w ]', '', s)
     s = s[:max_len] if len(s) > max_len else s
     s = s.strip('_')
