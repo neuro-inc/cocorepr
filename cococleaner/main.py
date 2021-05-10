@@ -8,6 +8,7 @@ import argparse
 import logging
 from pathlib import Path
 
+from .coco import merge_datasets
 from .json_file import *
 from .json_tree import *
 from .crop_tree import *
@@ -21,14 +22,18 @@ def get_parser():
     parser = argparse.ArgumentParser(
         description="Tool for converting datasets in COCO format between different formats"
     )
-    parser.add_argument("--in_json_path", type=Path, required=True)
-    parser.add_argument("--in_crop_tree_path", type=Path)
+    parser.add_argument("--in_json_trees", type=Path, nargs="*", default=[])
+    parser.add_argument("--in_json_files", type=Path, nargs="*", default=[])
+    parser.add_argument("--in_crop_tree", type=Path)
+
     parser.add_argument("--out_path", type=Path, required=True)
     parser.add_argument("--out_format", choices=['json_file', 'json_tree', 'crop_tree'], required=True)
+
     parser.add_argument("--overwrite", action='store_true')
     parser.add_argument("--indent", default=4,
                         type=lambda x: int(x) if str(x).lower() not in ('none', 'null', '~') else None)
     parser.add_argument("--debug", action='store_true')
+
     return parser
 
 
@@ -42,14 +47,9 @@ def main(args=None):
 
     logger.info(f'Arguments: {args}')
 
-    in_json_path = args.in_json_path
-    in_crop_tree_path = args.in_crop_tree_path
-
-    if in_json_path:
-        in_json_path = Path(in_json_path).resolve()
-    if in_crop_tree_path:
-        in_crop_tree_path = Path(in_crop_tree_path).resolve()
-
+    in_json_trees = args.in_json_trees
+    in_json_files = args.in_json_files
+    in_crop_tree = args.in_crop_tree
 
     out_path = args.out_path
     out_format = args.out_format
@@ -57,26 +57,18 @@ def main(args=None):
     indent = args.indent
 
     coco = None
-    in_format = None
-    if in_json_path.is_file():
-        in_format = 'json_file'
-        ext = in_json_path.suffix
-        if ext != '.json':
-            raise ValueError(f'Expect .json file as input, got: {in_json_path}')
-        coco = load_json_file(in_json_path)
-    elif in_json_path.is_dir():
-        in_format = 'json_tree'
-        coco = load_json_tree(in_json_path)
-    else:
-        raise ValueError(f'Neither json_file nor json_tree found: {in_json_path}')
-    logger.info(f'Detected input dataset type: {in_format}: {in_json_path}')
+    for in_json_tree in in_json_trees:
+        coco = merge_datasets(coco, load_json_tree(in_json_tree))
+    for in_json_file in in_json_files:
+        coco = merge_datasets(coco, load_json_file(in_json_file))
 
-    if in_crop_tree_path:
-        coco_merged = load_crop_tree(in_crop_tree_path, coco)
+    if coco is None:
+        raise ValueError(f'Not found base dataset, please specify either of: '
+                         '--in_json_trees / --in_json_files')
+
+    if in_crop_tree:
+        coco_merged = load_crop_tree(in_crop_tree, coco)
         coco = coco_merged
-    elif in_format == out_format:
-        raise ValueError(f'Conversion not supported (without input crop_tree): '
-                         f'{in_format} -> {out_format}')
 
     if out_format == 'json_file':
         dump_fun = dump_json_file

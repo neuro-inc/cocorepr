@@ -2,7 +2,7 @@
 
 __all__ = ['logger', 'CocoElement', 'CocoInfo', 'CocoLicense', 'CocoImage', 'CocoAnnotation',
            'CocoObjectDetectionAnnotation', 'CocoCategory', 'CocoObjectDetectionCategory', 'CocoDataset',
-           'CocoObjectDetectionDataset', 'get_dataset_class', 'MAP_COCO_TYPE_TO_DATASET_CLASS']
+           'CocoObjectDetectionDataset', 'get_dataset_class', 'MAP_COCO_TYPE_TO_DATASET_CLASS', 'merge_datasets']
 
 # Cell
 
@@ -164,3 +164,51 @@ def get_dataset_class(coco_kind: str):
         return MAP_COCO_TYPE_TO_DATASET_CLASS[coco_kind]
     except KeyError:
         raise ValueError(f"Not supported dataset kind: {kind}")
+
+
+# Cell
+
+def merge_datasets(d1: CocoDataset, d2: CocoDataset) -> CocoDataset:
+    if d1 is None:
+        return d2
+    if d2 is None:
+        return d1
+    assert isinstance(d1, CocoDataset), (type(d1), d1)
+    assert isinstance(d2, CocoDataset), (type(d1), d1)
+    t1 = type(d1)
+    t2 = type(d2)
+    assert t1 == t2, f'Cannot merge datasets: {t1} != {t2}'
+
+    D1 = d1.to_dict()
+    D2 = d2.to_dict()
+    K1 = set(D1.keys())
+    K2 = set(D2.keys())
+    assert K1 == K2, f'Cannot merge datasets: {K1} != {K2}'
+
+    res = {}
+    for k in K1:
+        if isinstance(D1[k], list):
+            v1 = {x['id']: x for x in (D1[k] or [])}
+            v2 = {x['id']: x for x in (D2[k] or [])}
+            v_res = {}
+            for i in v1:
+                if i in v2 and v1[i] != v2[i]:
+                    raise ValueError(f'Invalid "{k}" of id={i}: {v1[i]} != {v2[i]}')
+                v_res[i] = v1[i]
+            for i in v2:
+                if i in v1 and v2[i] != v1[i]:
+                    raise ValueError(f'Invalid "{k}" of id={i}: {v2[i]} != {v1[i]}')
+                v_res[i] = v2[i]
+            res[k] = sorted(v_res.values(), key=lambda x: x['id'])
+        else:
+            v1 = D1[k] or {}
+            v2 = D2[k] or {}
+            if not v1:
+                res[k] = v2
+            elif not v2:
+                res[k] = v1
+            else:
+                assert v1 == v2, f'key={k}: unexpectedly: {v1} != {v2}'
+                res[k] = v1
+
+    return t1.from_dict(res)

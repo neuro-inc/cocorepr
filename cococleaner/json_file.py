@@ -22,9 +22,13 @@ def load_json_file(annotations_json: Union[str, Path], *, kind: str = "object_de
 
     annotations_json = Path(annotations_json)
     logger.info(f"Loading json file from file: {annotations_json}")
+    ext = annotations_json.suffix
+    if ext != '.json':
+        raise ValueError(f'Expect .json file as input, got: {annotations_json}')
+
     D = json.loads(annotations_json.read_text())
     logger.info(
-        f"Loaded: images={len(D['images'])}, "
+        f"Loaded json file: images={len(D['images'])}, "
         f"annotations={len(D['annotations'])}, "
         f"categories={len(D['categories'])}"
     )
