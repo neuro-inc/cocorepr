@@ -1,7 +1,12 @@
-# cocorepr: A tool to convert COCO datasets between representations
+# Title
 
-> Note: for now, only Object Detection COCO is supported
 
+
+Cocorepr
+========
+
+A tool to convert COCO datasets between representations.
+{% include note.html content='for now, only Object Detection COCO is supported' %}
 ## Installation
 
 ```bash
@@ -100,7 +105,11 @@ Below you can find the detailed discussion of the COCO dataset representations.
 
 ---
 
-## Json file representation
+```python
+## Representations of COCO dataset
+```
+
+### Json file
 
 This is a regular format for a COCO dataset: all the annotations are stored in a single json file:
 
@@ -163,8 +172,7 @@ $ cat examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
 
 This format is used by many ML frameworks as input format, but usually the json tree file is too big to be stored in a Git repository (over 50M), therefore we either need to store it under Git LFS (which does not show the diff, only the hash), or to use another representation that are better adapted for work with Git.
 
-
-## Json tree representation
+### Json tree
 
 This format makes the dataset suitable for Git: it stores each element in a separate json chunk, thus enabling Git to do the diff at the level of individual chunks.
 
@@ -214,7 +222,7 @@ $ tree /tmp/json_tree
 5 directories, 24 files
 ```
 
-## Crop tree representation
+### Crop tree
 
 This format is used to facilitate the process of manual cleaning the CL dataset: the directory `crop` contains the list of classes named as `{sanitized-class-name}--{class-id}` so that the classes that have similar name (for example the classes of the cars `Bugatti Veyron EB 16.4` and `Bugatti Veyron 16.4 Grand Sport` will be named as `Bugatti_Veyron_EB_16_4--103209` and `Bugatti_Veyron_16_4_Grand_Sport--376319`, which makes sense since the directories are usually sorted alphabetically). The human then goes through the pictures of crops, deletes the "dirty" ones and makes sure that each class contains enough of "clean" crops. Then, we can reconstruct the dataset in the json tree representation and register it in Git.
 
@@ -228,7 +236,7 @@ INFO:root:Loading json file from file: examples/coco_chunk/json_file/instances_t
 INFO:root:Loaded: images=6, annotations=6, categories=3
 INFO:root:Detected input dataset type: json_file: examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
 INFO:root:Dumping crop tree to dir: /tmp/crop_tree
-Processing images: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 6/6 [00:03<00:00,  1.60it/s]
+Processing images: 100%|                                           | 6/6 [00:03<00:00,  1.60it/s]
 INFO:root:[+] Success: crop_tree dumped to /tmp/crop_tree: ['crops', 'images']
 
 $ tree /tmp/crop_tree
@@ -263,7 +271,7 @@ Our setup:
 - The customer has provided us with additional data as two `json_file`s: `/inputs/annotations-new-1.json` and `/inputs/annotations-new-2.json`.
 - We would like to merge these two datasets into a `crop_tree` representation, clean it manually, and then re-construct a new dataset and save it in-place in our git repository.
 
-- Step 1: merge datasets `json_tree` + `json_file`x2 -> `crop_tree`:
+*Step 1*: merge datasets `json_tree` + `json_file`x2 -> `crop_tree`:
 ```bash
 cocorepr \
     --in_json_tree /project/my-dataset \
@@ -275,9 +283,10 @@ cocorepr \
 ls /temp/my-dataset-crops
 ```
 
-- Step 2: manually clean the `crop_tree` in `/temp/my-dataset-crops`
+*Step 2*: manually clean the `crop_tree` in `/temp/my-dataset-crops`
 
-- Step 3: re-construct the cleaned dataset:
+*Step 3*: re-construct the cleaned dataset:
+
 ```bash
 # first, verify that your original dataset has no uncommitted changes (they'll be lost)
 cd /project/my-dataset
@@ -293,3 +302,4 @@ cocorepr \
 ```
 
 Now you can commit the changes of your dataset `/project/my-dataset`.
+

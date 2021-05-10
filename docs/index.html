@@ -29,182 +29,98 @@ nb_path: "nbs/index.ipynb"
 </div>
     {% endraw %}
 
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># $ cd &lt;project root&gt;</span>
-<span class="c1"># $ make build</span>
-<span class="c1"># $ pip install -e .</span>
-<span class="c1"># reload current notebook kernel</span>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Cocorepr">Cocorepr<a class="anchor-link" href="#Cocorepr"> </a></h1><p>A tool to convert COCO datasets between representations.
+{% include note.html content='for now, only Object Detection COCO is supported' %}</p>
+<h2 id="Installation">Installation<a class="anchor-link" href="#Installation"> </a></h2><div class="highlight"><pre><span></span>$ pip install -U cocorepr
 </pre></div>
 
-    </div>
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Basic-usage">Basic usage<a class="anchor-link" href="#Basic-usage"> </a></h2>
+<pre><code>$ cocorepr
+usage: cocorepr [-h] [--in_json_tree [IN_JSON_TREE [IN_JSON_TREE ...]]]
+                [--in_json_file [IN_JSON_FILE [IN_JSON_FILE ...]]]
+                [--in_crop_tree [IN_CROP_TREE [IN_CROP_TREE ...]]] --out_path
+                OUT_PATH --out_format {json_file,json_tree,crop_tree}
+                [--overwrite] [--indent INDENT] [--debug]
+cocorepr: error: the following arguments are required: --out_path, --out_format</code></pre>
+<p>This tool converts a dataset between three formats:</p>
+<ul>
+<li>json file (a single json file) - common ML format,</li>
+<li>json tree (a set of json chunks) - suitable for Git,</li>
+<li>crop tree (a set of png crops of the object detection annotations) - used for cleaning the object detection dataset.</li>
+</ul>
+<p>While json-based formats are self-contained, crop-based format needs at least one json path in order to reconstruct the dataset:</p>
+
+<pre><code>$ cocorepr \
+    --in_crop_tree /path/to/tree  \
+    --out_path /tmp/crop_tree \
+    --out_format crop_tree
+INFO: Arguments: Namespace(debug=False, in_crop_tree=[PosixPath('/path/to/tree')], in_json_file=[], in_json_tree=[], indent=4, out_format='crop_tree', out_path=PosixPath('/tmp/crop_tree'), overwrite=False)
+Traceback (most recent call last):
+  File "/home/ay/.pyenv/versions/3.7.6/bin/cocorepr", line 33, in &lt;module&gt;
+    sys.exit(load_entry_point('cocorepr', 'console_scripts', 'cocorepr')())
+  File "/plain/github/nm/cocorepr/cocorepr/main.py", line 66, in main
+    raise ValueError(f'Not found base dataset, please specify either of: '
+ValueError: Not found base dataset, please specify either of: --in_json_tree / --in_json_file (multiple arguments allowed)</code></pre>
+<p>Options <code>--in_json_tree</code>, <code>--in_json_file</code> and <code>--in_crop_tree</code> expect 1 or more path to the specified dataset representation.
+If multiple values were passed, the datasets will be merged (enforcing all the elements to have unique <code>id</code> fields).</p>
+
+<pre><code>$ cocorepr \
+    --in_json_file /tmp/json_file/file1.json /tmp/json_file/file2.json \
+    --in_json_tree /tmp/json_tree/dir1 /tmp/json_file/dir2 /tmp/json_file/dir3 \
+    --in_crop_tree /tmp/crop_tree/dir1 /tmp/crop_tree/dir2 \
+    --out_path /tmp/json_tree \
+    --out_format json_tree</code></pre>
+<p>The command above will load <a href="/cocorepr/json_file.html"><code>json_file</code></a> dataset from <code>/tmp/json_file/file1.json</code>, then load <code>/tmp/json_file/file2.json</code> and merge it with the first one, then load the <a href="/cocorepr/json_tree.html"><code>json_tree</code></a> from <code>/tmp/json_tree/dir1</code> and merge it with the previous result, etc.
+Then it'll load the <a href="/cocorepr/crop_tree.html"><code>crop_tree</code></a> from <code>/tmp/crop_tree/dir1</code> using meta-info from the previously constructed dataset and merge it with <code>/tmp/crop_tree/dir2</code>.
+The result will be written in form of <a href="/cocorepr/json_tree.html"><code>json_tree</code></a> to <code>/tmp/json_tree</code> (if directory exists, the tool will fail unless the <code>--overwrite</code> is specified).</p>
 
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span> rm -rf /tmp/cococo/json_tree
-<span class="o">!</span> cocorepr <span class="err">\</span>
-    <span class="o">--</span><span class="n">in_json_file</span> <span class="o">../</span><span class="n">examples</span><span class="o">/</span><span class="n">coco_chunk</span><span class="o">/</span><span class="n">json_file</span><span class="o">/</span><span class="n">instances_train2017_chunk3x2</span><span class="o">.</span><span class="n">json</span> \
-    <span class="o">--</span><span class="n">out_path</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cococo</span><span class="o">/</span><span class="n">json_tree</span> \
-    <span class="o">--</span><span class="n">out_format</span> <span class="n">json_tree</span> \
-    <span class="o">--</span><span class="n">overwrite</span>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Motivation">Motivation<a class="anchor-link" href="#Motivation"> </a></h2><p>This tool was born in <a href="https://neu.ro">Neu.ro</a> when we worked on an ML project for a client who needed a system that would process photos, detect objects and then classify them by one a large number of classes. The client had large volumes of data, but the data was very noisy.</p>
+<p>Roughly, our solution comprised two models:</p>
+<ol>
+<li>Object Detection (<code>OD</code>) model: trained on a dataset and finding generic objects (similar to COCO: bottle, laptop, bus),</li>
+<li>Object Classification (<code>CL</code>) model: fine-tuned on the client's domain (for example: which exactly mark of the bottle, which type of laptop).</li>
+</ol>
+<p>While the first model could be generated on a generic dataset, the second problem required large amount of work with the client on cleaning the noisy data and preparing a fine-tuned classification dataset.</p>
+<p>For historical reasons, both datasets were collected, cleaned and stored in COCO format. Hopefully, we didn't need to store image blobs -- the client's API enforced their availability and immutability, therefore we could store only image URL and some other metadata (<code>coco_url</code> and <code>id</code>, other fields are optional):</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">49428</span><span class="p">,</span>  <span class="err">//</span> <span class="err">image</span> <span class="err">ID</span>
+    <span class="nt">&quot;coco_url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://images.cocodataset.org/train2017/000000049428.jpg&quot;</span><span class="p">,</span>  <span class="err">//</span> <span class="err">URL</span> <span class="err">o</span><span class="kc">f</span> <span class="kc">t</span><span class="err">he</span> <span class="err">immu</span><span class="kc">ta</span><span class="err">ble</span> <span class="err">image</span> <span class="err">blob</span>
+    <span class="err">//</span> <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="err">//</span> <span class="nt">&quot;file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;000000049428.jpg&quot;</span><span class="p">,</span>
+    <span class="err">//</span> <span class="nt">&quot;height&quot;</span><span class="p">:</span> <span class="mi">427</span><span class="p">,</span>
+    <span class="err">//</span> <span class="nt">&quot;width&quot;</span><span class="p">:</span> <span class="mi">640</span><span class="p">,</span>
+    <span class="err">//</span> <span class="nt">&quot;date_captured&quot;</span><span class="p">:</span> <span class="s2">&quot;2013-11-15 04:30:29&quot;</span><span class="p">,</span>
+    <span class="err">//</span> <span class="nt">&quot;flickr_url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://farm7.staticflickr.com/6014/5923365195_bee5603371_z.jpg&quot;</span>
+<span class="p">},</span>
 </pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>INFO: Arguments: Namespace(debug=False, in_crop_tree=None, in_json_files=[PosixPath(&#39;../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json&#39;)], in_json_trees=[], indent=4, out_format=&#39;json_tree&#39;, out_path=PosixPath(&#39;/tmp/cococo/json_tree&#39;), overwrite=True)
-INFO: Loading json file from file: ../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
-INFO: Loaded: images=6, annotations=6, categories=3
-INFO: Dumping json tree to dir: /tmp/cococo/json_tree
-INFO: [+] Success: json_tree dumped to /tmp/cococo/json_tree: [&#39;info.json&#39;, &#39;info&#39;, &#39;categories&#39;, &#39;annotations&#39;, &#39;licenses&#39;, &#39;images&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span> rm -rf /tmp/cococo/json_file
-<span class="o">!</span> cocorepr <span class="err">\</span>
-    <span class="o">--</span><span class="n">in_json_tree</span> <span class="o">../</span><span class="n">examples</span><span class="o">/</span><span class="n">coco_chunk</span><span class="o">/</span><span class="n">json_tree</span> \
-    <span class="o">--</span><span class="n">out_path</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cococo</span><span class="o">/</span><span class="n">json_file</span><span class="o">/</span><span class="n">annotations</span><span class="o">.</span><span class="n">json</span> \
-    <span class="o">--</span><span class="n">out_format</span> <span class="n">json_file</span> \
-    <span class="o">--</span><span class="n">indent</span><span class="o">=</span><span class="kc">None</span>
+<p>Though COCO format is native fine for OD datasets, it might be bulky for CL datasets, which are concerned on the class of annotations, not images:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">124710</span><span class="p">,</span>  <span class="err">//</span> <span class="err">a</span><span class="kc">nn</span><span class="err">o</span><span class="kc">tat</span><span class="err">io</span><span class="kc">n</span> <span class="err">ID</span>
+    <span class="nt">&quot;image_id&quot;</span><span class="p">:</span> <span class="mi">140006</span><span class="p">,</span>  <span class="err">//</span> <span class="err">image</span> <span class="err">ID</span> <span class="err">i</span><span class="kc">n</span> <span class="kc">t</span><span class="err">he</span> <span class="err">sec</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span> <span class="nt">&quot;images&quot;</span>
+    <span class="nt">&quot;category_id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>  <span class="err">//</span> <span class="err">class</span> <span class="err">ID</span> <span class="err">i</span><span class="kc">n</span> <span class="kc">t</span><span class="err">he</span> <span class="err">sec</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span> <span class="nt">&quot;categories&quot;</span>
+    <span class="nt">&quot;bbox&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">496.52</span><span class="p">,</span> <span class="mf">125.94</span><span class="p">,</span> <span class="mf">143.48</span><span class="p">,</span> <span class="mf">113.54</span><span class="p">],</span>  <span class="err">//</span> <span class="err">crop</span> <span class="err">coordi</span><span class="kc">nates</span> <span class="err">i</span><span class="kc">n</span> <span class="err">pixels</span><span class="p">:</span> <span class="p">[</span><span class="err">x</span><span class="p">,</span><span class="err">y</span><span class="p">,</span><span class="err">w</span><span class="p">,</span><span class="err">h</span><span class="p">]</span> <span class="err">(</span><span class="kc">fr</span><span class="err">om</span> <span class="kc">t</span><span class="err">op</span><span class="mi">-</span><span class="err">le</span><span class="kc">ft</span><span class="p">,</span> <span class="err">x=horizo</span><span class="kc">ntal</span><span class="err">)</span>
+<span class="p">}</span>
 </pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>INFO: Arguments: Namespace(debug=False, in_crop_tree=None, in_json_files=[], in_json_trees=[PosixPath(&#39;../examples/coco_chunk/json_tree&#39;)], indent=None, out_format=&#39;json_file&#39;, out_path=PosixPath(&#39;/tmp/cococo/json_file/annotations.json&#39;), overwrite=False)
-INFO: Loading json tree from dir: ../examples/coco_chunk/json_tree
-INFO: Dumping json file to file: /tmp/cococo/json_file/annotations.json
-INFO: Writing dataset to json file: /tmp/cococo/json_file/annotations.json
-INFO: [+] Success: json_file dumped to /tmp/cococo/json_file/annotations.json
-</pre>
-</div>
-</div>
+<p>In order to train a CL model, we want to have a certain number of "clean" crops per each class (by <em>crop</em> we call a small picture cropped from given image using coordinates of given annotation). In order to facilitate the manual process of choosing the clean crops, we would like them to be sorted into directories grouping them into classes (categories). After the cleaning, we would like to reconstruct this subset of COCO dataset, register it in Git and then use it to train the model.
+Here comes <code>cocorepr</code>, which was created to automate these conversions between different representations of a COCO dataset.</p>
+<p>Below you can find the detailed discussion of the COCO dataset representations.</p>
+<hr>
 
 </div>
 </div>
-
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span> rm -rf /tmp/cococo/crop_tree
-<span class="o">!</span> cocorepr <span class="err">\</span>
-    <span class="o">--</span><span class="n">in_json_file</span> <span class="o">../</span><span class="n">examples</span><span class="o">/</span><span class="n">coco_chunk</span><span class="o">/</span><span class="n">json_file</span><span class="o">/</span><span class="n">instances_train2017_chunk3x2</span><span class="o">.</span><span class="n">json</span> \
-    <span class="o">--</span><span class="n">out_path</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cococo</span><span class="o">/</span><span class="n">crop_tree</span> \
-    <span class="o">--</span><span class="n">out_format</span> <span class="n">crop_tree</span> \
-    <span class="o">--</span><span class="n">overwrite</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>INFO: Arguments: Namespace(debug=False, in_crop_tree=None, in_json_files=[PosixPath(&#39;../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json&#39;)], in_json_trees=[], indent=4, out_format=&#39;crop_tree&#39;, out_path=PosixPath(&#39;/tmp/cococo/crop_tree&#39;), overwrite=True)
-INFO: Loading json file from file: ../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
-INFO: Loaded: images=6, annotations=6, categories=3
-INFO: Dumping crop tree to dir: /tmp/cococo/crop_tree
-Processing images: 100%|██████████████████████████| 6/6 [00:03&lt;00:00,  1.53it/s]
-INFO: [+] Success: crop_tree dumped to /tmp/cococo/crop_tree: [&#39;crops&#39;, &#39;images&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cats</span> <span class="o">=</span> <span class="o">!</span>ls /tmp/cococo/crop_tree/crops
-<span class="n">cat</span> <span class="o">=</span> <span class="n">cats</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">cat</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;bicycle--2&#39;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -222,259 +138,199 @@ INFO: [+] Success: crop_tree dumped to /tmp/cococo/crop_tree: [&#39;crops&#39;, 
 </div>
     {% endraw %}
 
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">crops</span> <span class="o">=</span> <span class="o">!</span>ls /tmp/cococo/crop_tree/crops/<span class="o">{</span>cat<span class="o">}</span>
-<span class="n">deleted_crop</span> <span class="o">=</span> <span class="n">crops</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">deleted_crop</span>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Json-file">Json file<a class="anchor-link" href="#Json-file"> </a></h3><p>This is a regular format for a COCO dataset: all the annotations are stored in a single json file:</p>
+<div class="highlight"><pre><span></span><span class="err">$</span> <span class="err">ca</span><span class="kc">t</span> <span class="err">examples/coco_chu</span><span class="kc">n</span><span class="err">k/jso</span><span class="kc">n</span><span class="err">_</span><span class="kc">f</span><span class="err">ile/i</span><span class="kc">nstan</span><span class="err">ces_</span><span class="kc">tra</span><span class="err">i</span><span class="kc">n</span><span class="mi">2017</span><span class="err">_chu</span><span class="kc">n</span><span class="err">k</span><span class="mi">3</span><span class="err">x</span><span class="mf">2.</span><span class="err">jso</span><span class="kc">n</span>
+<span class="p">{</span>
+    <span class="nt">&quot;licenses&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://creativecommons.org/licenses/by-nc-sa/2.0/&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Attribution-NonCommercial-ShareAlike License&quot;</span>
+        <span class="p">},</span>
+        <span class="err">...</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;info&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;COCO 2017 Dataset&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://cocodataset.org&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;year&quot;</span><span class="p">:</span> <span class="mi">2017</span><span class="p">,</span>
+        <span class="nt">&quot;contributor&quot;</span><span class="p">:</span> <span class="s2">&quot;COCO Consortium&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;date_created&quot;</span><span class="p">:</span> <span class="s2">&quot;2017/09/01&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;supercategory&quot;</span><span class="p">:</span> <span class="s2">&quot;person&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;person&quot;</span>
+        <span class="p">},</span>
+        <span class="err">...</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;images&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+            <span class="nt">&quot;file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;000000049428.jpg&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;coco_url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://images.cocodataset.org/train2017/000000049428.jpg&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;height&quot;</span><span class="p">:</span> <span class="mi">427</span><span class="p">,</span>
+            <span class="nt">&quot;width&quot;</span><span class="p">:</span> <span class="mi">640</span><span class="p">,</span>
+            <span class="nt">&quot;date_captured&quot;</span><span class="p">:</span> <span class="s2">&quot;2013-11-15 04:30:29&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;flickr_url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://farm7.staticflickr.com/6014/5923365195_bee5603371_z.jpg&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">49428</span>
+        <span class="p">},</span>
+        <span class="err">...</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;image_id&quot;</span><span class="p">:</span> <span class="mi">140006</span><span class="p">,</span>
+            <span class="nt">&quot;bbox&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="mf">496.52</span><span class="p">,</span>
+                <span class="mf">125.94</span><span class="p">,</span>
+                <span class="mf">143.48</span><span class="p">,</span>
+                <span class="mf">113.54</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;category_id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">124710</span>
+        <span class="p">},</span>
+        <span class="err">...</span>
+    <span class="p">]</span>
+<span class="p">}</span>
 </pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;124710.png&#39;</pre>
-</div>
-
-</div>
+<p>This format is used by many ML frameworks as input format, but usually the json tree file is too big to be stored in a Git repository (over 50M), therefore we either need to store it under Git LFS (which does not show the diff, only the hash), or to use another representation that are better adapted for work with Git.</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Json-tree">Json tree<a class="anchor-link" href="#Json-tree"> </a></h3><p>This format makes the dataset suitable for Git: it stores each element in a separate json chunk, thus enabling Git to do the diff at the level of individual chunks.</p>
+
+<pre><code>$ cocorepr \
+    --in_json_file examples/coco_chunk/json_file/instances_train2017_chunk3x2.json \
+    --out_path $TMP \
+    --out_format json_tree  # --overwrite
+INFO:root:Arguments: Namespace(in_crop_tree_path=None, in_json_path=PosixPath('examples/coco_chunk/json_file/instances_train2017_chunk3x2.json'), out_format='json_tree', out_path=PosixPath('/tmp/json_tree'), overwrite=False)
+INFO:root:Loading json file from file: examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
+INFO:root:Loaded: images=6, annotations=6, categories=3
+INFO:root:Dumping json tree to dir: /tmp/json_tree
+INFO:root:[+] Success: json_tree dumped to /tmp/json_tree: ['info.json', 'info', 'categories', 'annotations', 'licenses', 'images']
+
+$ tree /tmp/json_tree
+/tmp/json_tree
+├── annotations
+│   ├── 124710.json
+│   ├── 124713.json
+│   ├── 131774.json
+│   ├── 131812.json
+│   ├── 183020.json
+│   └── 183030.json
+├── categories
+│   ├── 1.json
+│   ├── 2.json
+│   └── 3.json
+├── images
+│   ├── 117891.json
+│   ├── 140006.json
+│   ├── 289949.json
+│   ├── 49428.json
+│   ├── 537548.json
+│   └── 71345.json
+├── info
+├── info.json
+└── licenses
+    ├── 1.json
+    ├── 2.json
+    ├── 3.json
+    ├── 4.json
+    ├── 5.json
+    ├── 6.json
+    ├── 7.json
+    └── 8.json
+
+5 directories, 24 files</code></pre>
 
 </div>
-    {% endraw %}
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Crop-tree">Crop tree<a class="anchor-link" href="#Crop-tree"> </a></h3><p>This format is used to facilitate the process of manual cleaning the CL dataset: the directory <code>crop</code> contains the list of classes named as <code>{sanitized-class-name}--{class-id}</code> so that the classes that have similar name (for example the classes of the cars <code>Bugatti Veyron EB 16.4</code> and <code>Bugatti Veyron 16.4 Grand Sport</code> will be named as <code>Bugatti_Veyron_EB_16_4--103209</code> and <code>Bugatti_Veyron_16_4_Grand_Sport--376319</code>, which makes sense since the directories are usually sorted alphabetically). The human then goes through the pictures of crops, deletes the "dirty" ones and makes sure that each class contains enough of "clean" crops. Then, we can reconstruct the dataset in the json tree representation and register it in Git.</p>
+<div class="highlight"><pre><span></span>$ cocorepr <span class="se">\</span>
+    --in_json_file examples/coco_chunk/json_file/instances_train2017_chunk3x2.json <span class="se">\</span>
+    --out_path /tmp/crop_tree <span class="se">\</span>
+    --out_format crop_tree
+INFO:root:Arguments: Namespace<span class="o">(</span><span class="nv">in_crop_tree_path</span><span class="o">=</span>None, <span class="nv">in_json_path</span><span class="o">=</span>PosixPath<span class="o">(</span><span class="s1">&#39;examples/coco_chunk/json_file/instances_train2017_chunk3x2.json&#39;</span><span class="o">)</span>, <span class="nv">indent</span><span class="o">=</span><span class="m">4</span>, <span class="nv">out_format</span><span class="o">=</span><span class="s1">&#39;crop_tree&#39;</span>, <span class="nv">out_path</span><span class="o">=</span>PosixPath<span class="o">(</span><span class="s1">&#39;/tmp/crop_tree&#39;</span><span class="o">)</span>, <span class="nv">overwrite</span><span class="o">=</span>False<span class="o">)</span>
+INFO:root:Loading json file from file: examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
+INFO:root:Loaded: <span class="nv">images</span><span class="o">=</span><span class="m">6</span>, <span class="nv">annotations</span><span class="o">=</span><span class="m">6</span>, <span class="nv">categories</span><span class="o">=</span><span class="m">3</span>
+INFO:root:Detected input dataset type: json_file: examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
+INFO:root:Dumping crop tree to dir: /tmp/crop_tree
+Processing images: <span class="m">100</span>%<span class="p">|</span>                                           <span class="p">|</span> <span class="m">6</span>/6 <span class="o">[</span><span class="m">00</span>:03&lt;<span class="m">00</span>:00,  <span class="m">1</span>.60it/s<span class="o">]</span>
+INFO:root:<span class="o">[</span>+<span class="o">]</span> Success: crop_tree dumped to /tmp/crop_tree: <span class="o">[</span><span class="s1">&#39;crops&#39;</span>, <span class="s1">&#39;images&#39;</span><span class="o">]</span>
 
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
+$ tree /tmp/crop_tree
+/tmp/crop_tree
+├── crops
+│   ├── bicycle--2
+│   │   ├── <span class="m">124710</span>.png
+│   │   └── <span class="m">124713</span>.png
+│   ├── car--3
+│   │   ├── <span class="m">131774</span>.png
+│   │   └── <span class="m">131812</span>.png
+│   └── person--1
+│       ├── <span class="m">183020</span>.png
+│       └── <span class="m">183030</span>.png
+└── images
+    ├── <span class="m">000000049428</span>.jpg
+    ├── <span class="m">000000071345</span>.jpg
+    ├── <span class="m">000000117891</span>.jpg
+    ├── <span class="m">000000140006</span>.jpg
+    ├── <span class="m">000000289949</span>.jpg
+    └── <span class="m">000000537548</span>.jpg
 
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span> ls /tmp/cococo/crop_tree/crops/<span class="o">{</span>cat<span class="o">}</span>
-<span class="o">!</span> rm /tmp/cococo/crop_tree/crops/<span class="o">{</span>cat<span class="o">}</span>/<span class="o">{</span>deleted_crop<span class="o">}</span>
-<span class="o">!</span> ls /tmp/cococo/crop_tree/crops/<span class="o">{</span>cat<span class="o">}</span>
+<span class="m">5</span> directories, <span class="m">12</span> files
 </pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>124710.png  124713.png
-124713.png
-</pre>
-</div>
-</div>
+<p>Now, this tree can be manually cleaned by a human ("dirty" crops deleted) and we'll be able to re-construct the dataset.</p>
 
 </div>
 </div>
-
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span> rm -rf /tmp/json_tree_2
-<span class="o">!</span> cocorepr <span class="err">\</span>
-    <span class="o">--</span><span class="n">in_json_file</span> <span class="o">../</span><span class="n">examples</span><span class="o">/</span><span class="n">coco_chunk</span><span class="o">/</span><span class="n">json_file</span><span class="o">/</span><span class="n">instances_train2017_chunk3x2</span><span class="o">.</span><span class="n">json</span> \
-    <span class="o">--</span><span class="n">in_crop_tree</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cococo</span><span class="o">/</span><span class="n">crop_tree</span> \
-    <span class="o">--</span><span class="n">out_path</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cococo</span><span class="o">/</span><span class="n">json_tree_2</span> \
-    <span class="o">--</span><span class="n">out_format</span> <span class="n">json_tree</span>
-
-<span class="o">!</span> <span class="o">[</span> ! -f <span class="o">{</span>TMP2<span class="o">}</span>/annotations/<span class="o">{</span>deleted_crop<span class="o">}</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;[+] File successfully not exists&quot;</span>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Showcase:-single-iteration-of-the-dataset-cleaning-process">Showcase: single iteration of the dataset cleaning process<a class="anchor-link" href="#Showcase:-single-iteration-of-the-dataset-cleaning-process"> </a></h2><p>Our setup:</p>
+<ul>
+<li>Our dataset stored in git repository <code>/project/my-dataset</code> in the <a href="/cocorepr/json_tree.html"><code>json_tree</code></a> representation. This dataset suffers from incompleteness: some categories lack "clean" annotations.</li>
+<li>The customer has provided us with additional data as two <a href="/cocorepr/json_file.html"><code>json_file</code></a>s: <code>/inputs/annotations-new-1.json</code> and <code>/inputs/annotations-new-2.json</code>.</li>
+<li>We would like to merge these two datasets into a <a href="/cocorepr/crop_tree.html"><code>crop_tree</code></a> representation, clean it manually, and then re-construct a new dataset and save it in-place in our git repository.</li>
+</ul>
+<p><em>Step 1</em>: merge datasets <a href="/cocorepr/json_tree.html"><code>json_tree</code></a> + <a href="/cocorepr/json_file.html"><code>json_file</code></a>x2 -&gt; <a href="/cocorepr/crop_tree.html"><code>crop_tree</code></a>:</p>
+<div class="highlight"><pre><span></span>cocorepr <span class="se">\</span>
+    --in_json_tree /project/my-dataset <span class="se">\</span>
+    --in_json_file /inputs/annotations-new-1.json /inputs/annotations-new-2.json <span class="se">\</span>
+    --out_path /temp/my-dataset-crops <span class="se">\</span>
+    --out_format crop_tree <span class="se">\</span>
+    --overwrite <span class="se">\</span>
+    --debug
+ls /temp/my-dataset-crops
 </pre></div>
+<p><em>Step 2</em>: manually clean the <a href="/cocorepr/crop_tree.html"><code>crop_tree</code></a> in <code>/temp/my-dataset-crops</code></p>
+<p><em>Step 3</em>: re-construct the cleaned dataset:</p>
+<div class="highlight"><pre><span></span><span class="c1"># first, verify that your original dataset has no uncommitted changes (they&#39;ll be lost)</span>
+<span class="nb">cd</span> /project/my-dataset
+git diff-index --quiet HEAD
 
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>INFO: Arguments: Namespace(debug=False, in_crop_tree=PosixPath(&#39;/tmp/cococo/crop_tree&#39;), in_json_files=[PosixPath(&#39;../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json&#39;)], in_json_trees=[], indent=4, out_format=&#39;json_tree&#39;, out_path=PosixPath(&#39;/tmp/cococo/json_tree_2&#39;), overwrite=False)
-INFO: Loading json file from file: ../examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
-INFO: Loaded: images=6, annotations=6, categories=3
-INFO: Loading blob list from dir: /tmp/cococo/crop_tree
-INFO: Loaded crop tree: len(annotations)=5 len(images)=5 len(categories)=3
-INFO: Dumping json tree to dir: /tmp/cococo/json_tree_2
-Traceback (most recent call last):
-  File &#34;/home/ay/.pyenv/versions/3.7.6/bin/cocorepr&#34;, line 33, in &lt;module&gt;
-    sys.exit(load_entry_point(&#39;cocorepr&#39;, &#39;console_scripts&#39;, &#39;cocorepr&#39;)())
-  File &#34;/plain/github/nm/cocorepr/cocorepr/main.py&#34;, line 81, in main
-    dump_fun(coco, out_path, skip_nulls=True, overwrite=overwrite, indent=indent)
-  File &#34;/plain/github/nm/cocorepr/cocorepr/json_tree.py&#34;, line 78, in dump_json_tree
-    raise ValueError(f&#34;Destination json tree dir already exists: {target_dir}&#34;)
-ValueError: Destination json tree dir already exists: /tmp/cococo/json_tree_2
-[+] File successfully not exists
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span> rm -rf /tmp/cococo/crop_tree_2
-<span class="o">!</span> cocorepr <span class="err">\</span>
-    <span class="o">--</span><span class="n">in_json_tree</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cococo</span><span class="o">/</span><span class="n">json_tree_2</span> \
-    <span class="o">--</span><span class="n">in_crop_tree</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cococo</span><span class="o">/</span><span class="n">crop_tree</span> \
-    <span class="o">--</span><span class="n">out_path</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cococo</span><span class="o">/</span><span class="n">crop_tree_2</span> \
-    <span class="o">--</span><span class="n">out_format</span> <span class="n">crop_tree</span>
-<span class="o">!</span> ls /tmp/cococo/crop_tree_2 <span class="p">|</span> grep crops
+cocorepr <span class="se">\</span>
+    --in_crop_tree /temp/my-dataset-crops <span class="se">\</span>
+    --in_json_tree /project/my-dataset <span class="se">\</span>
+    --out_path /project/my-dataset <span class="se">\</span>
+    --out_format json_tree <span class="se">\</span>
+    --overwrite <span class="se">\</span>
+    --debug
 </pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>INFO: Arguments: Namespace(debug=False, in_crop_tree=PosixPath(&#39;/tmp/cococo/crop_tree&#39;), in_json_files=[], in_json_trees=[PosixPath(&#39;/tmp/cococo/json_tree_2&#39;)], indent=4, out_format=&#39;crop_tree&#39;, out_path=PosixPath(&#39;/tmp/cococo/crop_tree_2&#39;), overwrite=False)
-INFO: Loading json tree from dir: /tmp/cococo/json_tree_2
-INFO: Loading blob list from dir: /tmp/cococo/crop_tree
-INFO: Loaded crop tree: len(annotations)=5 len(images)=5 len(categories)=3
-INFO: Dumping crop tree to dir: /tmp/cococo/crop_tree_2
-Processing images: 100%|██████████████████████████| 5/5 [00:04&lt;00:00,  1.20it/s]
-INFO: [+] Success: crop_tree dumped to /tmp/cococo/crop_tree_2: [&#39;crops&#39;, &#39;images&#39;]
-crops
-</pre>
-</div>
-</div>
+<p>Now you can commit the changes of your dataset <code>/project/my-dataset</code>.</p>
 
 </div>
 </div>
-
 </div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span> rm -rf /tmp/cococo/json_file_2
-<span class="o">!</span> cocorepr <span class="err">\</span>
-    <span class="o">--</span><span class="n">in_json_tree</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cococo</span><span class="o">/</span><span class="n">json_tree_2</span> \
-    <span class="o">--</span><span class="n">in_crop_tree</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cococo</span><span class="o">/</span><span class="n">crop_tree</span> \
-    <span class="o">--</span><span class="n">out_path</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cococo</span><span class="o">/</span><span class="n">json_file_2</span><span class="o">/</span><span class="n">annotations</span><span class="o">.</span><span class="n">json</span> \
-    <span class="o">--</span><span class="n">out_format</span> <span class="n">json_file</span>
-
-<span class="o">!</span> ls /tmp/cococo/json_file_2/annotations.json
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>INFO: Arguments: Namespace(debug=False, in_crop_tree=PosixPath(&#39;/tmp/cococo/crop_tree&#39;), in_json_files=[], in_json_trees=[PosixPath(&#39;/tmp/cococo/json_tree_2&#39;)], indent=4, out_format=&#39;json_file&#39;, out_path=PosixPath(&#39;/tmp/cococo/json_file_2/annotations.json&#39;), overwrite=False)
-INFO: Loading json tree from dir: /tmp/cococo/json_tree_2
-INFO: Loading blob list from dir: /tmp/cococo/crop_tree
-INFO: Loaded crop tree: len(annotations)=5 len(images)=5 len(categories)=3
-INFO: Dumping json file to file: /tmp/cococo/json_file_2/annotations.json
-INFO: Writing dataset to json file: /tmp/cococo/json_file_2/annotations.json
-INFO: [+] Success: json_file dumped to /tmp/cococo/json_file_2/annotations.json
-/tmp/cococo/json_file_2/annotations.json
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span> rm -rf /tmp/cococo/json_file_3/
-<span class="o">!</span> cocorepr <span class="err">\</span>
-    <span class="o">--</span><span class="n">in_json_tree</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cococo</span><span class="o">/</span><span class="n">json_tree_2</span> \
-    <span class="o">--</span><span class="n">in_json_file</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cococo</span><span class="o">/</span><span class="n">json_file</span><span class="o">/</span><span class="n">annotations</span><span class="o">.</span><span class="n">json</span> \
-    <span class="o">--</span><span class="n">out_path</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">cococo</span><span class="o">/</span><span class="n">json_file_3</span><span class="o">/</span><span class="n">annotations</span><span class="o">.</span><span class="n">json</span> \
-    <span class="o">--</span><span class="n">out_format</span> <span class="n">json_file</span> \
-    <span class="o">--</span><span class="n">overwrite</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>INFO: Arguments: Namespace(debug=False, in_crop_tree=None, in_json_files=[PosixPath(&#39;/tmp/cococo/json_file/annotations.json&#39;)], in_json_trees=[PosixPath(&#39;/tmp/cococo/json_tree_2&#39;)], indent=4, out_format=&#39;json_file&#39;, out_path=PosixPath(&#39;/tmp/cococo/json_file_3/annotations.json&#39;), overwrite=True)
-INFO: Loading json tree from dir: /tmp/cococo/json_tree_2
-INFO: Loading json file from file: /tmp/cococo/json_file/annotations.json
-INFO: Loaded: images=6, annotations=6, categories=3
-INFO: Dumping json file to file: /tmp/cococo/json_file_3/annotations.json
-INFO: Writing dataset to json file: /tmp/cococo/json_file_3/annotations.json
-INFO: [+] Success: json_file dumped to /tmp/cococo/json_file_3/annotations.json
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
 </div>
  
 
