@@ -236,14 +236,15 @@ def cut_annotations_per_category(coco: CocoDataset, max_annotations_per_category
     for ann in coco.annotations:
         catid2anns[ann.category_id].append(ann)
 
-    images = []
-    annotations = []
+    images = {}
+    annotations = {}
     for _, anns in catid2anns.items():
         if len(anns) > max_annotations_per_category:
             anns = shuffle(anns)[:max_annotations_per_category]
-        annotations.extend(anns)
-        images.extend([imgid2img[ann.image_id] for ann in anns])
-    coco = replace(coco, annotations=annotations)
-    coco = replace(coco, images=images)
+        for ann in anns:
+            annotations[ann.id] = ann
+            images[ann.image_id] = imgid2img[ann.image_id]
+    coco = replace(coco, annotations=sorted(annotations.values(), key=lambda x: x.id))
+    coco = replace(coco, images=sorted(images.values(), key=lambda x: x.id))
 
     return coco
