@@ -36,7 +36,6 @@ def get_parser():
 
     return parser
 
-
 # Cell
 
 def main(args=None):
@@ -65,20 +64,14 @@ def main(args=None):
     if coco is None:
         raise ValueError(f'Not found base dataset, please specify either of: '
                          '--in_json_tree / --in_json_file (multiple arguments allowed)')
-    logger.info(f'Loaded total json dataset: '
-                f'len(annotations)={len(coco.annotations)} '
-                f'len(images)={len(coco.images)} '
-                f'len(categories)={len(coco.categories)}')
+    logger.info(f'Loaded json dataset: {coco.to_full_str()}')
 
     coco_crop = None
     for in_crop_tree in in_crop_tree_list:
         coco_crop = merge_datasets(coco_crop, load_crop_tree(in_crop_tree, coco))
     if coco_crop is not None:
-        logger.info(f'Loaded total coco_crop dataset: '
-                    f'len(annotations)={len(coco_crop.annotations)} '
-                    f'len(images)={len(coco_crop.images)} '
-                    f'len(categories)={len(coco_crop.categories)}')
-        logger.info('Using coco_crop dataset as primary')
+        logger.info(f'Loaded coco tree dataset: {coco_crop.to_full_str()}')
+        logger.info('Using coco_crop dataset.S')
         coco = coco_crop
 
     if out_format == 'json_file':

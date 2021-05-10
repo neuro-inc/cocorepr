@@ -31,11 +31,6 @@ py_versions = '2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 3.0 3.1 3.2 3.3 3.4 3.5 3.6 3.7 3
 lic = licenses.get(cfg['license'].lower(), (cfg['license'], None))
 min_python = cfg['min_python']
 
-requirements = ['pip', 'packaging']
-if cfg.get('requirements'): requirements += cfg.get('requirements','').split()
-if cfg.get('pip_requirements'): requirements += cfg.get('pip_requirements','').split()
-dev_requirements = (cfg.get('dev_requirements') or '').split()
-
 long_description = open('README.md').read()
 # ![png](docs/images/output_13_0.png)
 for ext in ['png', 'svg']:
@@ -53,12 +48,13 @@ setuptools.setup(
     url = cfg['git_url'],
     packages = setuptools.find_packages(),
     include_package_data = True,
-    install_requires = requirements,
-    extras_require={ 'dev': dev_requirements },
+    install_requires = [
+        'dataclasses-json>=0.5.3',
+    ],
     python_requires  = '>=' + cfg['min_python'],
     long_description = long_description,
     long_description_content_type = 'text/markdown',
     zip_safe = False,
-    entry_points = { 'console_scripts': cfg.get('console_scripts','').split() },
+    entry_points = { 'console_scripts': ['cocorepr=cocorepr.main:main'] },
     **setup_cfg)
 

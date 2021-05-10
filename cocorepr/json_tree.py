@@ -44,16 +44,13 @@ def load_json_tree(tree_dir: Union[str, Path], *, kind: str = "object_detection"
             el = {}
         else:
             el = json.loads(el_file.read_text())
-        logger.debug(f'Loaded single-file {len(el_list)} json chunk {el_dir}')
+        logger.debug(f'Loaded single-file json chunk {el_file}')
         D[el_name] = el
 
-    logger.info(
-        f"Loaded json tree: images={len(D['images'])}, "
-        f"annotations={len(D['annotations'])}, "
-        f"categories={len(D['categories'])}"
-    )
+    coco = dataset_class.from_dict(D)
+    logger.info(f"Loaded from json tree: {coco.to_full_str()}")
 
-    return dataset_class.from_dict(D)
+    return coco
 
 # Cell
 

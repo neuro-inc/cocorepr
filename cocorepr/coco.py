@@ -132,8 +132,8 @@ class CocoObjectDetectionCategory(CocoCategory):
 @dataclass
 class CocoDataset(CocoElement):
     images: List[CocoImage] = field(default_factory=list)
-    info: Optional[CocoInfo] = None
-    licenses: Optional[List[CocoLicense]] = None
+    info: CocoInfo = CocoInfo()
+    licenses: List[CocoLicense] = field(default_factory=list)
 
     @classmethod
     def get_non_collective_elements(cls):
@@ -145,6 +145,14 @@ class CocoDataset(CocoElement):
         default_self = cls()
         non_collective = set(cls.get_non_collective_elements())
         return [f.name for f in fields(default_self) if f.name not in non_collective]
+
+    def to_full_str(self):
+        return (
+            f'{self.__class__.__name__}(' + \
+            ', '.join(f'{k}={len(getattr(self, k))}' for k in self.get_collective_elements()) + \
+            ')'
+        )
+
 
 # Cell
 

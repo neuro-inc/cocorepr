@@ -41,6 +41,6 @@ modules = ["utils.py",
 
 doc_url = "https://invalid/cocorepr/"
 
-git_url = "https://invalid"
+git_url = "https://github.com/neuro-inc/cocorepr"
 
 def custom_doc_links(name): return None

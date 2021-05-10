@@ -32,7 +32,7 @@ def load_crop_tree(
     dataset_class = get_dataset_class(kind)
 
     source_dir = Path(source_dir)
-    logger.info(f"Loading blob list from dir: {source_dir}")
+    logger.info(f"Loading crop tree from dir: {source_dir}")
     if not source_dir.is_dir():
         raise ValueError(f"Source dir not found: {source_dir}")
 
@@ -70,10 +70,10 @@ def load_crop_tree(
         'annotations': list(res_anns.values()),
         'categories': list(res_cats.values()),
     }
-    logger.info(f'Loaded crop tree: len(annotations)={len(D["annotations"])} '
-                f'len(images)={len(D["images"])} '
-                f'len(categories)={len(D["categories"])}')
-    return dataset_class.from_dict(D)
+    coco = dataset_class.from_dict(D)
+    logger.info(f"Loaded from crop tree: {coco.to_full_str()}")
+
+    return coco
 
 # Cell
 
