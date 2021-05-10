@@ -6,18 +6,56 @@
 
 ```bash
 $ pip install -U cococleaner
+```
 
+## Basic usage
+
+```
 $ cococleaner                  
-usage: cococleaner [-h] --in_json_path IN_JSON_PATH
-                   [--in_crop_tree_path IN_CROP_TREE_PATH] --out_path OUT_PATH
-                   --out_format {json_file,json_tree,crop_tree} [--overwrite]
-cococleaner: error: the following arguments are required: --in_json_path, --out_path, --out_format
+usage: cococleaner [-h] [--in_json_tree [IN_JSON_TREE [IN_JSON_TREE ...]]]
+                   [--in_json_file [IN_JSON_FILE [IN_JSON_FILE ...]]]
+                   [--in_crop_tree [IN_CROP_TREE [IN_CROP_TREE ...]]]
+                   --out_path OUT_PATH --out_format
+                   {json_file,json_tree,crop_tree} [--overwrite]
+                   [--indent INDENT] [--debug]
 ```
 
 This tool converts a dataset between three formats:
 - json file (a single json file) - common ML format,
 - json tree (a set of json chunks) - suitable for Git,
 - crop tree (a set of png crops of the object detection annotations) - used for cleaning the object detection dataset.
+
+
+While json-based formats are self-contained, crop-based format needs at least one json path in order to reconstruct the dataset:
+```
+$ cococleaner \
+    --in_crop_tree /path/to/tree  \
+    --out_path /tmp/crop_tree \
+    --out_format crop_tree     
+INFO: Arguments: Namespace(debug=False, in_crop_tree=[PosixPath('/path/to/tree')], in_json_file=[], in_json_tree=[], indent=4, out_format='crop_tree', out_path=PosixPath('/tmp/crop_tree'), overwrite=False)
+Traceback (most recent call last):
+  File "/home/ay/.pyenv/versions/3.7.6/bin/cococleaner", line 33, in <module>
+    sys.exit(load_entry_point('cococleaner', 'console_scripts', 'cococleaner')())
+  File "/plain/github/nm/cococleaner/cococleaner/main.py", line 66, in main
+    raise ValueError(f'Not found base dataset, please specify either of: '
+ValueError: Not found base dataset, please specify either of: --in_json_tree / --in_json_file (multiple arguments allowed)
+```
+
+
+Options `--in_json_tree`, `--in_json_file` and `--in_crop_tree` expect 1 or more path to the specified dataset representation.
+If multiple values were passed, the datasets will be merged (enforcing all the elements to have unique `id` fields).
+```
+$ cococleaner \
+    --in_json_file /tmp/json_file/file1.json /tmp/json_file/file2.json \
+    --in_json_tree /tmp/json_tree/dir1 /tmp/json_file/dir2 /tmp/json_file/dir3 \
+    --in_crop_tree /tmp/crop_tree/dir1 /tmp/crop_tree/dir2 \
+    --out_path /tmp/json_tree \
+    --out_format json_tree
+```
+
+The command above will load `json_file` dataset from `/tmp/json_file/file1.json`, then load `/tmp/json_file/file2.json` and merge it with the first one, then load the `json_tree` from `/tmp/json_tree/dir1` and merge it with the previous result, etc.
+Then it'll load the `crop_tree` from `/tmp/crop_tree/dir1` using meta-info from the previously constructed dataset and merge it with `/tmp/crop_tree/dir2`.
+The result will be written in form of `json_tree` to `/tmp/json_tree` (if directory exists, the tool will fail unless the `--overwrite` is specified).
 
 
 ## Motivation
@@ -131,7 +169,7 @@ This format makes the dataset suitable for Git: it stores each element in a sepa
 
 ```
 $ cococleaner \
-    --in_json_path examples/coco_chunk/json_file/instances_train2017_chunk3x2.json \   
+    --in_json_file examples/coco_chunk/json_file/instances_train2017_chunk3x2.json \   
     --out_path $TMP \        
     --out_format json_tree  # --overwrite
 INFO:root:Arguments: Namespace(in_crop_tree_path=None, in_json_path=PosixPath('examples/coco_chunk/json_file/instances_train2017_chunk3x2.json'), out_format='json_tree', out_path=PosixPath('/tmp/json_tree'), overwrite=False)
@@ -181,7 +219,7 @@ This format is used to facilitate the process of manual cleaning the CL dataset:
 
 ```bash
 $ cococleaner \
-    --in_json_path examples/coco_chunk/json_file/instances_train2017_chunk3x2.json \
+    --in_json_file examples/coco_chunk/json_file/instances_train2017_chunk3x2.json \
     --out_path /tmp/crop_tree \
     --out_format crop_tree  
 INFO:root:Arguments: Namespace(in_crop_tree_path=None, in_json_path=PosixPath('examples/coco_chunk/json_file/instances_train2017_chunk3x2.json'), indent=4, out_format='crop_tree', out_path=PosixPath('/tmp/crop_tree'), overwrite=False)
@@ -214,3 +252,43 @@ $ tree /tmp/crop_tree
 
 5 directories, 12 files
 ```
+
+Now, this tree can be manually cleaned by a human ("dirty" crops deleted) and we'll be able to re-construct the dataset.
+
+## Showcase: single iteration of the dataset cleaning process
+
+Our setup:
+- Our dataset stored in git repository `/project/my-dataset` in the `json_tree` representation. This dataset suffers from incompleteness: some categories lack "clean" annotations.
+- The customer has provided us with additional data as two `json_file`s: `/inputs/annotations-new-1.json` and `/inputs/annotations-new-2.json`.
+- We would like to merge these two datasets into a `crop_tree` representation, clean it manually, and then re-construct a new dataset and save it in-place in our git repository.
+
+- Step 1: merge datasets `json_tree` + `json_file`x2 -> `crop_tree`:
+```bash
+cococleaner \
+    --in_json_tree /project/my-dataset \
+    --in_json_file /inputs/annotations-new-1.json /inputs/annotations-new-2.json \
+    --out_path /temp/my-dataset-crops \
+    --out_format crop_tree \
+    --overwrite \
+    --debug
+ls /temp/my-dataset-crops
+```
+
+- Step 2: manually clean the `crop_tree` in `/temp/my-dataset-crops`
+
+- Step 3: re-construct the cleaned dataset:
+```bash
+# first, verify that your original dataset has no uncommitted changes (they'll be lost)
+cd /project/my-dataset
+git diff-index --quiet HEAD
+
+cococleaner \
+    --in_crop_tree /temp/my-dataset-crops \
+    --in_json_tree /project/my-dataset \
+    --out_path /project/my-dataset \
+    --out_format json_tree \
+    --overwrite \
+    --debug
+```
+
+Now you can commit the changes of your dataset `/project/my-dataset`.
