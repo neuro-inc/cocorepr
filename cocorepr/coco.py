@@ -13,7 +13,6 @@ from abc import abstractmethod
 from datetime import datetime
 from dataclasses_json import dataclass_json
 from dataclasses import dataclass, fields, asdict, field, replace
-from dataclasses_serialization.json import JSONSerializer
 from typing import *
 
 from .utils import sanitize_filename
