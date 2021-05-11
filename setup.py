@@ -52,6 +52,9 @@ setuptools.setup(
         'dataclasses-json>=0.5.3',
     ],
     python_requires  = '>=' + cfg['min_python'],
+    extras_require = {
+        'tqdm':  ['tqdm>=4.0.0']
+    }
     long_description = long_description,
     long_description_content_type = 'text/markdown',
     zip_safe = False,
