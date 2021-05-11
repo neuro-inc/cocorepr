@@ -11,7 +11,6 @@ from collections import defaultdict
 from dataclasses import dataclass, Field
 from typing import *
 from pathlib import Path
-from tqdm.auto import tqdm
 
 from .utils import *
 from .coco import *
@@ -86,6 +85,13 @@ def dump_crop_tree(
     overwrite: bool = False,
     indent: Optional[int] = 4,
 ) -> None:
+    try:
+        from tqdm.auto import tqdm
+    except ImportError:
+        logger.warning("Could not import tqdm, please run 'pip install tqdm'")
+        def tqdm(it, *args, **kwargs):
+            yield from it
+
     dataset_class = get_dataset_class(kind)
     if skip_nulls:
         to_dict_function = dataset_class.to_dict_skip_nulls
