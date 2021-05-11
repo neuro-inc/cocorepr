@@ -1,13 +1,6 @@
-# Title
+# Cocorepr
 
 
-
-Cocorepr
-========
-
-A tool to convert COCO datasets between representations.
-
-*Note*: for now, only Object Detection COCO is supported
 
 ## Installation
 
@@ -124,7 +117,7 @@ $ cat examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
             "id": 1,
             "name": "Attribution-NonCommercial-ShareAlike License"
         },
-        // ...
+        ...
     ],
     "info": {
         "description": "COCO 2017 Dataset",
@@ -139,8 +132,8 @@ $ cat examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
             "supercategory": "person",
             "id": 1,
             "name": "person"
-        }
-        // ...
+        },
+        ...
     ],
     "images": [
         {
@@ -166,8 +159,8 @@ $ cat examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
             ],
             "category_id": 2,
             "id": 124710
-        }
-        // ...
+        },
+        ...
     ]
 }
 ```

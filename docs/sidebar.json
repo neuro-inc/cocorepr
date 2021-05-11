@@ -1,6 +1,11 @@
 {
   "cocorepr": {
     "Overview": "/",
-    "Title": "cli.html"
+    "COCO dataset": "coco.html",
+    "Json file representation": "json_file.html",
+    "Json tree representation": "json_tree.html",
+    "Crop tree representation": "crop_tree.html",
+    "Utils": "utils.html",
+    "CLI options": "cli.html"
   }
 }

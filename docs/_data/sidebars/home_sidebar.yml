@@ -10,7 +10,22 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: Title
+      title: COCO dataset
+      url: coco.html
+    - output: web,pdf
+      title: Json file representation
+      url: json_file.html
+    - output: web,pdf
+      title: Json tree representation
+      url: json_tree.html
+    - output: web,pdf
+      title: Crop tree representation
+      url: crop_tree.html
+    - output: web,pdf
+      title: Utils
+      url: utils.html
+    - output: web,pdf
+      title: CLI options
       url: cli.html
     output: web
     title: cocorepr

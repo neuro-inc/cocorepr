@@ -1,6 +1,6 @@
 ---
 
-title: Title
+title: Cocorepr
 
 
 keywords: fastai
@@ -31,8 +31,6 @@ nb_path: "nbs/index.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Cocorepr">Cocorepr<a class="anchor-link" href="#Cocorepr"> </a></h1><p>A tool to convert COCO datasets between representations.</p>
-<p><em>Note</em>: for now, only Object Detection COCO is supported</p>
 <h2 id="Installation">Installation<a class="anchor-link" href="#Installation"> </a></h2><div class="highlight"><pre><span></span>$ pip install -U cocorepr
 </pre></div>
 
@@ -153,7 +151,7 @@ $ cat examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
             "id": 1,
             "name": "Attribution-NonCommercial-ShareAlike License"
         },
-        // ...
+        ...
     ],
     "info": {
         "description": "COCO 2017 Dataset",
@@ -168,8 +166,8 @@ $ cat examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
             "supercategory": "person",
             "id": 1,
             "name": "person"
-        }
-        // ...
+        },
+        ...
     ],
     "images": [
         {
@@ -195,8 +193,8 @@ $ cat examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
             ],
             "category_id": 2,
             "id": 124710
-        }
-        // ...
+        },
+        ...
     ]
 }</code></pre>
 <p>This format is used by many ML frameworks as input format, but usually the json tree file is too big to be stored in a Git repository (over 50M), therefore we either need to store it under Git LFS (which does not show the diff, only the hash), or to use another representation that are better adapted for work with Git.</p>
