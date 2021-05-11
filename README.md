@@ -11,13 +11,43 @@ $ pip install -U cocorepr
 ## Basic usage
 
 ```
-$ cocorepr
-usage: cocorepr [-h] [--in_json_tree [IN_JSON_TREE [IN_JSON_TREE ...]]]
-                [--in_json_file [IN_JSON_FILE [IN_JSON_FILE ...]]]
+$ cocorepr --help                                                                                       
+usage: cocorepr [-h] [--in_json_file [IN_JSON_FILE [IN_JSON_FILE ...]]]
+                [--in_json_tree [IN_JSON_TREE [IN_JSON_TREE ...]]]
                 [--in_crop_tree [IN_CROP_TREE [IN_CROP_TREE ...]]] --out_path
                 OUT_PATH --out_format {json_file,json_tree,crop_tree}
+                [--seed SEED] [--max_crops_per_class MAX_CROPS_PER_CLASS]
                 [--overwrite] [--indent INDENT] [--debug]
-cocorepr: error: the following arguments are required: --out_path, --out_format
+
+Tool for converting datasets in COCO format between different representations
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --in_json_file [IN_JSON_FILE [IN_JSON_FILE ...]]
+                        Path to one or multiple json files storing COCO
+                        dataset in `json_file` representation (all json-based
+                        datasets will be merged).
+  --in_json_tree [IN_JSON_TREE [IN_JSON_TREE ...]]
+                        Path to one or multiple directories storing COCO
+                        dataset in `json_tree` representation (all json-based
+                        datasets will be merged).
+  --in_crop_tree [IN_CROP_TREE [IN_CROP_TREE ...]]
+                        Path to one or multiple directories storing COCO
+                        dataset in `crop_tree` representation (all crop-based
+                        datasets will be merged and will overwrite the json-
+                        based datasets).
+  --out_path OUT_PATH   Path to the output dataset (file or directory: depends
+                        on `--out_format`)
+  --out_format {json_file,json_tree,crop_tree}
+  --seed SEED           Random seed.
+  --max_crops_per_class MAX_CROPS_PER_CLASS
+                        If set, the tool will randomly select up to this
+                        number of crops (annotations) per each class
+                        (category) and drop the others.
+  --overwrite           If set, will delete the output file/directory before
+                        dumping the result dataset.
+  --indent INDENT       Indentation in the output json files.
+  --debug
 ```
 
 This tool converts a dataset between three formats:
@@ -100,9 +130,7 @@ Below you can find the detailed discussion of the COCO dataset representations.
 
 ---
 
-```
 ## Representations of COCO dataset
-```
 
 ### Json file
 

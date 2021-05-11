@@ -2,7 +2,8 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"CocoElement": "01_coco.ipynb",
+index = {"logger": "95_cli.ipynb",
+         "CocoElement": "01_coco.ipynb",
          "CocoInfo": "01_coco.ipynb",
          "CocoLicense": "01_coco.ipynb",
          "CocoImage": "01_coco.ipynb",
@@ -19,7 +20,6 @@ index = {"CocoElement": "01_coco.ipynb",
          "cut_annotations_per_category": "01_coco.ipynb",
          "load_json_file": "02_json_file.ipynb",
          "dump_json_file": "02_json_file.ipynb",
-         "logger": "95_cli.ipynb",
          "load_json_tree": "03_json_tree.ipynb",
          "dump_json_tree": "03_json_tree.ipynb",
          "load_crop_tree": "04_crop_tree.ipynb",
@@ -38,7 +38,7 @@ modules = ["coco.py",
            "json_tree.py",
            "crop_tree.py",
            "utils.py",
-           "main.py"]
+           "cli.py"]
 
 doc_url = "https://neuro-inc.github.io/cocorepr/cocorepr/"
 
