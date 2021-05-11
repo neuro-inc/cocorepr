@@ -6,7 +6,9 @@ Cocorepr
 ========
 
 A tool to convert COCO datasets between representations.
-{% include note.html content='for now, only Object Detection COCO is supported' %}
+
+*Note*: for now, only Object Detection COCO is supported
+
 ## Installation
 
 ```bash
@@ -75,7 +77,7 @@ While the first model could be generated on a generic dataset, the second proble
 
 For historical reasons, both datasets were collected, cleaned and stored in COCO format. Hopefully, we didn't need to store image blobs -- the client's API enforced their availability and immutability, therefore we could store only image URL and some other metadata (`coco_url` and `id`, other fields are optional):
 
-```json
+```json5
 {
     "id": 49428,  // image ID
     "coco_url": "http://images.cocodataset.org/train2017/000000049428.jpg",  // URL of the immutable image blob
@@ -89,7 +91,7 @@ For historical reasons, both datasets were collected, cleaned and stored in COCO
 ```
 
 Though COCO format is native fine for OD datasets, it might be bulky for CL datasets, which are concerned on the class of annotations, not images:
-```json
+```json5
 {
     "id": 124710,  // annotation ID
     "image_id": 140006,  // image ID in the section "images"
@@ -113,7 +115,7 @@ Below you can find the detailed discussion of the COCO dataset representations.
 
 This is a regular format for a COCO dataset: all the annotations are stored in a single json file:
 
-```json
+```json5
 $ cat examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
 {
     "licenses": [
@@ -122,7 +124,7 @@ $ cat examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
             "id": 1,
             "name": "Attribution-NonCommercial-ShareAlike License"
         },
-        ...
+        // ...
     ],
     "info": {
         "description": "COCO 2017 Dataset",
@@ -137,8 +139,8 @@ $ cat examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
             "supercategory": "person",
             "id": 1,
             "name": "person"
-        },
-        ...
+        }
+        // ...
     ],
     "images": [
         {
@@ -164,8 +166,8 @@ $ cat examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
             ],
             "category_id": 2,
             "id": 124710
-        },
-        ...
+        }
+        // ...
     ]
 }
 ```

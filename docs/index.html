@@ -31,8 +31,8 @@ nb_path: "nbs/index.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Cocorepr">Cocorepr<a class="anchor-link" href="#Cocorepr"> </a></h1><p>A tool to convert COCO datasets between representations.
-{% include note.html content='for now, only Object Detection COCO is supported' %}</p>
+<h1 id="Cocorepr">Cocorepr<a class="anchor-link" href="#Cocorepr"> </a></h1><p>A tool to convert COCO datasets between representations.</p>
+<p><em>Note</em>: for now, only Object Detection COCO is supported</p>
 <h2 id="Installation">Installation<a class="anchor-link" href="#Installation"> </a></h2><div class="highlight"><pre><span></span>$ pip install -U cocorepr
 </pre></div>
 
@@ -94,25 +94,27 @@ The result will be written in form of <a href="/cocorepr/json_tree.html"><code>j
 </ol>
 <p>While the first model could be generated on a generic dataset, the second problem required large amount of work with the client on cleaning the noisy data and preparing a fine-tuned classification dataset.</p>
 <p>For historical reasons, both datasets were collected, cleaned and stored in COCO format. Hopefully, we didn't need to store image blobs -- the client's API enforced their availability and immutability, therefore we could store only image URL and some other metadata (<code>coco_url</code> and <code>id</code>, other fields are optional):</p>
-<div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">49428</span><span class="p">,</span>  <span class="err">//</span> <span class="err">image</span> <span class="err">ID</span>
-    <span class="nt">&quot;coco_url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://images.cocodataset.org/train2017/000000049428.jpg&quot;</span><span class="p">,</span>  <span class="err">//</span> <span class="err">URL</span> <span class="err">o</span><span class="kc">f</span> <span class="kc">t</span><span class="err">he</span> <span class="err">immu</span><span class="kc">ta</span><span class="err">ble</span> <span class="err">image</span> <span class="err">blob</span>
-    <span class="err">//</span> <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
-    <span class="err">//</span> <span class="nt">&quot;file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;000000049428.jpg&quot;</span><span class="p">,</span>
-    <span class="err">//</span> <span class="nt">&quot;height&quot;</span><span class="p">:</span> <span class="mi">427</span><span class="p">,</span>
-    <span class="err">//</span> <span class="nt">&quot;width&quot;</span><span class="p">:</span> <span class="mi">640</span><span class="p">,</span>
-    <span class="err">//</span> <span class="nt">&quot;date_captured&quot;</span><span class="p">:</span> <span class="s2">&quot;2013-11-15 04:30:29&quot;</span><span class="p">,</span>
-    <span class="err">//</span> <span class="nt">&quot;flickr_url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://farm7.staticflickr.com/6014/5923365195_bee5603371_z.jpg&quot;</span>
-<span class="p">},</span>
-</pre></div>
+
+<pre><code>json5
+{
+    "id": 49428,  // image ID
+    "coco_url": "http://images.cocodataset.org/train2017/000000049428.jpg",  // URL of the immutable image blob
+    // "license": 6,
+    // "file_name": "000000049428.jpg",
+    // "height": 427,
+    // "width": 640,
+    // "date_captured": "2013-11-15 04:30:29",
+    // "flickr_url": "http://farm7.staticflickr.com/6014/5923365195_bee5603371_z.jpg"
+},</code></pre>
 <p>Though COCO format is native fine for OD datasets, it might be bulky for CL datasets, which are concerned on the class of annotations, not images:</p>
-<div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">124710</span><span class="p">,</span>  <span class="err">//</span> <span class="err">a</span><span class="kc">nn</span><span class="err">o</span><span class="kc">tat</span><span class="err">io</span><span class="kc">n</span> <span class="err">ID</span>
-    <span class="nt">&quot;image_id&quot;</span><span class="p">:</span> <span class="mi">140006</span><span class="p">,</span>  <span class="err">//</span> <span class="err">image</span> <span class="err">ID</span> <span class="err">i</span><span class="kc">n</span> <span class="kc">t</span><span class="err">he</span> <span class="err">sec</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span> <span class="nt">&quot;images&quot;</span>
-    <span class="nt">&quot;category_id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>  <span class="err">//</span> <span class="err">class</span> <span class="err">ID</span> <span class="err">i</span><span class="kc">n</span> <span class="kc">t</span><span class="err">he</span> <span class="err">sec</span><span class="kc">t</span><span class="err">io</span><span class="kc">n</span> <span class="nt">&quot;categories&quot;</span>
-    <span class="nt">&quot;bbox&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">496.52</span><span class="p">,</span> <span class="mf">125.94</span><span class="p">,</span> <span class="mf">143.48</span><span class="p">,</span> <span class="mf">113.54</span><span class="p">],</span>  <span class="err">//</span> <span class="err">crop</span> <span class="err">coordi</span><span class="kc">nates</span> <span class="err">i</span><span class="kc">n</span> <span class="err">pixels</span><span class="p">:</span> <span class="p">[</span><span class="err">x</span><span class="p">,</span><span class="err">y</span><span class="p">,</span><span class="err">w</span><span class="p">,</span><span class="err">h</span><span class="p">]</span> <span class="err">(</span><span class="kc">fr</span><span class="err">om</span> <span class="kc">t</span><span class="err">op</span><span class="mi">-</span><span class="err">le</span><span class="kc">ft</span><span class="p">,</span> <span class="err">x=horizo</span><span class="kc">ntal</span><span class="err">)</span>
-<span class="p">}</span>
-</pre></div>
+
+<pre><code>json5
+{
+    "id": 124710,  // annotation ID
+    "image_id": 140006,  // image ID in the section "images"
+    "category_id": 2,  // class ID in the section "categories"
+    "bbox": [496.52, 125.94, 143.48, 113.54],  // crop coordinates in pixels: [x,y,w,h] (from top-left, x=horizontal)
+}</code></pre>
 <p>In order to train a CL model, we want to have a certain number of "clean" crops per each class (by <em>crop</em> we call a small picture cropped from given image using coordinates of given annotation). In order to facilitate the manual process of choosing the clean crops, we would like them to be sorted into directories grouping them into classes (categories). After the cleaning, we would like to reconstruct this subset of COCO dataset, register it in Git and then use it to train the model.
 Here comes <code>cocorepr</code>, which was created to automate these conversions between different representations of a COCO dataset.</p>
 <p>Below you can find the detailed discussion of the COCO dataset representations.</p>
@@ -141,61 +143,62 @@ Here comes <code>cocorepr</code>, which was created to automate these conversion
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Json-file">Json file<a class="anchor-link" href="#Json-file"> </a></h3><p>This is a regular format for a COCO dataset: all the annotations are stored in a single json file:</p>
-<div class="highlight"><pre><span></span><span class="err">$</span> <span class="err">ca</span><span class="kc">t</span> <span class="err">examples/coco_chu</span><span class="kc">n</span><span class="err">k/jso</span><span class="kc">n</span><span class="err">_</span><span class="kc">f</span><span class="err">ile/i</span><span class="kc">nstan</span><span class="err">ces_</span><span class="kc">tra</span><span class="err">i</span><span class="kc">n</span><span class="mi">2017</span><span class="err">_chu</span><span class="kc">n</span><span class="err">k</span><span class="mi">3</span><span class="err">x</span><span class="mf">2.</span><span class="err">jso</span><span class="kc">n</span>
-<span class="p">{</span>
-    <span class="nt">&quot;licenses&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://creativecommons.org/licenses/by-nc-sa/2.0/&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Attribution-NonCommercial-ShareAlike License&quot;</span>
-        <span class="p">},</span>
-        <span class="err">...</span>
-    <span class="p">],</span>
-    <span class="nt">&quot;info&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;COCO 2017 Dataset&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://cocodataset.org&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;year&quot;</span><span class="p">:</span> <span class="mi">2017</span><span class="p">,</span>
-        <span class="nt">&quot;contributor&quot;</span><span class="p">:</span> <span class="s2">&quot;COCO Consortium&quot;</span><span class="p">,</span>
-        <span class="nt">&quot;date_created&quot;</span><span class="p">:</span> <span class="s2">&quot;2017/09/01&quot;</span>
-    <span class="p">},</span>
-    <span class="nt">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;supercategory&quot;</span><span class="p">:</span> <span class="s2">&quot;person&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-            <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;person&quot;</span>
-        <span class="p">},</span>
-        <span class="err">...</span>
-    <span class="p">],</span>
-    <span class="nt">&quot;images&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;license&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
-            <span class="nt">&quot;file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;000000049428.jpg&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;coco_url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://images.cocodataset.org/train2017/000000049428.jpg&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;height&quot;</span><span class="p">:</span> <span class="mi">427</span><span class="p">,</span>
-            <span class="nt">&quot;width&quot;</span><span class="p">:</span> <span class="mi">640</span><span class="p">,</span>
-            <span class="nt">&quot;date_captured&quot;</span><span class="p">:</span> <span class="s2">&quot;2013-11-15 04:30:29&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;flickr_url&quot;</span><span class="p">:</span> <span class="s2">&quot;http://farm7.staticflickr.com/6014/5923365195_bee5603371_z.jpg&quot;</span><span class="p">,</span>
-            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">49428</span>
-        <span class="p">},</span>
-        <span class="err">...</span>
-    <span class="p">],</span>
-    <span class="nt">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="nt">&quot;image_id&quot;</span><span class="p">:</span> <span class="mi">140006</span><span class="p">,</span>
-            <span class="nt">&quot;bbox&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="mf">496.52</span><span class="p">,</span>
-                <span class="mf">125.94</span><span class="p">,</span>
-                <span class="mf">143.48</span><span class="p">,</span>
-                <span class="mf">113.54</span>
-            <span class="p">],</span>
-            <span class="nt">&quot;category_id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-            <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">124710</span>
-        <span class="p">},</span>
-        <span class="err">...</span>
-    <span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
+
+<pre><code>json5
+$ cat examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
+{
+    "licenses": [
+        {
+            "url": "http://creativecommons.org/licenses/by-nc-sa/2.0/",
+            "id": 1,
+            "name": "Attribution-NonCommercial-ShareAlike License"
+        },
+        // ...
+    ],
+    "info": {
+        "description": "COCO 2017 Dataset",
+        "url": "http://cocodataset.org",
+        "version": "1.0",
+        "year": 2017,
+        "contributor": "COCO Consortium",
+        "date_created": "2017/09/01"
+    },
+    "categories": [
+        {
+            "supercategory": "person",
+            "id": 1,
+            "name": "person"
+        }
+        // ...
+    ],
+    "images": [
+        {
+            "license": 6,
+            "file_name": "000000049428.jpg",
+            "coco_url": "http://images.cocodataset.org/train2017/000000049428.jpg",
+            "height": 427,
+            "width": 640,
+            "date_captured": "2013-11-15 04:30:29",
+            "flickr_url": "http://farm7.staticflickr.com/6014/5923365195_bee5603371_z.jpg",
+            "id": 49428
+        },
+        ...
+    ],
+    "annotations": [
+        {
+            "image_id": 140006,
+            "bbox": [
+                496.52,
+                125.94,
+                143.48,
+                113.54
+            ],
+            "category_id": 2,
+            "id": 124710
+        }
+        // ...
+    ]
+}</code></pre>
 <p>This format is used by many ML frameworks as input format, but usually the json tree file is too big to be stored in a Git repository (over 50M), therefore we either need to store it under Git LFS (which does not show the diff, only the hash), or to use another representation that are better adapted for work with Git.</p>
 
 </div>
