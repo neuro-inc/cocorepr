@@ -50,6 +50,7 @@ setuptools.setup(
     include_package_data = True,
     install_requires = [
         'dataclasses-json>=0.5.3',
+        'opencv-python>=4.5.1',
     ],
     python_requires  = '>=' + cfg['min_python'],
     long_description = long_description,
