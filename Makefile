@@ -7,6 +7,9 @@ all: build docs
 diff:
 	nbdev_diff_nbs
 
+clean_nbs:
+	nbdev_clean_nbs
+
 build: $(SRC)
 	nbdev_build_lib
 	touch cocorepr

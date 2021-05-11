@@ -2,14 +2,7 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"logger": "90_cli.ipynb",
-         "sort_dict": "00_utils.ipynb",
-         "sanitize_filename": "00_utils.ipynb",
-         "read_image": "00_utils.ipynb",
-         "download_image": "00_utils.ipynb",
-         "cut_bbox": "00_utils.ipynb",
-         "write_image": "00_utils.ipynb",
-         "CocoElement": "01_coco.ipynb",
+index = {"CocoElement": "01_coco.ipynb",
          "CocoInfo": "01_coco.ipynb",
          "CocoLicense": "01_coco.ipynb",
          "CocoImage": "01_coco.ipynb",
@@ -26,21 +19,28 @@ index = {"logger": "90_cli.ipynb",
          "cut_annotations_per_category": "01_coco.ipynb",
          "load_json_file": "02_json_file.ipynb",
          "dump_json_file": "02_json_file.ipynb",
+         "logger": "95_cli.ipynb",
          "load_json_tree": "03_json_tree.ipynb",
          "dump_json_tree": "03_json_tree.ipynb",
          "load_crop_tree": "04_crop_tree.ipynb",
          "dump_crop_tree": "04_crop_tree.ipynb",
-         "get_parser": "90_cli.ipynb",
-         "main": "90_cli.ipynb"}
+         "sort_dict": "90_utils.ipynb",
+         "sanitize_filename": "90_utils.ipynb",
+         "read_image": "90_utils.ipynb",
+         "download_image": "90_utils.ipynb",
+         "cut_bbox": "90_utils.ipynb",
+         "write_image": "90_utils.ipynb",
+         "get_parser": "95_cli.ipynb",
+         "main": "95_cli.ipynb"}
 
-modules = ["utils.py",
-           "coco.py",
+modules = ["coco.py",
            "json_file.py",
            "json_tree.py",
            "crop_tree.py",
+           "utils.py",
            "main.py"]
 
-doc_url = "https://invalid/cocorepr/"
+doc_url = "https://neuro-inc.github.io/cocorepr/cocorepr/"
 
 git_url = "https://github.com/neuro-inc/cocorepr"
 

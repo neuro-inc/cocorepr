@@ -1,5 +1,5 @@
 # Cocorepr
-
+> A tool to convert COCO datasets between different representations (for now, only Object Detection is supported).
 
 
 ## Installation
