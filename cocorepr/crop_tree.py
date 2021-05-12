@@ -91,7 +91,6 @@ def _cut_to_chunks(L: List[Any], n) -> List[List[Any]]:
 # Cell
 
 def _delete_extra_files(coco, target_dir, images_dir, crops_dir):
-    # TODO: extract to a method
     logger.info(f'Collecting extra files to clean in root {target_dir}')
     to_remove = []
 
@@ -215,9 +214,10 @@ def dump_crop_tree(
             (imgid2img[imgid], anns, images_dir, crops_dir, catid2cat, anns_failed_file)
             for (imgid, anns) in imgid2anns.items()
         ]
-        chunks = _cut_to_chunks(pairs, num_processes)
+        #chunks = _cut_to_chunks(pairs, num_processes)
         with Pool(num_processes) as pool:
-            result = list(pool.map(_process_image_list, chunks))
+            #for chunk in tqdm(chunks):
+            list(tqdm(pool.imap(_process_image_list, pairs), total=len(pairs), desc='Processing images'))
         #process_map(_process_image_list, chunks, total=len(imgid2anns), desc='Processing images', max_workers=num_processes)
 
     logger.info(f'Crops written to {crops_dir}: elapsed {timer.elapsed}')
