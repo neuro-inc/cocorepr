@@ -65,7 +65,7 @@ def dump_json_tree(
     target_dir: Union[str, Path],
     *,
     kind: str = 'object_detection',
-    skip_nulls: bool = False,
+    skip_nulls: bool = True,
     overwrite: bool = False,
     indent: Optional[int] = 4,
 ) -> None:
