@@ -141,8 +141,7 @@ def _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file
 def _process_image_list(args):
     if not args:
         return
-    for (img, anns, images_dir, crops_dir, catid2cat, anns_failed_file) in args:
-        _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file)
+    _process_image(*args)
 
 
 def dump_crop_tree(
