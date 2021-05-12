@@ -103,7 +103,7 @@ def _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file
         ann_file = cat_dir / ann.get_file_name()
         if ann_file.is_file():
             continue
-        f
+
         image = image or read_image(image_file, download_url=img.coco_url)
         box = cut_bbox(image, ann.bbox)
         try:
