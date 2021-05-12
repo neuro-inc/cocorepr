@@ -104,8 +104,7 @@ def _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file
         if ann_file.is_file():
             continue
 
-        if image is None:
-            image = read_image(image_file, download_url=img.coco_url)
+        image = image or read_image(image_file, download_url=img.coco_url)
         box = cut_bbox(image, ann.bbox)
         try:
             write_image(box, ann_file)
@@ -113,6 +112,7 @@ def _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file
             logger.error(e)
             with anns_failed_file.open('a') as f:
                 f.write(json.dumps(ann.to_dict(), ensure_ascii=False) + '\n')
+    print('.', end='')
 
 
 def _process_image_list(l):
@@ -205,7 +205,7 @@ def dump_crop_tree(
         ]
         chunks = _cut_to_chunks(pairs, num_processes)
         with Pool(num_processes) as pool:
-            result = list(tqdm(pool.imap(_process_image_list, chunks), total=len(imgid2anns), desc='Processing images'))
+            result = list(pool.map(_process_image_list, chunks))
         #process_map(_process_image_list, chunks, total=len(imgid2anns), desc='Processing images', max_workers=num_processes)
 
     logger.info(f'Crops written to {crops_dir}: elapsed {timer.elapsed}')
