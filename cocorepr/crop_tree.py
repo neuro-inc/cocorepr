@@ -90,6 +90,38 @@ def _cut_to_chunks(L: List[Any], n) -> List[List[Any]]:
 
 # Cell
 
+def _delete_extra_files(coco, target_dir, images_dir, crops_dir):
+    # TODO: extract to a method
+    logger.info(f'Collecting extra files to clean in root {target_dir}')
+    to_remove = []
+
+    a = {images_dir}
+    b = {images_dir/img.get_file_name() for img in coco.images}
+    c = {crops_dir}
+    d = {crops_dir/catid2cat[cat.id].get_dir_name() for cat in coco.categories}
+    e = {crops_dir/catid2cat[ann.category_id].get_dir_name()/ann.get_file_name() for ann in coco.annotations}
+    all_files = a | b | c | d | e
+
+    for p in target_dir.glob('**/*'):
+        if p not in all_files:
+            to_remove.append(p)
+    to_remove = sorted(to_remove)
+    removed_str = '\n'.join(map(str, to_remove))
+    logger.info(f'Removing {len(to_remove)} files and dirs:\n{removed_str}')
+    # reversed so that files get deleted before their dirs
+    for p in reversed(to_remove):
+        try:
+            if p.is_file():
+                p.unlink()
+            else:
+                shutil.rmtree(str(p))
+        except BaseException as e:
+            fod = 'file' if p.is_file() else 'dir'
+            logger.warning(f'Could not delete {fod} {p} (ignoring!): {e}')
+            continue
+    logger.info(f'[.] Removed {len(to_remove)} files and dirs.')
+
+
 def _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file):
     file_name = img.get_file_name()
     image_file = images_dir / file_name
@@ -176,36 +208,7 @@ def dump_crop_tree(
     anns_failed_file = crops_dir / 'crops_failed.ndjson'
 
     if overwrite and crops_dir.is_dir():
-        # TODO: extract to a method
-        logger.info(f'Collecting extra files to clean in root {target_dir}')
-        to_remove = []
-
-        a = {images_dir}
-        b = {images_dir/img.get_file_name() for img in coco.images}
-        c = {crops_dir}
-        d = {crops_dir/catid2cat[cat.id].get_dir_name() for cat in coco.categories}
-        e = {crops_dir/catid2cat[ann.category_id].get_dir_name()/ann.get_file_name() for ann in coco.annotations}
-        all_files = a | b | c | d | e
-
-        for p in target_dir.glob('**/*'):
-            if p not in all_files:
-                to_remove.append(p)
-        to_remove = sorted(to_remove)
-        removed_str = '\n'.join(map(str, to_remove))
-        logger.info(f'Removing {len(to_remove)} files and dirs:\n{removed_str}')
-        # reversed so that files get deleted before their dirs
-        for p in reversed(to_remove):
-            try:
-                if p.is_file():
-                    p.unlink()
-                else:
-                    shutil.rmtree(str(p))
-            except BaseException as e:
-                fod = 'file' if p.is_file() else 'dir'
-                logger.warning(f'Could not delete {fod} {p} (ignoring!): {e}')
-                continue
-
-        logger.info(f'Removed {len(to_remove)} files and dirs.')
+        _delete_extra_files(coco, target_dir, images_dir, crops_dir)
 
     with measure_time() as timer:
         pairs = [
