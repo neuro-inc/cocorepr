@@ -9,6 +9,7 @@ import logging
 from pathlib import Path
 import random
 
+from .utils import log_elapsed_time
 from .coco import merge_datasets, cut_annotations_per_category
 from .json_file import *
 from .json_tree import *
@@ -68,6 +69,7 @@ def get_parser():
 
 # Cell
 
+@log_elapsed_time(lambda t: logger.info(f'Total elapsed: {t.elapsed}'))
 def main(args=None):
     args = args or get_parser().parse_args()
 

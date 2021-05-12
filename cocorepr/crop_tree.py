@@ -12,7 +12,7 @@ from dataclasses import dataclass, Field
 from typing import *
 from pathlib import Path
 
-from .utils import *
+from .utils import sort_dict, measure_time, read_image, write_image, cut_bbox
 from .coco import *
 
 # Cell
@@ -46,29 +46,36 @@ def load_crop_tree(
     res_imgs = {}
     res_anns = {}
 
-    for ann_dir in crops_dir.iterdir():
-        cat_id = int(ann_dir.name.split('--')[-1])
-        cat = catid2cat[cat_id]
+    with measure_time() as timer1:
+        for count1, ann_dir in enumerate(crops_dir.iterdir(), 1):
+            cat_id = int(ann_dir.name.split('--')[-1])
+            cat = catid2cat[cat_id]
 
-        for i, ann_file in enumerate(ann_dir.glob('*.png'), 1):
-            ann_id = int(ann_file.stem)
-            ann = annid2ann[ann_id]
-            img_id = annid2imgid[ann_id]
-            img = imgid2img[img_id]
+            with measure_time() as timer2:
+                for count2, ann_file in enumerate(ann_dir.glob('*.png'), 1):
+                    ann_id = int(ann_file.stem)
+                    ann = annid2ann[ann_id]
+                    img_id = annid2imgid[ann_id]
+                    img = imgid2img[img_id]
 
-            res_cats[cat.id] = cat
-            res_imgs[img.id] = img
-            res_anns[ann.id] = ann
-        logger.debug(f'Loaded {i} crops from: {ann_dir}')
+                    res_cats[cat.id] = cat
+                    res_imgs[img.id] = img
+                    res_anns[ann.id] = ann
+            logger.info(f'  loaded {count2} crops from {ann_dir}: elapsed {timer2.elapsed}')
+        logger.info(f'Loaded from {count1} crop directories: elapsed {timer1.elapsed}')
 
-    D = {
-        **base_coco.to_dict(),
-        'images': list(res_imgs.values()),
-        'annotations': list(res_anns.values()),
-        'categories': list(res_cats.values()),
-    }
-    coco = dataset_class.from_dict(D)
-    logger.info(f"Loaded from crop_tree: {coco.to_full_str()}")
+    with measure_time() as timer:
+        D = {
+            **base_coco.to_dict(),
+            'images': list(res_imgs.values()),
+            'annotations': list(res_anns.values()),
+            'categories': list(res_cats.values()),
+        }
+    logger.info(f'Dataset dict constructed: elapsed {timer.elapsed}')
+
+    with measure_time() as timer:
+        coco = dataset_class.from_dict(D)
+    logger.info(f'Dataset object constructed: elapsed {timer.elapsed}: {coco.to_full_str()}')
 
     return coco
 
@@ -125,25 +132,29 @@ def dump_crop_tree(
 
     anns_failed = []
     anns_failed_file = crops_dir / 'crops_failed.ndjson'
-    for imgid, anns in tqdm(imgid2anns.items(), desc='Processing images'):
-        img = imgid2img[imgid]
-        assert img.file_name, f'Empty file name for img: {img}'
-        image_file = images_dir / img.file_name
-        image = read_image(image_file, download_url=img.coco_url)
 
-        for ann in anns:
-            cat = catid2cat[ann.category_id]
-            cat_dir = crops_dir / cat.get_dir_name()
-            cat_dir.mkdir(exist_ok=True)
+    with measure_time() as timer:
+        for imgid, anns in tqdm(imgid2anns.items(), desc='Processing images'):
+            img = imgid2img[imgid]
+            assert img.file_name, f'Empty file name for img: {img}'
+            image_file = images_dir / img.file_name
+            image = read_image(image_file, download_url=img.coco_url)
 
-            ann_file = cat_dir / f'{ann.id}.png'
-            box = cut_bbox(image, ann.bbox)
-            try:
-                write_image(box, ann_file)
-            except ValueError as e:
-                logger.error(e)
-                anns_failed.append(ann)
-                with anns_failed_file.open('a') as f:
-                    f.write(json.dumps(ann.to_dict()) + '\n')
+            for ann in anns:
+                cat = catid2cat[ann.category_id]
+                cat_dir = crops_dir / cat.get_dir_name()
+                cat_dir.mkdir(exist_ok=True)
+
+                ann_file = cat_dir / f'{ann.id}.png'
+                box = cut_bbox(image, ann.bbox)
+                try:
+                    write_image(box, ann_file)
+                except ValueError as e:
+                    logger.error(e)
+                    anns_failed.append(ann)
+                    with anns_failed_file.open('a') as f:
+                        f.write(json.dumps(ann.to_dict()) + '\n')
+    logger.info(f'Crops written to {crops_dir}: elapsed {timer.elapsed}')
+
     if anns_failed:
         logger.warning(f'Failed to process {len(anns_failed)} crops, see file {anns_failed_file}')
