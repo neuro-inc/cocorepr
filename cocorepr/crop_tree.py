@@ -81,16 +81,8 @@ def load_crop_tree(
     return coco
 
 # Cell
-def _cut_to_chunks(L: List[Any], n) -> List[List[Any]]:
-    assert n > 0
-    return [
-        L[i: i+n] + [None]*(n - len(L[i: i+n]))
-        for i in range(0, len(L), n)
-    ]
 
-# Cell
-
-def _delete_extra_files(coco, target_dir, images_dir, crops_dir):
+def _delete_extra_files(coco, target_dir, images_dir, crops_dir, catid2cat):
     logger.info(f'Collecting extra files to clean in root {target_dir}')
     to_remove = []
 
@@ -207,7 +199,7 @@ def dump_crop_tree(
     anns_failed_file = crops_dir / 'crops_failed.ndjson'
 
     if overwrite and crops_dir.is_dir():
-        _delete_extra_files(coco, target_dir, images_dir, crops_dir)
+        _delete_extra_files(coco, target_dir, images_dir, crops_dir, catid2cat)
 
     with measure_time() as timer:
         pairs = [
