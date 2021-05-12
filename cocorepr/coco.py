@@ -91,8 +91,12 @@ class CocoImage(CocoElement):
     date_captured: Optional[str] = None
 
     def __post_init__(self):
-        assert int(self.id) >= 0, self.id
-        assert self.coco_url
+        try:
+            assert int(self.id) >= 0
+            assert self.coco_url
+        except BaseException as e:
+            logger.error(f'Invalid image id={self.id}: {e}')
+            raise
 
     @property
     def collection_name(self):
@@ -106,8 +110,12 @@ class CocoAnnotation(CocoElement):
     image_id: int
 
     def __post_init__(self):
-        assert int(self.id) >= 0, self.id
-        assert int(self.image_id) >= 0, self.image_id
+        try:
+            assert int(self.id) >= 0
+            assert int(self.image_id) >= 0
+        except BaseException as e:
+            logger.error(f'Invalid annotation id={self.id}: {e}')
+            raise
 
 @dataclass
 class CocoObjectDetectionAnnotation(CocoAnnotation):
@@ -119,12 +127,16 @@ class CocoObjectDetectionAnnotation(CocoAnnotation):
 
     def __post_init__(self):
         super().__post_init__()
-        assert int(self.category_id) >= 0, self.category_id
-        x, y, w, h = map(int, self.bbox)
-        assert x >= 0, x
-        assert y >= 0, y
-        assert w >= 0, w
-        assert h >= 0, h
+        try:
+            assert int(self.category_id) >= 0
+            x, y, w, h = map(int, self.bbox)
+            assert x >= 0, x
+            assert y >= 0, y
+            assert w >= 0, w
+            assert h >= 0, h
+        except BaseException as e:
+            logger.error(f'Invalid annotation id={self.id}: {e}')
+            raise
 
 # Cell
 
@@ -137,7 +149,11 @@ class CocoCategory(CocoElement):
         raise NotImplementedError
 
     def __post_init__(self):
-        assert int(self.id) >= 0
+        try:
+            assert int(self.id) >= 0
+        except BaseException as e:
+            logger.error(f'Invalid category id={self.id}: {e}')
+            raise
 
 @dataclass
 class CocoObjectDetectionCategory(CocoCategory):
