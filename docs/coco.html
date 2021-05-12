@@ -375,7 +375,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="CocoAnnotation" class="doc_header"><code>class</code> <code>CocoAnnotation</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L100" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoAnnotation</code>(<strong><code>id</code></strong>:<code>int</code>, <strong><code>image_id</code></strong>:<code>int</code>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
+<h2 id="CocoAnnotation" class="doc_header"><code>class</code> <code>CocoAnnotation</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L104" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoAnnotation</code>(<strong><code>id</code></strong>:<code>int</code>, <strong><code>image_id</code></strong>:<code>int</code>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
 </blockquote>
 <p>CocoAnnotation(id: int, image_id: int)</p>
 
@@ -400,7 +400,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="CocoObjectDetectionAnnotation" class="doc_header"><code>class</code> <code>CocoObjectDetectionAnnotation</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L105" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoObjectDetectionAnnotation</code>(<strong><code>id</code></strong>:<code>int</code>, <strong><code>image_id</code></strong>:<code>int</code>, <strong><code>category_id</code></strong>:<code>int</code>, <strong><code>bbox</code></strong>:<code>Tuple</code>[<code>Type</code>[<code>int</code>], <code>int</code>, <code>int</code>, <code>int</code>], <strong><code>supercategory</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>area</code></strong>:<code>Optional</code>[<code>int</code>]=<em><code>None</code></em>, <strong><code>iscrowd</code></strong>:<code>Optional</code>[<code>int</code>]=<em><code>None</code></em>) :: <a href="/cocorepr/coco.html#CocoAnnotation"><code>CocoAnnotation</code></a></p>
+<h2 id="CocoObjectDetectionAnnotation" class="doc_header"><code>class</code> <code>CocoObjectDetectionAnnotation</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L113" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoObjectDetectionAnnotation</code>(<strong><code>id</code></strong>:<code>int</code>, <strong><code>image_id</code></strong>:<code>int</code>, <strong><code>category_id</code></strong>:<code>int</code>, <strong><code>bbox</code></strong>:<code>Tuple</code>[<code>Type</code>[<code>int</code>], <code>int</code>, <code>int</code>, <code>int</code>], <strong><code>supercategory</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>area</code></strong>:<code>Optional</code>[<code>int</code>]=<em><code>None</code></em>, <strong><code>iscrowd</code></strong>:<code>Optional</code>[<code>int</code>]=<em><code>None</code></em>) :: <a href="/cocorepr/coco.html#CocoAnnotation"><code>CocoAnnotation</code></a></p>
 </blockquote>
 <p>CocoObjectDetectionAnnotation(id: int, image_id: int, category_id: int, bbox: Tuple[Type[int], int, int, int], supercategory: Union[str, NoneType] = None, area: Union[int, NoneType] = None, iscrowd: Union[int, NoneType] = None)</p>
 
@@ -432,7 +432,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="CocoCategory" class="doc_header"><code>class</code> <code>CocoCategory</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L115" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoCategory</code>(<strong><code>id</code></strong>:<code>int</code>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
+<h2 id="CocoCategory" class="doc_header"><code>class</code> <code>CocoCategory</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L132" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoCategory</code>(<strong><code>id</code></strong>:<code>int</code>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
 </blockquote>
 <p>CocoCategory(id: int)</p>
 
@@ -457,7 +457,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="CocoObjectDetectionCategory" class="doc_header"><code>class</code> <code>CocoObjectDetectionCategory</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L124" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoObjectDetectionCategory</code>(<strong><code>id</code></strong>:<code>int</code>, <strong><code>name</code></strong>:<code>str</code>, <strong><code>supercategory</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>) :: <a href="/cocorepr/coco.html#CocoCategory"><code>CocoCategory</code></a></p>
+<h2 id="CocoObjectDetectionCategory" class="doc_header"><code>class</code> <code>CocoObjectDetectionCategory</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L143" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoObjectDetectionCategory</code>(<strong><code>id</code></strong>:<code>int</code>, <strong><code>name</code></strong>:<code>str</code>, <strong><code>supercategory</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>) :: <a href="/cocorepr/coco.html#CocoCategory"><code>CocoCategory</code></a></p>
 </blockquote>
 <p>CocoObjectDetectionCategory(id: int, name: str, supercategory: Union[str, NoneType] = None)</p>
 
@@ -508,7 +508,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="CocoDataset" class="doc_header"><code>class</code> <code>CocoDataset</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L135" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoDataset</code>(<strong><code>images</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoImage"><code>CocoImage</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>info</code></strong>:<a href="/cocorepr/coco.html#CocoInfo"><code>CocoInfo</code></a>=<em><code>CocoInfo(year=None, version=None, description=None, contributor=None, url=None, date_created=None)</code></em>, <strong><code>licenses</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoLicense"><code>CocoLicense</code></a>]=<em><code>&lt;factory&gt;</code></em>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
+<h2 id="CocoDataset" class="doc_header"><code>class</code> <code>CocoDataset</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L154" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoDataset</code>(<strong><code>images</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoImage"><code>CocoImage</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>info</code></strong>:<a href="/cocorepr/coco.html#CocoInfo"><code>CocoInfo</code></a>=<em><code>CocoInfo(year=None, version=None, description=None, contributor=None, url=None, date_created=None)</code></em>, <strong><code>licenses</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoLicense"><code>CocoLicense</code></a>]=<em><code>&lt;factory&gt;</code></em>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
 </blockquote>
 <p>CocoDataset(images: List[cocorepr.coco.CocoImage] = <factory>, info: cocorepr.coco.CocoInfo = CocoInfo(year=None, version=None, description=None, contributor=None, url=None, date_created=None), licenses: List[cocorepr.coco.CocoLicense] = <factory>)</p>
 
@@ -561,7 +561,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="CocoObjectDetectionDataset" class="doc_header"><code>class</code> <code>CocoObjectDetectionDataset</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L162" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoObjectDetectionDataset</code>(<strong><code>images</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoImage"><code>CocoImage</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>info</code></strong>:<a href="/cocorepr/coco.html#CocoInfo"><code>CocoInfo</code></a>=<em><code>CocoInfo(year=None, version=None, description=None, contributor=None, url=None, date_created=None)</code></em>, <strong><code>licenses</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoLicense"><code>CocoLicense</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>annotations</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoObjectDetectionAnnotation"><code>CocoObjectDetectionAnnotation</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>categories</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoObjectDetectionCategory"><code>CocoObjectDetectionCategory</code></a>]=<em><code>&lt;factory&gt;</code></em>) :: <a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a></p>
+<h2 id="CocoObjectDetectionDataset" class="doc_header"><code>class</code> <code>CocoObjectDetectionDataset</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L181" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoObjectDetectionDataset</code>(<strong><code>images</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoImage"><code>CocoImage</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>info</code></strong>:<a href="/cocorepr/coco.html#CocoInfo"><code>CocoInfo</code></a>=<em><code>CocoInfo(year=None, version=None, description=None, contributor=None, url=None, date_created=None)</code></em>, <strong><code>licenses</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoLicense"><code>CocoLicense</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>annotations</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoObjectDetectionAnnotation"><code>CocoObjectDetectionAnnotation</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>categories</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoObjectDetectionCategory"><code>CocoObjectDetectionCategory</code></a>]=<em><code>&lt;factory&gt;</code></em>) :: <a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a></p>
 </blockquote>
 <p>CocoObjectDetectionDataset(images: List[cocorepr.coco.CocoImage] = <factory>, info: cocorepr.coco.CocoInfo = CocoInfo(year=None, version=None, description=None, contributor=None, url=None, date_created=None), licenses: List[cocorepr.coco.CocoLicense] = <factory>, annotations: List[cocorepr.coco.CocoObjectDetectionAnnotation] = <factory>, categories: List[cocorepr.coco.CocoObjectDetectionCategory] = <factory>)</p>
 
@@ -836,7 +836,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_dataset_class" class="doc_header"><code>get_dataset_class</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L172" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_dataset_class</code>(<strong><code>coco_kind</code></strong>:<code>str</code>)</p>
+<h4 id="get_dataset_class" class="doc_header"><code>get_dataset_class</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L191" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_dataset_class</code>(<strong><code>coco_kind</code></strong>:<code>str</code>)</p>
 </blockquote>
 
 </div>
@@ -900,7 +900,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="merge_datasets" class="doc_header"><code>merge_datasets</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L180" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>merge_datasets</code>(<strong><code>d1</code></strong>:<a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a>, <strong><code>d2</code></strong>:<a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a>)</p>
+<h4 id="merge_datasets" class="doc_header"><code>merge_datasets</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L199" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>merge_datasets</code>(<strong><code>d1</code></strong>:<a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a>, <strong><code>d2</code></strong>:<a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a>)</p>
 </blockquote>
 
 </div>
@@ -1066,7 +1066,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="shuffle" class="doc_header"><code>shuffle</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L226" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>shuffle</code>(<strong><code>arr</code></strong>)</p>
+<h4 id="shuffle" class="doc_header"><code>shuffle</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L245" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>shuffle</code>(<strong><code>arr</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -1132,7 +1132,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="cut_annotations_per_category" class="doc_header"><code>cut_annotations_per_category</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L230" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>cut_annotations_per_category</code>(<strong><code>coco</code></strong>:<a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a>, <strong><code>max_annotations_per_category</code></strong>:<code>int</code>)</p>
+<h4 id="cut_annotations_per_category" class="doc_header"><code>cut_annotations_per_category</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L249" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>cut_annotations_per_category</code>(<strong><code>coco</code></strong>:<a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a>, <strong><code>max_annotations_per_category</code></strong>:<code>int</code>)</p>
 </blockquote>
 <p>Returns a copy of the input dataset where each class (category)
 contains up to <code>max_crops_per_class</code> crops (annotations)</p>

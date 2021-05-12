@@ -90,7 +90,7 @@ def _cut_to_chunks(L: List[Any], n) -> List[List[Any]]:
 
 # Cell
 
-def _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file, anns_failed_file_lock):
+def _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file):
     file_name = img.file_name or Path(img.coco_url).name
     image_file = images_dir / file_name
     image = read_image(image_file, download_url=img.coco_url)
@@ -106,14 +106,13 @@ def _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file
             write_image(box, ann_file)
         except ValueError as e:
             logger.error(e)
-            with anns_failed_file_lock:
-                with anns_failed_file.open('a') as f:
-                    f.write(json.dumps(ann.to_dict(), ensure_ascii=False) + '\n')
+            with anns_failed_file.open('a') as f:
+                f.write(json.dumps(ann.to_dict(), ensure_ascii=False) + '\n')
 
 
 def _process_image_list(l):
-    for (img, anns, images_dir, crops_dir, catid2cat, anns_failed_file, anns_failed_file_lock) in l:
-        _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file, anns_failed_file_lock)
+    for (img, anns, images_dir, crops_dir, catid2cat, anns_failed_file) in l:
+        _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file)
 
 
 def dump_crop_tree(
@@ -172,7 +171,7 @@ def dump_crop_tree(
 
     with measure_time() as timer:
         pairs = [
-            (imgid2img[imgid], anns, images_dir, crops_dir, catid2cat, anns_failed_file, anns_failed_file_lock)
+            (imgid2img[imgid], anns, images_dir, crops_dir, catid2cat, anns_failed_file)
             for (imgid, anns) in imgid2anns.items()
         ]
         chunks = _cut_to_chunks(pairs, num_processes)
