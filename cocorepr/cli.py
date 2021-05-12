@@ -57,6 +57,8 @@ def get_parser():
                             "crops (annotations) per each class (category) and drop the others."),
                        )
 
+    parser.add_argument("--dump_crop_tree_num_processes", type=int, default=1)
+
     parser.add_argument("--overwrite", action='store_true',
                         help="If set, will delete the output file/directory before dumping the result dataset.")
     parser.add_argument("--indent", default=4,
@@ -87,6 +89,7 @@ def main(args=None):
 
     out_path = args.out_path
     out_format = args.out_format
+    dump_crop_tree_num_processes = args.dump_crop_tree_num_processes
     overwrite = args.overwrite
     indent = args.indent
 
@@ -123,15 +126,17 @@ def main(args=None):
         coco = cut_annotations_per_category(coco, max_crops_per_class)
         logger.info(f'After cutting off: {coco.to_full_str()}')
 
+    dump_kwargs = dict(skip_nulls=True, overwrite=overwrite, indent=indent)
     if out_format == 'json_file':
         dump_fun = dump_json_file
     elif out_format == 'json_tree':
         dump_fun = dump_json_tree
     elif out_format == 'crop_tree':
         dump_fun = dump_crop_tree
+        dump_kwargs['num_processes'] = dump_crop_tree_num_processes
     else:
         raise ValueError(out_format)
-    dump_fun(coco, out_path, skip_nulls=True, overwrite=overwrite, indent=indent)
+    dump_fun(coco, out_path, **dump_kwargs)
 
     details = f': {[p.name for p in out_path.iterdir()]}' if out_path.is_dir() else ''
     logger.info(f'[+] Success: {out_format} dumped to {out_path}' + details)

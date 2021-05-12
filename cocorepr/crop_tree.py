@@ -11,6 +11,7 @@ from collections import defaultdict
 from dataclasses import dataclass, Field
 from typing import *
 from pathlib import Path
+from multiprocessing import Pool, Lock
 
 from .utils import sort_dict, measure_time, read_image, write_image, cut_bbox
 from .coco import *
@@ -80,6 +81,41 @@ def load_crop_tree(
     return coco
 
 # Cell
+def _cut_to_chunks(L: List[Any], n) -> List[List[Any]]:
+    assert n > 0
+    return [
+        L[i: i+n] + [None]*(n - len(L[i: i+n]))
+        for i in range(0, len(L), n)
+    ]
+
+# Cell
+
+def _process_image(img, anns, images_dir, crops_dir, catid2cat):
+    file_name = img.file_name or Path(img.coco_url).name
+    image_file = images_dir / file_name
+    image = read_image(image_file, download_url=img.coco_url)
+
+    for ann in anns:
+        cat = catid2cat[ann.category_id]
+        cat_dir = crops_dir / cat.get_dir_name()
+        cat_dir.mkdir(exist_ok=True)
+
+        ann_file = cat_dir / f'{ann.id}.png'
+        box = cut_bbox(image, ann.bbox)
+        try:
+            write_image(box, ann_file)
+        except ValueError as e:
+            logger.error(e)
+            anns_failed.append(ann)
+            with anns_failed_file_lock:
+                with anns_failed_file.open('a') as f:
+                    f.write(json.dumps(ann.to_dict(), ensure_ascii=False) + '\n')
+
+
+def _process_image_list(l):
+    for (img, anns, images_dir, crops_dir, catid2cat) in l:
+        _process_image(img, anns, images_dir, crops_dir, catid2cat)
+
 
 def dump_crop_tree(
     coco: CocoDataset,
@@ -89,6 +125,7 @@ def dump_crop_tree(
     skip_nulls: bool = True,
     overwrite: bool = False,
     indent: Optional[int] = 4,
+    n_processes: int = 1,
 ) -> None:
     try:
         from tqdm.auto import tqdm
@@ -132,28 +169,18 @@ def dump_crop_tree(
 
     anns_failed = []
     anns_failed_file = crops_dir / 'crops_failed.ndjson'
+    anns_failed_file_lock = Lock()
 
     with measure_time() as timer:
-        for imgid, anns in tqdm(imgid2anns.items(), desc='Processing images'):
-            img = imgid2img[imgid]
-            assert img.file_name, f'Empty file name for img: {img}'
-            image_file = images_dir / img.file_name
-            image = read_image(image_file, download_url=img.coco_url)
+        pairs = [
+            (imgid2img[imgid], anns, images_dir, crops_dir, catid2cat)
+            for (imgid, anns) in imgid2anns.items()
+        ]
+        chunks = _cut_to_chunks(pairs, n_processes)
+        with Pool(n_processes) as pool:
+            result = list(tqdm(pool.imap(_process_image_list, chunks), total=len(imgid2anns), desc='Processing images'))
+        #process_map(_process_image_list, chunks, total=len(imgid2anns), desc='Processing images', max_workers=n_processes)
 
-            for ann in anns:
-                cat = catid2cat[ann.category_id]
-                cat_dir = crops_dir / cat.get_dir_name()
-                cat_dir.mkdir(exist_ok=True)
-
-                ann_file = cat_dir / f'{ann.id}.png'
-                box = cut_bbox(image, ann.bbox)
-                try:
-                    write_image(box, ann_file)
-                except ValueError as e:
-                    logger.error(e)
-                    anns_failed.append(ann)
-                    with anns_failed_file.open('a') as f:
-                        f.write(json.dumps(ann.to_dict(), ensure_ascii=False) + '\n')
     logger.info(f'Crops written to {crops_dir}: elapsed {timer.elapsed}')
 
     if anns_failed:
