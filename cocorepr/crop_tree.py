@@ -125,7 +125,7 @@ def dump_crop_tree(
     skip_nulls: bool = True,
     overwrite: bool = False,
     indent: Optional[int] = 4,
-    n_processes: int = 1,
+    num_processes: int = 1,
 ) -> None:
     try:
         from tqdm.auto import tqdm
@@ -176,10 +176,10 @@ def dump_crop_tree(
             (imgid2img[imgid], anns, images_dir, crops_dir, catid2cat)
             for (imgid, anns) in imgid2anns.items()
         ]
-        chunks = _cut_to_chunks(pairs, n_processes)
-        with Pool(n_processes) as pool:
+        chunks = _cut_to_chunks(pairs, num_processes)
+        with Pool(num_processes) as pool:
             result = list(tqdm(pool.imap(_process_image_list, chunks), total=len(imgid2anns), desc='Processing images'))
-        #process_map(_process_image_list, chunks, total=len(imgid2anns), desc='Processing images', max_workers=n_processes)
+        #process_map(_process_image_list, chunks, total=len(imgid2anns), desc='Processing images', max_workers=num_processes)
 
     logger.info(f'Crops written to {crops_dir}: elapsed {timer.elapsed}')
 
