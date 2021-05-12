@@ -44,10 +44,10 @@ def get_parser():
                             "overwrite the json-based datasets)."
                        ))
 
-    parser.add_argument("--out_path", type=Path, required=True,
+    parser.add_argument("--out_path", type=Path,
                         help="Path to the output dataset (file or directory: depends on `--out_format`)")
 
-    parser.add_argument("--out_format", choices=['json_file', 'json_tree', 'crop_tree'], required=True)
+    parser.add_argument("--out_format", choices=['json_file', 'json_tree', 'crop_tree'])
 
     parser.add_argument("--seed", type=int, default=42, help="Random seed.")
 
@@ -93,6 +93,9 @@ def main(args=None):
     overwrite = args.overwrite
     indent = args.indent
 
+    if out_path and not out_format or not out_path and out_format:
+        raise ValueError(f'Option --out_format requires --out_path and vice versa')
+
     random.seed(args.seed)
 
     coco = None
@@ -126,17 +129,21 @@ def main(args=None):
         coco = cut_annotations_per_category(coco, max_crops_per_class)
         logger.info(f'After cutting off: {coco.to_full_str()}')
 
-    dump_kwargs = dict(skip_nulls=True, overwrite=overwrite, indent=indent)
-    if out_format == 'json_file':
-        dump_fun = dump_json_file
-    elif out_format == 'json_tree':
-        dump_fun = dump_json_tree
-    elif out_format == 'crop_tree':
-        dump_fun = dump_crop_tree
-        dump_kwargs['num_processes'] = dump_crop_tree_num_processes
-    else:
-        raise ValueError(out_format)
-    dump_fun(coco, out_path, **dump_kwargs)
+    details = ''
+    if out_format is not None:
+        assert out_path
+        dump_kwargs = dict(skip_nulls=True, overwrite=overwrite, indent=indent)
+        if out_format == 'json_file':
+            dump_fun = dump_json_file
+        elif out_format == 'json_tree':
+            dump_fun = dump_json_tree
+        elif out_format == 'crop_tree':
+            dump_fun = dump_crop_tree
+            dump_kwargs['num_processes'] = dump_crop_tree_num_processes
+        else:
+            raise ValueError(out_format)
+        dump_fun(coco, out_path, **dump_kwargs)
+        out_path.is_dir():
+            details = f': {[p.name for p in out_path.iterdir()]}'
 
-    details = f': {[p.name for p in out_path.iterdir()]}' if out_path.is_dir() else ''
     logger.info(f'[+] Success: {out_format} dumped to {out_path}' + details)
