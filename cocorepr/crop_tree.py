@@ -104,7 +104,8 @@ def _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file
         if ann_file.is_file():
             continue
 
-        image = image or read_image(image_file, download_url=img.coco_url)
+        if image is None:
+            image = read_image(image_file, download_url=img.coco_url)
         box = cut_bbox(image, ann.bbox)
         try:
             write_image(box, ann_file)
@@ -174,7 +175,7 @@ def dump_crop_tree(
     anns_failed_file = crops_dir / 'crops_failed.ndjson'
 
     if overwrite and crops_dir.is_dir():
-        logger.info(f'Cleaning extra files in root {target_dir}')
+        logger.info(f'Collecting extra files to clean in root {target_dir}')
         to_remove = []
 
         a = {images_dir}
