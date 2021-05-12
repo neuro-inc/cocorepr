@@ -176,19 +176,23 @@ def dump_crop_tree(
     if overwrite and crops_dir.is_dir():
         logger.info(f'Cleaning extra files in root {target_dir}')
         to_remove = []
-        image_files = {images_dir / img.get_file_name() for img in coco.images}
-        crop_files = {crops_dir / catid2cat[ann.category_id].get_dir_name() / ann.get_file_name() for ann in coco.annotations}
-        all_files = image_files | crop_files
+        all_files = {images_dir} | \
+                    {images_dir/img.get_file_name() for img in coco.images} \
+                    {crops_dir} | \
+                    {crops_dir/catid2cat[cat.id].get_dir_name() for cat in coco.categories} | \
+                    {crops_dir/catid2cat[ann.category_id].get_dir_name()/ann.get_file_name() for ann in coco.annotations}
         for p in target_dir.glob('**/*'):
             if p not in all_files:
                 to_remove.append(p)
-        removed_str = '\n'.join(map(str, sorted(to_remove)))
+        to_remove = sorted(to_remove)
+        removed_str = '\n'.join(map(str, to_remove))
         logger.info(f'Removing {len(to_remove)} files and dirs:\n{removed_str}')
         for p in to_remove:
             if p.is_dir():
                 shutil.rmtree(str(p))
             else:
                 p.unlink()
+        logger.info(f'Removed {len(to_remove)} files and dirs.')
 
     with measure_time() as timer:
         pairs = [
