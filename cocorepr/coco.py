@@ -14,6 +14,7 @@ from datetime import datetime
 from dataclasses_json import dataclass_json
 from dataclasses import dataclass, fields, asdict, field, replace
 from typing import *
+from pathlib import Path
 
 from .utils import sanitize_filename
 
@@ -111,6 +112,9 @@ class CocoImage(CocoElement):
     def collection_name(self):
         return "images"
 
+    def get_file_name(self) -> str:
+        return self.file_name or Path(self.coco_url).name
+
 # Cell
 
 @dataclass
@@ -125,6 +129,9 @@ class CocoAnnotation(CocoElement):
             return True
         except:
             return False
+
+    def get_file_name(self) -> str:
+        return f'{self.id}.png'
 
 @dataclass
 class CocoObjectDetectionAnnotation(CocoAnnotation):

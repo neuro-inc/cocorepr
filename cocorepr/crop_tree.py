@@ -91,16 +91,20 @@ def _cut_to_chunks(L: List[Any], n) -> List[List[Any]]:
 # Cell
 
 def _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file):
-    file_name = img.file_name or Path(img.coco_url).name
+    file_name = img.get_file_name()
     image_file = images_dir / file_name
-    image = read_image(image_file, download_url=img.coco_url)
+    image = None
 
     for ann in anns:
         cat = catid2cat[ann.category_id]
         cat_dir = crops_dir / cat.get_dir_name()
         cat_dir.mkdir(exist_ok=True)
 
-        ann_file = cat_dir / f'{ann.id}.png'
+        ann_file = cat_dir / ann.get_file_name()
+        if ann_file.is_file():
+            continue
+
+        image = image or read_image(image_file, download_url=img.coco_url)
         box = cut_bbox(image, ann.bbox)
         try:
             write_image(box, ann_file)
@@ -148,9 +152,9 @@ def dump_crop_tree(
     elif target_dir.is_dir():
         raise ValueError(f"Destination json tree dir already exists: {target_dir}")
 
-    if target_dir.is_dir():
-        logger.info(f'Deleting old target directory {target_dir}')
-        shutil.rmtree(str(target_dir))
+    #if overwrite and target_dir.is_dir():
+    #    logger.info(f'Deleting old target directory {target_dir}')
+    #    shutil.rmtree(str(target_dir))
 
     target_dir.mkdir(parents=True)
     catid2cat = {cat.id: cat for cat in coco.categories}
@@ -168,7 +172,32 @@ def dump_crop_tree(
 
     anns_failed = []
     anns_failed_file = crops_dir / 'crops_failed.ndjson'
-    anns_failed_file_lock = Lock()
+
+    if overwrite and crops_dir.is_dir():
+        removed = []
+        logger.info(f'Cleaning extra files in root {target_dir}')
+        root_files = {images_dir, crops_dir}
+        for p in target_dir.iterdir():
+            if p not in root_files:
+                removed.append(p)
+                shutil.rmtree(str(p))
+
+        logger.info(f'Cleaning extra images in {images_dir}')
+        image_files = {images_dir / img.get_file_name() for img in coco.images}
+        for p in images_dir.iterdir():
+            if p not in image_files:
+                removed.append(p)
+                shutil.rmtree(str(p))
+
+        logger.info(f'Cleaning extra crops in {crops_dir}')
+        crop_files = {crops_dir / ann.get_file_name() for ann in coco.annotations}
+        for p in crops_dir.iterdir():
+            if p not in crop_files:
+                removed.append(p)
+                shutil.rmtree(str(p))
+
+        removed_str = '\n'.join(map(str, removed))
+        logger.info(f'Totally removed {len(removed)} files:\n{removed_str}')
 
     with measure_time() as timer:
         pairs = [
