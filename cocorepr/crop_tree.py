@@ -176,11 +176,14 @@ def dump_crop_tree(
     if overwrite and crops_dir.is_dir():
         logger.info(f'Cleaning extra files in root {target_dir}')
         to_remove = []
-        all_files = {images_dir} | \
-                    {images_dir/img.get_file_name() for img in coco.images} \
-                    {crops_dir} | \
-                    {crops_dir/catid2cat[cat.id].get_dir_name() for cat in coco.categories} | \
-                    {crops_dir/catid2cat[ann.category_id].get_dir_name()/ann.get_file_name() for ann in coco.annotations}
+
+        a = {images_dir}
+        b = {images_dir/img.get_file_name() for img in coco.images}
+        c = {crops_dir}
+        d = {crops_dir/catid2cat[cat.id].get_dir_name() for cat in coco.categories}
+        e = {crops_dir/catid2cat[ann.category_id].get_dir_name()/ann.get_file_name() for ann in coco.annotations}
+        all_files = a | b | c | d | e
+
         for p in target_dir.glob('**/*'):
             if p not in all_files:
                 to_remove.append(p)
