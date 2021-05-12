@@ -190,11 +190,18 @@ def dump_crop_tree(
         to_remove = sorted(to_remove)
         removed_str = '\n'.join(map(str, to_remove))
         logger.info(f'Removing {len(to_remove)} files and dirs:\n{removed_str}')
-        for p in to_remove:
-            if p.is_dir():
-                shutil.rmtree(str(p))
-            else:
-                p.unlink()
+        # reversed so that files get deleted before their dirs
+        for p in reversed(to_remove):
+            try:
+                if p.is_file():
+                    p.unlink()
+                else:
+                    shutil.rmtree(str(p))
+            except BaseException as e:
+                fod = 'file' if p.is_file() else 'dir'
+                logger.warning(f'Could not delete {fod} {p} (ignoring!): {e}')
+                continue
+
         logger.info(f'Removed {len(to_remove)} files and dirs.')
 
     with measure_time() as timer:
