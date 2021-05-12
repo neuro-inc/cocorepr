@@ -111,6 +111,7 @@ def _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file
 
 
 def _process_image_list(l):
+    l = l or []
     for (img, anns, images_dir, crops_dir, catid2cat, anns_failed_file) in l:
         _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file)
 
