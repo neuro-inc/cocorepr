@@ -62,7 +62,7 @@ def load_crop_tree(
                     res_cats[cat.id] = cat
                     res_imgs[img.id] = img
                     res_anns[ann.id] = ann
-            logger.info(f'- loaded {count2} crops from {ann_dir}: elapsed {timer2.elapsed}')
+            logger.debug(f'- loaded {count2} crops from {ann_dir}: elapsed {timer2.elapsed}')
         logger.info(f'Loaded from {count1} crop directories: elapsed {timer1.elapsed}')
 
     with measure_time() as timer:
@@ -98,7 +98,9 @@ def _delete_extra_files(coco, target_dir, images_dir, crops_dir, catid2cat):
             to_remove.append(p)
     to_remove = sorted(to_remove)
     removed_str = '\n'.join(map(str, to_remove))
-    logger.info(f'Removing {len(to_remove)} files and dirs:\n{removed_str}')
+    if removed_str:
+        removed_str = '\n' + removed_str
+    logger.info(f'Removing {len(to_remove)} files and dirs:{removed_str}')
     # reversed so that files get deleted before their dirs
     for p in reversed(to_remove):
         try:
@@ -135,7 +137,6 @@ def _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file
             logger.error(e)
             with anns_failed_file.open('a') as f:
                 f.write(json.dumps(ann.to_dict(), ensure_ascii=False) + '\n')
-    print('.', end='')
 
 
 def _process_image_list(args):
