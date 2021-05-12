@@ -115,8 +115,10 @@ def _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file
     print('.', end='')
 
 
-def _process_image_list(l):
-    for (img, anns, images_dir, crops_dir, catid2cat, anns_failed_file) in (l or []):
+def _process_image_list(args):
+    if not args:
+        return
+    for (img, anns, images_dir, crops_dir, catid2cat, anns_failed_file) in args:
         _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file)
 
 
@@ -174,6 +176,7 @@ def dump_crop_tree(
     anns_failed_file = crops_dir / 'crops_failed.ndjson'
 
     if overwrite and crops_dir.is_dir():
+        # TODO: extract to a method
         logger.info(f'Collecting extra files to clean in root {target_dir}')
         to_remove = []
 
