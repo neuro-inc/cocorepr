@@ -153,7 +153,7 @@ def dump_crop_tree(
                     logger.error(e)
                     anns_failed.append(ann)
                     with anns_failed_file.open('a') as f:
-                        f.write(json.dumps(ann.to_dict()) + '\n')
+                        f.write(json.dumps(ann.to_dict(), ensure_ascii=False) + '\n')
     logger.info(f'Crops written to {crops_dir}: elapsed {timer.elapsed}')
 
     if anns_failed:

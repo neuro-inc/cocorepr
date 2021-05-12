@@ -71,5 +71,5 @@ def dump_json_file(
     logger.info(f"Writing dataset {coco.to_full_str()} to json-file: {annotations_json}")
     with measure_time() as timer:
         annotations_json.parent.mkdir(parents=True, exist_ok=True)
-        annotations_json.write_text(json.dumps(raw, indent=indent))
+        annotations_json.write_text(json.dumps(raw, indent=indent, ensure_ascii=False))
     logger.info(f"Dataset written to {annotations_json}: elapsed {timer.elapsed}")

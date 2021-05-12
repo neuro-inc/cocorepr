@@ -102,7 +102,7 @@ def dump_json_tree(
             for el in raw[cat]:
                 el_file = el_dir / f'{el["id"]}.json'
                 el = sort_dict(el)
-                el_file.write_text(json.dumps(el, indent=indent))
+                el_file.write_text(json.dumps(el, indent=indent, ensure_ascii=False))
             logger.debug(f'Written {len(raw[cat])} elements to {el_dir}')
 
         for cat in dataset_class.get_non_collective_elements():
@@ -111,6 +111,6 @@ def dump_json_tree(
             el_file = target_dir / f'{cat}.json'
             el = raw[cat]
             el = sort_dict(el)
-            el_file.write_text(json.dumps(el, indent=indent))
+            el_file.write_text(json.dumps(el, indent=indent, ensure_ascii=False))
             logger.debug(f'Written single element to {el_dir}')
     logger.info(f'Dataset written to {target_dir}: elapsed {timer.elapsed}')

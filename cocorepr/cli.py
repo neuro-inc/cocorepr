@@ -115,7 +115,7 @@ def main(args=None):
     if coco_crop is not None:
         if coco_crop_count > 1:
             logger.info(f'Total loaded crop-tree dataset: {coco_crop.to_full_str()}')
-        logger.info('Using coco_crop dataset.S')
+        logger.info('Using coco_crop dataset only.')
         coco = coco_crop
 
     if max_crops_per_class:
