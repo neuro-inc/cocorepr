@@ -3,7 +3,7 @@
 __all__ = ['logger', 'CocoElement', 'CocoInfo', 'CocoLicense', 'CocoImage', 'CocoAnnotation',
            'CocoObjectDetectionAnnotation', 'CocoCategory', 'CocoObjectDetectionCategory', 'CocoDataset',
            'CocoObjectDetectionDataset', 'get_dataset_class', 'MAP_COCO_TYPE_TO_DATASET_CLASS', 'merge_datasets',
-           'shuffle', 'cut_annotations_per_category']
+           'shuffle', 'cut_annotations_per_category', 'remove_invalid_elements']
 
 # Cell
 
@@ -50,6 +50,9 @@ class CocoElement:
     def collection_name(self) -> str:
         raise NotImplementedError
 
+    def is_valid(self) -> bool:
+        raise NotImplementedError
+
 # Cell
 
 @dataclass
@@ -65,6 +68,9 @@ class CocoInfo(CocoElement):
     def collection_name(self):
         return "info"
 
+    def is_valid(self) -> bool:
+        return True  # no restrictions on the format
+
 # Cell
 
 @dataclass
@@ -76,6 +82,9 @@ class CocoLicense(CocoElement):
     @property
     def collection_name(self):
         return "licenses"
+
+    def is_valid(self) -> bool:
+        return True  # no restrictions on the format
 
 # Cell
 
@@ -90,13 +99,13 @@ class CocoImage(CocoElement):
     flickr_url: Optional[str] = None
     date_captured: Optional[str] = None
 
-    def __post_init__(self):
+    def is_valid(self) -> bool:
         try:
             assert int(self.id) >= 0
             assert self.coco_url
-        except BaseException as e:
-            logger.error(f'Invalid image id={self.id}: {e}')
-            raise
+            return True
+        except:
+            return False
 
     @property
     def collection_name(self):
@@ -109,13 +118,13 @@ class CocoAnnotation(CocoElement):
     id: int
     image_id: int
 
-    def __post_init__(self):
+    def is_valid(self) -> bool:
         try:
             assert int(self.id) >= 0
             assert int(self.image_id) >= 0
-        except BaseException as e:
-            logger.error(f'Invalid annotation id={self.id}: {e}')
-            raise
+            return True
+        except:
+            return False
 
 @dataclass
 class CocoObjectDetectionAnnotation(CocoAnnotation):
@@ -125,8 +134,9 @@ class CocoObjectDetectionAnnotation(CocoAnnotation):
     area: Optional[int] = None
     iscrowd: Optional[int] = None
 
-    def __post_init__(self):
-        super().__post_init__()
+    def is_valid(self) -> bool:
+        if not super().is_valid():
+            return False
         try:
             assert int(self.category_id) >= 0
             x, y, w, h = map(int, self.bbox)
@@ -134,9 +144,9 @@ class CocoObjectDetectionAnnotation(CocoAnnotation):
             assert y >= 0, y
             assert w >= 0, w
             assert h >= 0, h
-        except BaseException as e:
-            logger.error(f'Invalid annotation id={self.id}: {e}')
-            raise
+            return True
+        except:
+            return False
 
 # Cell
 
@@ -148,12 +158,12 @@ class CocoCategory(CocoElement):
     def get_alias(self):
         raise NotImplementedError
 
-    def __post_init__(self):
+    def is_valid(self) -> bool:
         try:
             assert int(self.id) >= 0
-        except BaseException as e:
-            logger.error(f'Invalid category id={self.id}: {e}')
-            raise
+            return True
+        except:
+            return False
 
 @dataclass
 class CocoObjectDetectionCategory(CocoCategory):
@@ -164,10 +174,18 @@ class CocoObjectDetectionCategory(CocoCategory):
         name = sanitize_filename(self.name)
         return f'{name}--{self.id}'
 
+    def is_valid(self) -> bool:
+        if not super().is_valid():
+            return False
+        if not self.name:
+            return False
+        return True
+
 # Cell
 
 @dataclass
 class CocoDataset(CocoElement):
+    annotations: List[CocoAnnotation] = field(default_factory=list)
     images: List[CocoImage] = field(default_factory=list)
     info: CocoInfo = CocoInfo()
     licenses: List[CocoLicense] = field(default_factory=list)
@@ -181,7 +199,7 @@ class CocoDataset(CocoElement):
     def get_collective_elements(cls):
         default_self = cls()
         non_collective = set(cls.get_non_collective_elements())
-        return [f.name for f in fields(default_self) if f.name not in non_collective]
+        return sorted([f.name for f in fields(default_self) if f.name not in non_collective])
 
     def to_full_str(self):
         return (
@@ -190,6 +208,11 @@ class CocoDataset(CocoElement):
             ')'
         )
 
+    def is_valid(self) -> bool:
+        return all(
+            el.is_valid()
+            for el in self.annotations + self.images + [self.info] + self.licenses
+        )
 
 # Cell
 
@@ -283,3 +306,18 @@ def cut_annotations_per_category(coco: CocoDataset, max_annotations_per_category
     coco = replace(coco, images=sorted(images.values(), key=lambda x: x.id))
 
     return coco
+
+# Cell
+def remove_invalid_elements(coco: CocoDataset) -> CocoDataset:
+    kw = {
+        el: [x for x in getattr(coco, el) if x.is_valid()]
+        for el in coco.get_collective_elements()
+    }
+    res = replace(coco, **kw)
+
+    for el in coco.get_non_collective_elements():
+        x = getattr(coco, el)
+        if not x.is_valid():
+            logger.warning(f"Cannot drop invalid element '{el}' (keeping): {x}")
+
+    return res

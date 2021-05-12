@@ -10,7 +10,7 @@ from pathlib import Path
 import random
 
 from .utils import log_elapsed_time
-from .coco import merge_datasets, cut_annotations_per_category
+from .coco import merge_datasets, cut_annotations_per_category, remove_invalid_elements
 from .json_file import *
 from .json_tree import *
 from .crop_tree import *
@@ -57,6 +57,9 @@ def get_parser():
                             "crops (annotations) per each class (category) and drop the others."),
                        )
 
+    parser.add_argument("--drop_invalid_elements", action='store_true',
+                        help="If set, drops broken elements (for example, negative IDs or broken bboxes).")
+
     parser.add_argument("--dump_crop_tree_num_processes", type=int, default=1)
 
     parser.add_argument("--overwrite", action='store_true',
@@ -86,6 +89,7 @@ def main(args=None):
 
     seed = args.seed
     max_crops_per_class = args.max_crops_per_class
+    drop_invalid_elements = args.drop_invalid_elements
 
     out_path = args.out_path
     out_format = args.out_format
@@ -129,6 +133,10 @@ def main(args=None):
         coco = cut_annotations_per_category(coco, max_crops_per_class)
         logger.info(f'After cutting off: {coco.to_full_str()}')
 
+    if drop_invalid_elements:
+        coco = remove_invalid_elements(coco)
+        logger.info(f'After removing invalid elements: {coco.to_full_str()}')
+
     details = ''
     if out_format is not None:
         assert out_path
@@ -143,7 +151,7 @@ def main(args=None):
         else:
             raise ValueError(out_format)
         dump_fun(coco, out_path, **dump_kwargs)
-        out_path.is_dir():
+        if out_path.is_dir():
             details = f': {[p.name for p in out_path.iterdir()]}'
 
     logger.info(f'[+] Success: {out_format} dumped to {out_path}' + details)
