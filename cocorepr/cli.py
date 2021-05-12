@@ -137,7 +137,7 @@ def main(args=None):
         coco = remove_invalid_elements(coco)
         logger.info(f'After removing invalid elements: {coco.to_full_str()}')
 
-    logger.info(f'Result dataset: {coco.to_full_str()}')
+    logger.info(f'[.] Result dataset: {coco.to_full_str()}')
     details = ''
     if out_format is not None:
         assert out_path

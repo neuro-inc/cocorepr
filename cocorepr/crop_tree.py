@@ -62,7 +62,7 @@ def load_crop_tree(
                     res_cats[cat.id] = cat
                     res_imgs[img.id] = img
                     res_anns[ann.id] = ann
-            logger.info(f'  loaded {count2} crops from {ann_dir}: elapsed {timer2.elapsed}')
+            logger.info(f'- loaded {count2} crops from {ann_dir}: elapsed {timer2.elapsed}')
         logger.info(f'Loaded from {count1} crop directories: elapsed {timer1.elapsed}')
 
     with measure_time() as timer:

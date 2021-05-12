@@ -49,11 +49,11 @@ def load_json_tree(tree_dir: Union[str, Path], *, kind: str = "object_detection"
                     el = json.loads(el_file.read_text())
                 logger.debug(f'Loaded single-file json chunk {el_file}')
                 D[el_name] = el
-        logger.info(f"  json files loaded: elapsed {timer2.elapsed}")
+        logger.info(f"- json files loaded: elapsed {timer2.elapsed}")
 
         with measure_time() as timer2:
             coco = dataset_class.from_dict(D)
-        logger.info(f"  dataset constructed: elapsed {timer2.elapsed}")
+        logger.info(f"- dataset constructed: elapsed {timer2.elapsed}")
 
     logger.info(f"Loaded from json_tree: {coco.to_full_str()}")
     return coco
