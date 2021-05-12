@@ -185,7 +185,10 @@ def dump_crop_tree(
         removed_str = '\n'.join(map(str, sorted(to_remove)))
         logger.info(f'Removing {len(to_remove)} files and dirs:\n{removed_str}')
         for p in to_remove:
-            shutil.rmtree(str(p))
+            if p.is_dir():
+                shutil.rmtree(str(p))
+            else:
+                p.unlink()
 
     with measure_time() as timer:
         pairs = [
