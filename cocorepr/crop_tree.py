@@ -129,7 +129,8 @@ def _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file
         if ann_file.is_file():
             continue
 
-        image = image or read_image(image_file, download_url=img.coco_url)
+        if image is None:
+            image = read_image(image_file, download_url=img.coco_url)
         box = cut_bbox(image, ann.bbox)
         try:
             write_image(box, ann_file)
