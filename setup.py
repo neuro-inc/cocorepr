@@ -56,6 +56,6 @@ setuptools.setup(
     long_description = long_description,
     long_description_content_type = 'text/markdown',
     zip_safe = False,
-    entry_points = { 'console_scripts': ['cocorepr=cocorepr.main:main'] },
+    entry_points = { 'console_scripts': ['cocorepr=cocorepr.cli:main'] },
     **setup_cfg)
 
