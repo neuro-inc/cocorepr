@@ -315,16 +315,31 @@ def cut_annotations_per_category(coco: CocoDataset, max_annotations_per_category
     return coco
 
 # Cell
+from collections import defaultdict
+
 def remove_invalid_elements(coco: CocoDataset) -> CocoDataset:
-    kw = {
-        el: [x for x in getattr(coco, el) if x.is_valid()]
-        for el in coco.get_collective_elements()
-    }
-    res = replace(coco, **kw)
+    annid2ann = {ann.id: ann for ann in coco.annotations if ann.is_valid()}
+    imgid2img = {img.id: img for img in coco.images if img.is_valid()}
+    catid2cat = {cat.id: cat for cat in coco.categories if cat.is_valid()}
 
-    for el in coco.get_non_collective_elements():
-        x = getattr(coco, el)
-        if not x.is_valid():
-            logger.warning(f"Cannot drop invalid element '{el}' (keeping): {x}")
+    imgid2img_used = {}
+    catid2cat_used = {}
+    annid2ann_used = {}
+    for ann in annid2ann.values():
+        img = imgid2img.get(ann.image_id)
+        cat = catid2cat.get(ann.category_id)
+        if img is not None and cat is not None:
+            annid2ann_used[ann.id] = ann
+            imgid2img_used[img.id] = img
+            catid2cat_used[cat.id] = cat
 
-    return res
+    coco = replace(
+        coco,
+        annotations=sorted(annid2ann_used.values(), key=lambda x: x.id),
+        images=sorted(imgid2img_used.values(), key=lambda x: x.id),
+        categories=sorted(catid2cat_used.values(), key=lambda x: x.id),
+    )
+
+    # TODO: filter also licenses
+    # TODO: filter also get_non_collective_elements (info)
+    return coco

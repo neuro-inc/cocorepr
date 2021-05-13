@@ -31,6 +31,7 @@ def load_json_tree(tree_dir: Union[str, Path], *, kind: str = "object_detection"
     with measure_time() as timer:
 
         with measure_time() as timer2:
+
             for el_name in dataset_class.get_collective_elements():
                 el_dir = tree_dir / el_name
                 if not el_dir.is_dir():
@@ -40,6 +41,7 @@ def load_json_tree(tree_dir: Union[str, Path], *, kind: str = "object_detection"
                     el_list = [json.loads(f.read_text()) for f in el_dir.glob('*.json')]
                 logger.debug(f'Loaded {len(el_list)} json chunks from {el_dir}')
                 D[el_name] = el_list
+
             for el_name in dataset_class.get_non_collective_elements():
                 el_file = tree_dir / f'{el_name}.json'
                 if not el_file.is_file():
@@ -49,6 +51,7 @@ def load_json_tree(tree_dir: Union[str, Path], *, kind: str = "object_detection"
                     el = json.loads(el_file.read_text())
                 logger.debug(f'Loaded single-file json chunk {el_file}')
                 D[el_name] = el
+
         logger.info(f"- json files loaded: elapsed {timer2.elapsed}")
 
         with measure_time() as timer2:
