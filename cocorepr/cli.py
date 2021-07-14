@@ -128,14 +128,14 @@ def main(args=None):
         logger.info('Using coco_crop dataset only.')
         coco = coco_crop
 
+    if drop_invalid_elements:
+        coco = remove_invalid_elements(coco)
+        logger.info(f'After removing invalid elements: {coco.to_full_str()}')
+
     if max_crops_per_class:
         logger.info(f'Cutting off crops up to {max_crops_per_class} per class, random seed={seed}')
         coco = cut_annotations_per_category(coco, max_crops_per_class)
         logger.info(f'After cutting off: {coco.to_full_str()}')
-
-    if drop_invalid_elements:
-        coco = remove_invalid_elements(coco)
-        logger.info(f'After removing invalid elements: {coco.to_full_str()}')
 
     logger.info(f'[.] Result dataset: {coco.to_full_str()}')
     details = ''

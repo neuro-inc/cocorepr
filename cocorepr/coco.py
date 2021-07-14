@@ -76,7 +76,7 @@ class CocoInfo(CocoElement):
 
 @dataclass
 class CocoLicense(CocoElement):
-    id: int
+    id: str
     name: str
     url: Optional[str] = None
 
@@ -91,7 +91,7 @@ class CocoLicense(CocoElement):
 
 @dataclass
 class CocoImage(CocoElement):
-    id: int
+    id: str
     coco_url: str
     width: Optional[int] = None
     height: Optional[int] = None
@@ -102,7 +102,7 @@ class CocoImage(CocoElement):
 
     def is_valid(self) -> bool:
         try:
-            assert int(self.id) >= 0
+            assert self.id
             assert self.coco_url
             return True
         except:
@@ -119,13 +119,13 @@ class CocoImage(CocoElement):
 
 @dataclass
 class CocoAnnotation(CocoElement):
-    id: int
-    image_id: int
+    id: str
+    image_id: str
 
     def is_valid(self) -> bool:
         try:
-            assert int(self.id) >= 0
-            assert int(self.image_id) >= 0
+            assert self.id
+            assert self.image_id
             return True
         except:
             return False
@@ -135,7 +135,7 @@ class CocoAnnotation(CocoElement):
 
 @dataclass
 class CocoObjectDetectionAnnotation(CocoAnnotation):
-    category_id: int
+    category_id: str
     bbox: Tuple[X, Y, W, H]
     supercategory: Optional[str] = None
     area: Optional[int] = None
@@ -145,7 +145,7 @@ class CocoObjectDetectionAnnotation(CocoAnnotation):
         if not super().is_valid():
             return False
         try:
-            assert int(self.category_id) >= 0
+            assert self.category_id
             x, y, w, h = map(int, self.bbox)
             assert x >= 0, x
             assert y >= 0, y
@@ -159,7 +159,7 @@ class CocoObjectDetectionAnnotation(CocoAnnotation):
 
 @dataclass
 class CocoCategory(CocoElement):
-    id: int
+    id: str
 
     @abstractmethod
     def get_alias(self):
@@ -167,7 +167,7 @@ class CocoCategory(CocoElement):
 
     def is_valid(self) -> bool:
         try:
-            assert int(self.id) >= 0
+            assert self.id
             return True
         except:
             return False
