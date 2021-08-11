@@ -105,9 +105,9 @@ If multiple values were passed, the datasets will be merged (enforcing all the e
     --in_crop_tree /tmp/crop_tree/dir1 /tmp/crop_tree/dir2 \
     --out_path /tmp/json_tree \
     --out_format json_tree</code></pre>
-<p>The command above will load <a href="/cocorepr/json_file.html"><code>json_file</code></a> dataset from <code>/tmp/json_file/file1.json</code>, then load <code>/tmp/json_file/file2.json</code> and merge it with the first one, then load the <a href="/cocorepr/json_tree.html"><code>json_tree</code></a> from <code>/tmp/json_tree/dir1</code> and merge it with the previous result, etc.
-Then it'll load the <a href="/cocorepr/crop_tree.html"><code>crop_tree</code></a> from <code>/tmp/crop_tree/dir1</code> using meta-info from the previously constructed dataset and merge it with <code>/tmp/crop_tree/dir2</code>.
-The result will be written in form of <a href="/cocorepr/json_tree.html"><code>json_tree</code></a> to <code>/tmp/json_tree</code> (if directory exists, the tool will fail unless the <code>--overwrite</code> is specified).</p>
+<p>The command above will load <code>json_file</code> dataset from <code>/tmp/json_file/file1.json</code>, then load <code>/tmp/json_file/file2.json</code> and merge it with the first one, then load the <code>json_tree</code> from <code>/tmp/json_tree/dir1</code> and merge it with the previous result, etc.
+Then it'll load the <code>crop_tree</code> from <code>/tmp/crop_tree/dir1</code> using meta-info from the previously constructed dataset and merge it with <code>/tmp/crop_tree/dir2</code>.
+The result will be written in form of <code>json_tree</code> to <code>/tmp/json_tree</code> (if directory exists, the tool will fail unless the <code>--overwrite</code> is specified).</p>
 
 </div>
 </div>
@@ -318,11 +318,11 @@ $ tree /tmp/crop_tree
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Showcase:-single-iteration-of-the-dataset-cleaning-process">Showcase: single iteration of the dataset cleaning process<a class="anchor-link" href="#Showcase:-single-iteration-of-the-dataset-cleaning-process"> </a></h2><p>Our setup:</p>
 <ul>
-<li>Our dataset stored in git repository <code>/project/my-dataset</code> in the <a href="/cocorepr/json_tree.html"><code>json_tree</code></a> representation. This dataset suffers from incompleteness: some categories lack "clean" annotations.</li>
-<li>The customer has provided us with additional data as two <a href="/cocorepr/json_file.html"><code>json_file</code></a>s: <code>/inputs/annotations-new-1.json</code> and <code>/inputs/annotations-new-2.json</code>.</li>
-<li>We would like to merge these two datasets into a <a href="/cocorepr/crop_tree.html"><code>crop_tree</code></a> representation, clean it manually, and then re-construct a new dataset and save it in-place in our git repository.</li>
+<li>Our dataset stored in git repository <code>/project/my-dataset</code> in the <code>json_tree</code> representation. This dataset suffers from incompleteness: some categories lack "clean" annotations.</li>
+<li>The customer has provided us with additional data as two <code>json_file</code>s: <code>/inputs/annotations-new-1.json</code> and <code>/inputs/annotations-new-2.json</code>.</li>
+<li>We would like to merge these two datasets into a <code>crop_tree</code> representation, clean it manually, and then re-construct a new dataset and save it in-place in our git repository.</li>
 </ul>
-<p><em>Step 1</em>: merge datasets <a href="/cocorepr/json_tree.html"><code>json_tree</code></a> + <a href="/cocorepr/json_file.html"><code>json_file</code></a>x2 -&gt; <a href="/cocorepr/crop_tree.html"><code>crop_tree</code></a>:</p>
+<p><em>Step 1</em>: merge datasets <code>json_tree</code> + <code>json_file</code>x2 -&gt; <code>crop_tree</code>:</p>
 <div class="highlight"><pre><span></span>cocorepr <span class="se">\</span>
     --in_json_tree /project/my-dataset <span class="se">\</span>
     --in_json_file /inputs/annotations-new-1.json /inputs/annotations-new-2.json <span class="se">\</span>
@@ -332,7 +332,7 @@ $ tree /tmp/crop_tree
     --debug
 ls /temp/my-dataset-crops
 </pre></div>
-<p><em>Step 2</em>: manually clean the <a href="/cocorepr/crop_tree.html"><code>crop_tree</code></a> in <code>/temp/my-dataset-crops</code></p>
+<p><em>Step 2</em>: manually clean the <code>crop_tree</code> in <code>/temp/my-dataset-crops</code></p>
 <p><em>Step 3</em>: re-construct the cleaned dataset:</p>
 <div class="highlight"><pre><span></span><span class="c1"># first, verify that your original dataset has no uncommitted changes (they&#39;ll be lost)</span>
 <span class="nb">cd</span> /project/my-dataset

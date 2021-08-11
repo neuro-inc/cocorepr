@@ -15,7 +15,7 @@ from dataclasses_json import dataclass_json
 from dataclasses import dataclass, fields, asdict, field, replace
 from typing import *
 from pathlib import Path
-
+from pydantic import validate_arguments
 from .utils import sanitize_filename
 
 # Type helpers:
@@ -25,7 +25,7 @@ X, Y, W, H = Type[int], int, int, int
 logger = logging.getLogger()
 
 # Cell
-
+@validate_arguments
 @dataclass_json
 @dataclass
 class CocoElement:
@@ -84,6 +84,10 @@ class CocoLicense(CocoElement):
     def collection_name(self):
         return "licenses"
 
+    @property
+    def id(self):
+        return str(self.id)
+
     def is_valid(self) -> bool:
         return True  # no restrictions on the format
 
@@ -112,6 +116,10 @@ class CocoImage(CocoElement):
     def collection_name(self):
         return "images"
 
+    @property
+    def id(self):
+        return str(self.id)
+
     def get_file_name(self) -> str:
         return self.file_name or Path(self.coco_url).name
 
@@ -129,6 +137,14 @@ class CocoAnnotation(CocoElement):
             return True
         except:
             return False
+
+    @property
+    def id(self):
+        return str(self.id)
+
+    @property
+    def image_id(self):
+        return str(self.image_id)
 
     def get_file_name(self) -> str:
         return f'{self.id}.png'
@@ -155,6 +171,10 @@ class CocoObjectDetectionAnnotation(CocoAnnotation):
         except:
             return False
 
+    @property
+    def category_id(self):
+        return str(self.category_id)
+
 # Cell
 
 @dataclass
@@ -171,6 +191,10 @@ class CocoCategory(CocoElement):
             return True
         except:
             return False
+
+    @property
+    def id(self):
+        return str(self.id)
 
 @dataclass
 class CocoObjectDetectionCategory(CocoCategory):
@@ -273,7 +297,8 @@ def merge_datasets(d1: CocoDataset, d2: CocoDataset) -> CocoDataset:
                 if i in v1 and v2[i] != v1[i]:
                     raise ValueError(f'Invalid "{k}" of id={i}: {v2[i]} != {v1[i]}')
                 v_res[i] = v2[i]
-            res[k] = sorted(v_res.values(), key=lambda x: x['id'])
+            res[k] = sorted(v_res.values(), key=lambda x: str(x['id']))
+            # we are converting ID to str since sometimes its integer
         else:
             v1 = D1[k] or {}
             v2 = D2[k] or {}
@@ -335,9 +360,9 @@ def remove_invalid_elements(coco: CocoDataset) -> CocoDataset:
 
     coco = replace(
         coco,
-        annotations=sorted(annid2ann_used.values(), key=lambda x: x.id),
-        images=sorted(imgid2img_used.values(), key=lambda x: x.id),
-        categories=sorted(catid2cat_used.values(), key=lambda x: x.id),
+        annotations=sorted(annid2ann_used.values(), key=lambda x: str(x.id)),
+        images=sorted(imgid2img_used.values(), key=lambda x: str(x.id)),
+        categories=sorted(catid2cat_used.values(), key=lambda x: str(x.id)),
     )
 
     # TODO: filter also licenses
