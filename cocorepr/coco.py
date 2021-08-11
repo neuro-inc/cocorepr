@@ -12,20 +12,16 @@ import random
 from abc import abstractmethod
 from datetime import datetime
 from dataclasses_json import dataclass_json
-from dataclasses import dataclass, fields, asdict, field, replace
+from dataclasses import fields, asdict, field, replace
+from pydantic.dataclasses import dataclass
 from typing import *
 from pathlib import Path
-from pydantic import validate_arguments
 from .utils import sanitize_filename
-
-# Type helpers:
-X, Y, W, H = Type[int], int, int, int
 
 # Cell
 logger = logging.getLogger()
 
 # Cell
-@validate_arguments
 @dataclass_json
 @dataclass
 class CocoElement:
@@ -84,10 +80,6 @@ class CocoLicense(CocoElement):
     def collection_name(self):
         return "licenses"
 
-    @property
-    def id(self):
-        return str(self.id)
-
     def is_valid(self) -> bool:
         return True  # no restrictions on the format
 
@@ -116,10 +108,6 @@ class CocoImage(CocoElement):
     def collection_name(self):
         return "images"
 
-    @property
-    def id(self):
-        return str(self.id)
-
     def get_file_name(self) -> str:
         return self.file_name or Path(self.coco_url).name
 
@@ -138,21 +126,13 @@ class CocoAnnotation(CocoElement):
         except:
             return False
 
-    @property
-    def id(self):
-        return str(self.id)
-
-    @property
-    def image_id(self):
-        return str(self.image_id)
-
     def get_file_name(self) -> str:
         return f'{self.id}.png'
 
 @dataclass
 class CocoObjectDetectionAnnotation(CocoAnnotation):
     category_id: str
-    bbox: Tuple[X, Y, W, H]
+    bbox: Optional[Tuple[int, ...]]
     supercategory: Optional[str] = None
     area: Optional[int] = None
     iscrowd: Optional[int] = None
@@ -171,9 +151,6 @@ class CocoObjectDetectionAnnotation(CocoAnnotation):
         except:
             return False
 
-    @property
-    def category_id(self):
-        return str(self.category_id)
 
 # Cell
 
@@ -192,9 +169,6 @@ class CocoCategory(CocoElement):
         except:
             return False
 
-    @property
-    def id(self):
-        return str(self.id)
 
 @dataclass
 class CocoObjectDetectionCategory(CocoCategory):
