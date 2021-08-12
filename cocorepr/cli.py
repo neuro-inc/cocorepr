@@ -67,7 +67,13 @@ def get_parser():
     parser.add_argument("--indent", default=4,
                         type=lambda x: int(x) if str(x).lower() not in ('none', 'null', '~') else None,
                         help="Indentation in the output json files.")
-
+    parser.add_argument("--update", action='store_true',
+        help="Whether to update objects with the same ID, but different content during the dataset merge. "
+             "If not used and such objects are found - exception will be thrown. "
+             "The update strategy: [in_json_tree, in_json_file, in_crop_tree], from left to right within each group, top-right one wins. "
+             "Beware, crop_tree datasets are owerwritting and removing data from other datasets: "
+             "consider first merging crop_tree with it's json_tree/file into json_tree/file and merge the resulting dataset with others."
+    )
     parser.add_argument("--debug", action='store_true')
 
     return parser
@@ -96,6 +102,7 @@ def main(args=None):
     dump_crop_tree_num_processes = args.dump_crop_tree_num_processes
     overwrite = args.overwrite
     indent = args.indent
+    update: bool = args.update
 
     if out_path and not out_format or not out_path and out_format:
         raise ValueError(f'Option --out_format requires --out_path and vice versa')
@@ -105,10 +112,10 @@ def main(args=None):
     coco = None
     coco_count = 0
     for in_json_tree in in_json_tree_list:
-        coco = merge_datasets(coco, load_json_tree(in_json_tree))
+        coco = merge_datasets(coco, load_json_tree(in_json_tree), update)
         coco_count += 1
     for in_json_file in in_json_file_list:
-        coco = merge_datasets(coco, load_json_file(in_json_file))
+        coco = merge_datasets(coco, load_json_file(in_json_file), update)
         coco_count += 1
 
     if coco is None:
@@ -120,7 +127,7 @@ def main(args=None):
     coco_crop = None
     coco_crop_count = 0
     for in_crop_tree in in_crop_tree_list:
-        coco_crop = merge_datasets(coco_crop, load_crop_tree(in_crop_tree, coco))
+        coco_crop = merge_datasets(coco_crop, load_crop_tree(in_crop_tree, coco), update)
         coco_crop_count += 1
     if coco_crop is not None:
         if coco_crop_count > 1:

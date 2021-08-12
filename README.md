@@ -17,7 +17,7 @@ usage: cocorepr [-h] [--in_json_file [IN_JSON_FILE [IN_JSON_FILE ...]]]
                 [--in_crop_tree [IN_CROP_TREE [IN_CROP_TREE ...]]] --out_path
                 OUT_PATH --out_format {json_file,json_tree,crop_tree}
                 [--seed SEED] [--max_crops_per_class MAX_CROPS_PER_CLASS]
-                [--overwrite] [--indent INDENT] [--debug]
+                [--overwrite] [--indent INDENT] [--update] [--debug]
 
 Tool for converting datasets in COCO format between different representations
 
@@ -47,6 +47,16 @@ optional arguments:
   --overwrite           If set, will delete the output file/directory before
                         dumping the result dataset.
   --indent INDENT       Indentation in the output json files.
+  --update              Whether to update objects with the same ID, but
+                        different content during the dataset merge. If not
+                        used and such objects are found - exception will be
+                        thrown. The update strategy: [in_json_tree,
+                        in_json_file, in_crop_tree], from left to right within
+                        each group, top-right one wins. Beware, crop_tree
+                        datasets are owerwritting and removing data from other
+                        datasets: consider first merging crop_tree with it's
+                        json_tree/file into json_tree/file and merge the
+                        resulting dataset with others.
   --debug
 ```
 
@@ -102,7 +112,7 @@ For historical reasons, both datasets were collected, cleaned and stored in COCO
 
 ```json5
 {
-    "id": 49428,  // image ID
+    "id": "49428",  // image ID
     "coco_url": "http://images.cocodataset.org/train2017/000000049428.jpg",  // URL of the immutable image blob
     // "license": 6,
     // "file_name": "000000049428.jpg",
@@ -116,9 +126,9 @@ For historical reasons, both datasets were collected, cleaned and stored in COCO
 Though COCO format is native fine for OD datasets, it might be bulky for CL datasets, which are concerned on the class of annotations, not images:
 ```json5
 {
-    "id": 124710,  // annotation ID
-    "image_id": 140006,  // image ID in the section "images"
-    "category_id": 2,  // class ID in the section "categories"
+    "id": "124710",  // annotation ID
+    "image_id": "140006",  // image ID in the section "images"
+    "category_id": "2",  // class ID in the section "categories"
     "bbox": [496.52, 125.94, 143.48, 113.54],  // crop coordinates in pixels: [x,y,w,h] (from top-left, x=horizontal)
 }
 ```
@@ -142,7 +152,7 @@ $ cat examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
     "licenses": [
         {
             "url": "http://creativecommons.org/licenses/by-nc-sa/2.0/",
-            "id": 1,
+            "id": "1",
             "name": "Attribution-NonCommercial-ShareAlike License"
         },
         ...
@@ -158,35 +168,35 @@ $ cat examples/coco_chunk/json_file/instances_train2017_chunk3x2.json
     "categories": [
         {
             "supercategory": "person",
-            "id": 1,
+            "id": "1",
             "name": "person"
         },
         ...
     ],
     "images": [
         {
-            "license": 6,
+            "license": "6",
             "file_name": "000000049428.jpg",
             "coco_url": "http://images.cocodataset.org/train2017/000000049428.jpg",
             "height": 427,
             "width": 640,
             "date_captured": "2013-11-15 04:30:29",
             "flickr_url": "http://farm7.staticflickr.com/6014/5923365195_bee5603371_z.jpg",
-            "id": 49428
+            "id": "49428"
         },
         ...
     ],
     "annotations": [
         {
-            "image_id": 140006,
+            "image_id": "140006",
             "bbox": [
                 496.52,
                 125.94,
                 143.48,
                 113.54
             ],
-            "category_id": 2,
-            "id": 124710
+            "category_id": "2",
+            "id": "124710"
         },
         ...
     ]

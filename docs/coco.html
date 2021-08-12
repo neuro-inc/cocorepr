@@ -44,6 +44,29 @@ nb_path: "nbs/01_coco.ipynb"
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Executing &lt;Handle IOLoop.add_future.&lt;locals&gt;.&lt;lambda&gt;(&lt;Future finis...queues.py:248&gt;) at /Users/ysem/miniconda3/envs/cocorepr36/lib/python3.6/site-packages/tornado/ioloop.py:688 created at /Users/ysem/miniconda3/envs/cocorepr36/lib/python3.6/site-packages/tornado/concurrent.py:184&gt; took 0.448 seconds
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The autoreload extension is already loaded. To reload it, use:
+  %reload_ext autoreload
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -72,7 +95,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="CocoElement" class="doc_header"><code>class</code> <code>CocoElement</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L30" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoElement</code>()</p>
+<h2 id="CocoElement" class="doc_header"><code>class</code> <code>CocoElement</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L27" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoElement</code>()</p>
 </blockquote>
 <p>CocoElement()</p>
 
@@ -106,7 +129,7 @@ nb_path: "nbs/01_coco.ipynb"
 <div class="output_markdown rendered_html output_subarea ">
 <h2 id="CocoInfo" class="doc_header"><code>class</code> <code>CocoInfo</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L56" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoInfo</code>(<strong><code>year</code></strong>:<code>Optional</code>[<code>int</code>]=<em><code>None</code></em>, <strong><code>version</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>description</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>contributor</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>url</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>date_created</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
 </blockquote>
-<p>CocoInfo(year: Union[int, NoneType] = None, version: Union[str, NoneType] = None, description: Union[str, NoneType] = None, contributor: Union[str, NoneType] = None, url: Union[str, NoneType] = None, date_created: Union[str, NoneType] = None)</p>
+<p>CocoInfo(year:Union[int, NoneType]=None, version:Union[str, NoneType]=None, description:Union[str, NoneType]=None, contributor:Union[str, NoneType]=None, url:Union[str, NoneType]=None, date_created:Union[str, NoneType]=None)</p>
 
 </div>
 
@@ -148,6 +171,7 @@ nb_path: "nbs/01_coco.ipynb"
 <span class="k">assert</span> <span class="n">coco_info_dict2</span> <span class="o">==</span> <span class="n">coco_info_dict</span><span class="p">,</span> <span class="n">coco_info_dict2</span>
 
 <span class="k">assert</span> <span class="n">coco_info</span><span class="o">.</span><span class="n">collection_name</span> <span class="o">==</span> <span class="s1">&#39;info&#39;</span>
+<span class="k">assert</span> <span class="n">coco_info</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -198,9 +222,9 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="CocoLicense" class="doc_header"><code>class</code> <code>CocoLicense</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L71" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoLicense</code>(<strong><code>id</code></strong>:<code>int</code>, <strong><code>name</code></strong>:<code>str</code>, <strong><code>url</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
+<h2 id="CocoLicense" class="doc_header"><code>class</code> <code>CocoLicense</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L74" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoLicense</code>(<strong><code>id</code></strong>:<code>str</code>, <strong><code>name</code></strong>:<code>str</code>, <strong><code>url</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
 </blockquote>
-<p>CocoLicense(id: int, name: str, url: Union[str, NoneType] = None)</p>
+<p>CocoLicense(id:str, name:str, url:Union[str, NoneType]=None)</p>
 
 </div>
 
@@ -227,7 +251,7 @@ nb_path: "nbs/01_coco.ipynb"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">coco_license_dict</span> <span class="o">=</span> <span class="p">{</span>
- <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+ <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
  <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Attribution-NonCommercial-NoDerivatives 4.0 International&#39;</span><span class="p">,</span>
  <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://creativecommons.org/licenses/by-nc-nd/4.0/&#39;</span><span class="p">,</span>
 <span class="p">}</span>
@@ -236,6 +260,8 @@ nb_path: "nbs/01_coco.ipynb"
 <span class="n">coco_license_dict2</span> <span class="o">=</span> <span class="n">coco_license</span><span class="o">.</span><span class="n">to_dict_skip_nulls</span><span class="p">()</span>
 <span class="n">display</span><span class="p">(</span><span class="n">coco_license</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">coco_license_dict2</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">coco_license</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
 
 <span class="k">assert</span> <span class="n">coco_license_dict2</span> <span class="o">==</span> <span class="n">coco_license_dict</span><span class="p">,</span> <span class="n">coco_license_dict2</span>
 <span class="k">assert</span> <span class="n">coco_license</span><span class="o">.</span><span class="n">collection_name</span> <span class="o">==</span> <span class="s1">&#39;licenses&#39;</span>
@@ -257,7 +283,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_text output_subarea ">
-<pre>CocoLicense(id=1, name=&#39;Attribution-NonCommercial-NoDerivatives 4.0 International&#39;, url=&#39;https://creativecommons.org/licenses/by-nc-nd/4.0/&#39;)</pre>
+<pre>CocoLicense(id=&#39;1&#39;, name=&#39;Attribution-NonCommercial-NoDerivatives 4.0 International&#39;, url=&#39;https://creativecommons.org/licenses/by-nc-nd/4.0/&#39;)</pre>
 </div>
 
 </div>
@@ -267,7 +293,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_text output_subarea ">
-<pre>{&#39;id&#39;: 1,
+<pre>{&#39;id&#39;: &#39;1&#39;,
  &#39;name&#39;: &#39;Attribution-NonCommercial-NoDerivatives 4.0 International&#39;,
  &#39;url&#39;: &#39;https://creativecommons.org/licenses/by-nc-nd/4.0/&#39;}</pre>
 </div>
@@ -291,9 +317,9 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="CocoImage" class="doc_header"><code>class</code> <code>CocoImage</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L83" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoImage</code>(<strong><code>id</code></strong>:<code>int</code>, <strong><code>coco_url</code></strong>:<code>str</code>, <strong><code>width</code></strong>:<code>Optional</code>[<code>int</code>]=<em><code>None</code></em>, <strong><code>height</code></strong>:<code>Optional</code>[<code>int</code>]=<em><code>None</code></em>, <strong><code>license</code></strong>:<code>Optional</code>[<code>int</code>]=<em><code>None</code></em>, <strong><code>file_name</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>flickr_url</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>date_captured</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
+<h2 id="CocoImage" class="doc_header"><code>class</code> <code>CocoImage</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L89" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoImage</code>(<strong><code>id</code></strong>:<code>str</code>, <strong><code>coco_url</code></strong>:<code>str</code>, <strong><code>width</code></strong>:<code>Optional</code>[<code>int</code>]=<em><code>None</code></em>, <strong><code>height</code></strong>:<code>Optional</code>[<code>int</code>]=<em><code>None</code></em>, <strong><code>license</code></strong>:<code>Optional</code>[<code>int</code>]=<em><code>None</code></em>, <strong><code>file_name</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>flickr_url</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>date_captured</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
 </blockquote>
-<p>CocoImage(id: int, coco_url: str, width: Union[int, NoneType] = None, height: Union[int, NoneType] = None, license: Union[int, NoneType] = None, file_name: Union[str, NoneType] = None, flickr_url: Union[str, NoneType] = None, date_captured: Union[str, NoneType] = None)</p>
+<p>CocoImage(id:str, coco_url:str, width:Union[int, NoneType]=None, height:Union[int, NoneType]=None, license:Union[int, NoneType]=None, file_name:Union[str, NoneType]=None, flickr_url:Union[str, NoneType]=None, date_captured:Union[str, NoneType]=None)</p>
 
 </div>
 
@@ -320,7 +346,7 @@ nb_path: "nbs/01_coco.ipynb"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">coco_image_dict</span> <span class="o">=</span> <span class="p">{</span>
- <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">204800</span><span class="p">,</span>
+ <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;204800&#39;</span><span class="p">,</span>
  <span class="s1">&#39;license&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
  <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://outforz.s3.amazonaws.com/media/public/content/2021/01/10/e2e76667-f7e.jpg&#39;</span><span class="p">,</span>
  <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="mi">1920</span><span class="p">,</span>
@@ -333,12 +359,16 @@ nb_path: "nbs/01_coco.ipynb"
 <span class="n">coco_image</span> <span class="o">=</span> <span class="n">CocoImage</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">coco_image_dict</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">coco_image</span><span class="p">)</span>
 
+<span class="k">assert</span> <span class="n">coco_image</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
+
 <span class="k">assert</span> <span class="n">coco_image</span><span class="o">.</span><span class="n">to_dict_skip_nulls</span><span class="p">()</span> <span class="o">==</span> <span class="n">coco_image_dict</span><span class="p">,</span> <span class="n">coco_image</span><span class="o">.</span><span class="n">to_dict_skip_nulls</span><span class="p">()</span>
 <span class="k">assert</span> <span class="n">coco_image</span><span class="o">.</span><span class="n">collection_name</span> <span class="o">==</span> <span class="s1">&#39;images&#39;</span>
 
 <span class="c1"># --</span>
 <span class="c1"># test minimal required fields</span>
 <span class="k">assert</span> <span class="n">CocoImage</span><span class="o">.</span><span class="n">from_dict</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;http://image&#39;</span><span class="p">})</span> <span class="o">==</span> <span class="n">CocoImage</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">coco_url</span><span class="o">=</span><span class="s1">&#39;http://image&#39;</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">CocoImage</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">coco_url</span><span class="o">=</span><span class="s1">&#39;http://abc.com/keks.jpg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_file_name</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;keks.jpg&#39;</span>
 </pre></div>
 
     </div>
@@ -353,7 +383,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_text output_subarea ">
-<pre>CocoImage(id=204800, coco_url=&#39;https://outforz.s3.amazonaws.com/media/public/content/2021/01/10/e2e76667-f7e.jpg&#39;, width=1920, height=2560, license=1, file_name=&#39;e2e76667-f7e.jpg&#39;, flickr_url=None, date_captured=&#39;2021-01-05 13:18:13&#39;)</pre>
+<pre>CocoImage(id=&#39;204800&#39;, coco_url=&#39;https://outforz.s3.amazonaws.com/media/public/content/2021/01/10/e2e76667-f7e.jpg&#39;, width=1920, height=2560, license=1, file_name=&#39;e2e76667-f7e.jpg&#39;, flickr_url=None, date_captured=&#39;2021-01-05 13:18:13&#39;)</pre>
 </div>
 
 </div>
@@ -375,66 +405,9 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="CocoAnnotation" class="doc_header"><code>class</code> <code>CocoAnnotation</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L104" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoAnnotation</code>(<strong><code>id</code></strong>:<code>int</code>, <strong><code>image_id</code></strong>:<code>int</code>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
+<h2 id="CocoAnnotation" class="doc_header"><code>class</code> <code>CocoAnnotation</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L117" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoAnnotation</code>(<strong><code>id</code></strong>:<code>str</code>, <strong><code>image_id</code></strong>:<code>str</code>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
 </blockquote>
-<p>CocoAnnotation(id: int, image_id: int)</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h2 id="CocoObjectDetectionAnnotation" class="doc_header"><code>class</code> <code>CocoObjectDetectionAnnotation</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L113" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoObjectDetectionAnnotation</code>(<strong><code>id</code></strong>:<code>int</code>, <strong><code>image_id</code></strong>:<code>int</code>, <strong><code>category_id</code></strong>:<code>int</code>, <strong><code>bbox</code></strong>:<code>Tuple</code>[<code>Type</code>[<code>int</code>], <code>int</code>, <code>int</code>, <code>int</code>], <strong><code>supercategory</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>area</code></strong>:<code>Optional</code>[<code>int</code>]=<em><code>None</code></em>, <strong><code>iscrowd</code></strong>:<code>Optional</code>[<code>int</code>]=<em><code>None</code></em>) :: <a href="/cocorepr/coco.html#CocoAnnotation"><code>CocoAnnotation</code></a></p>
-</blockquote>
-<p>CocoObjectDetectionAnnotation(id: int, image_id: int, category_id: int, bbox: Tuple[Type[int], int, int, int], supercategory: Union[str, NoneType] = None, area: Union[int, NoneType] = None, iscrowd: Union[int, NoneType] = None)</p>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h2 id="CocoCategory" class="doc_header"><code>class</code> <code>CocoCategory</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L132" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoCategory</code>(<strong><code>id</code></strong>:<code>int</code>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
-</blockquote>
-<p>CocoCategory(id: int)</p>
+<p>CocoAnnotation(id:str, image_id:str)</p>
 
 </div>
 
@@ -457,9 +430,90 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="CocoObjectDetectionCategory" class="doc_header"><code>class</code> <code>CocoObjectDetectionCategory</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L143" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoObjectDetectionCategory</code>(<strong><code>id</code></strong>:<code>int</code>, <strong><code>name</code></strong>:<code>str</code>, <strong><code>supercategory</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>) :: <a href="/cocorepr/coco.html#CocoCategory"><code>CocoCategory</code></a></p>
+<h2 id="CocoObjectDetectionAnnotation" class="doc_header"><code>class</code> <code>CocoObjectDetectionAnnotation</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L133" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoObjectDetectionAnnotation</code>(<strong><code>id</code></strong>:<code>str</code>, <strong><code>image_id</code></strong>:<code>str</code>, <strong><code>category_id</code></strong>:<code>str</code>, <strong><code>bbox</code></strong>:<code>Optional</code>[<code>Tuple</code>[<code>int</code>, <code>Ellipsis</code>]], <strong><code>supercategory</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>, <strong><code>area</code></strong>:<code>Optional</code>[<code>int</code>]=<em><code>None</code></em>, <strong><code>iscrowd</code></strong>:<code>Optional</code>[<code>int</code>]=<em><code>None</code></em>) :: <a href="/cocorepr/coco.html#CocoAnnotation"><code>CocoAnnotation</code></a></p>
 </blockquote>
-<p>CocoObjectDetectionCategory(id: int, name: str, supercategory: Union[str, NoneType] = None)</p>
+<p>CocoObjectDetectionAnnotation(id:str, image_id:str, category_id:str, bbox:Union[Tuple[int, ...], NoneType], supercategory:Union[str, NoneType]=None, area:Union[int, NoneType]=None, iscrowd:Union[int, NoneType]=None)</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">CocoObjectDetectionAnnotation</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">image_id</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">category_id</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="p">[])</span>
+<span class="k">assert</span> <span class="ow">not</span> <span class="n">c</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">replace</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="k">assert</span> <span class="ow">not</span> <span class="n">c</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">replace</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="k">assert</span> <span class="n">c</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="CocoCategory" class="doc_header"><code>class</code> <code>CocoCategory</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L158" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoCategory</code>(<strong><code>id</code></strong>:<code>str</code>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
+</blockquote>
+<p>CocoCategory(id:str)</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="CocoObjectDetectionCategory" class="doc_header"><code>class</code> <code>CocoObjectDetectionCategory</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L174" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoObjectDetectionCategory</code>(<strong><code>id</code></strong>:<code>str</code>, <strong><code>name</code></strong>:<code>str</code>, <strong><code>supercategory</code></strong>:<code>Optional</code>[<code>str</code>]=<em><code>None</code></em>) :: <a href="/cocorepr/coco.html#CocoCategory"><code>CocoCategory</code></a></p>
+</blockquote>
+<p>CocoObjectDetectionCategory(id:str, name:str, supercategory:Union[str, NoneType]=None)</p>
 
 </div>
 
@@ -486,6 +540,7 @@ nb_path: "nbs/01_coco.ipynb"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">CocoObjectDetectionCategory</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;12345678&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Бреф Кольорова вода Евкаліпт НОВИНКА!!! 50 г&#39;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">c</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
 <span class="n">a</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">get_dir_name</span><span class="p">()</span>
 <span class="k">assert</span> <span class="n">a</span> <span class="o">==</span> <span class="s1">&#39;Бреф_Кольорова_вода_Евкаліпт_НОВИНКА_50_г--12345678&#39;</span><span class="p">,</span> <span class="n">a</span>
 </pre></div>
@@ -508,9 +563,9 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="CocoDataset" class="doc_header"><code>class</code> <code>CocoDataset</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L154" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoDataset</code>(<strong><code>images</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoImage"><code>CocoImage</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>info</code></strong>:<a href="/cocorepr/coco.html#CocoInfo"><code>CocoInfo</code></a>=<em><code>CocoInfo(year=None, version=None, description=None, contributor=None, url=None, date_created=None)</code></em>, <strong><code>licenses</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoLicense"><code>CocoLicense</code></a>]=<em><code>&lt;factory&gt;</code></em>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
+<h2 id="CocoDataset" class="doc_header"><code>class</code> <code>CocoDataset</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L192" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoDataset</code>(<strong><code>annotations</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoAnnotation"><code>CocoAnnotation</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>images</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoImage"><code>CocoImage</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>info</code></strong>:<a href="/cocorepr/coco.html#CocoInfo"><code>CocoInfo</code></a>=<em><code>CocoInfo(year=None, version=None, description=None, contributor=None, url=None, date_created=None)</code></em>, <strong><code>licenses</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoLicense"><code>CocoLicense</code></a>]=<em><code>&lt;factory&gt;</code></em>) :: <a href="/cocorepr/coco.html#CocoElement"><code>CocoElement</code></a></p>
 </blockquote>
-<p>CocoDataset(images: List[cocorepr.coco.CocoImage] = <factory>, info: cocorepr.coco.CocoInfo = CocoInfo(year=None, version=None, description=None, contributor=None, url=None, date_created=None), licenses: List[cocorepr.coco.CocoLicense] = <factory>)</p>
+<p>CocoDataset(annotations:List[cocorepr.coco.CocoAnnotation]=<factory>, images:List[cocorepr.coco.CocoImage]=<factory>, info:cocorepr.coco.CocoInfo=CocoInfo(year=None, version=None, description=None, contributor=None, url=None, date_created=None), licenses:List[cocorepr.coco.CocoLicense]=<factory>)</p>
 
 </div>
 
@@ -540,7 +595,7 @@ nb_path: "nbs/01_coco.ipynb"
 <span class="n">col</span> <span class="o">=</span> <span class="n">CocoDataset</span><span class="o">.</span><span class="n">get_collective_elements</span><span class="p">()</span>
 
 <span class="k">assert</span> <span class="n">non_col</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">],</span> <span class="n">non_col</span>
-<span class="k">assert</span> <span class="n">col</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;images&#39;</span><span class="p">,</span> <span class="s1">&#39;licenses&#39;</span><span class="p">],</span> <span class="n">col</span>
+<span class="k">assert</span> <span class="n">col</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;annotations&#39;</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">,</span> <span class="s1">&#39;licenses&#39;</span><span class="p">],</span> <span class="n">col</span>
 </pre></div>
 
     </div>
@@ -561,9 +616,9 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="CocoObjectDetectionDataset" class="doc_header"><code>class</code> <code>CocoObjectDetectionDataset</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L181" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoObjectDetectionDataset</code>(<strong><code>images</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoImage"><code>CocoImage</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>info</code></strong>:<a href="/cocorepr/coco.html#CocoInfo"><code>CocoInfo</code></a>=<em><code>CocoInfo(year=None, version=None, description=None, contributor=None, url=None, date_created=None)</code></em>, <strong><code>licenses</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoLicense"><code>CocoLicense</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>annotations</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoObjectDetectionAnnotation"><code>CocoObjectDetectionAnnotation</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>categories</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoObjectDetectionCategory"><code>CocoObjectDetectionCategory</code></a>]=<em><code>&lt;factory&gt;</code></em>) :: <a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a></p>
+<h2 id="CocoObjectDetectionDataset" class="doc_header"><code>class</code> <code>CocoObjectDetectionDataset</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L225" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>CocoObjectDetectionDataset</code>(<strong><code>annotations</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoObjectDetectionAnnotation"><code>CocoObjectDetectionAnnotation</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>images</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoImage"><code>CocoImage</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>info</code></strong>:<a href="/cocorepr/coco.html#CocoInfo"><code>CocoInfo</code></a>=<em><code>CocoInfo(year=None, version=None, description=None, contributor=None, url=None, date_created=None)</code></em>, <strong><code>licenses</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoLicense"><code>CocoLicense</code></a>]=<em><code>&lt;factory&gt;</code></em>, <strong><code>categories</code></strong>:<code>List</code>[<a href="/cocorepr/coco.html#CocoObjectDetectionCategory"><code>CocoObjectDetectionCategory</code></a>]=<em><code>&lt;factory&gt;</code></em>) :: <a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a></p>
 </blockquote>
-<p>CocoObjectDetectionDataset(images: List[cocorepr.coco.CocoImage] = <factory>, info: cocorepr.coco.CocoInfo = CocoInfo(year=None, version=None, description=None, contributor=None, url=None, date_created=None), licenses: List[cocorepr.coco.CocoLicense] = <factory>, annotations: List[cocorepr.coco.CocoObjectDetectionAnnotation] = <factory>, categories: List[cocorepr.coco.CocoObjectDetectionCategory] = <factory>)</p>
+<p>CocoObjectDetectionDataset(annotations:List[cocorepr.coco.CocoObjectDetectionAnnotation]=<factory>, images:List[cocorepr.coco.CocoImage]=<factory>, info:cocorepr.coco.CocoInfo=CocoInfo(year=None, version=None, description=None, contributor=None, url=None, date_created=None), licenses:List[cocorepr.coco.CocoLicense]=<factory>, categories:List[cocorepr.coco.CocoObjectDetectionCategory]=<factory>)</p>
 
 </div>
 
@@ -593,7 +648,7 @@ nb_path: "nbs/01_coco.ipynb"
 <span class="n">col</span> <span class="o">=</span> <span class="n">CocoObjectDetectionDataset</span><span class="o">.</span><span class="n">get_collective_elements</span><span class="p">()</span>
 
 <span class="k">assert</span> <span class="n">non_col</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">],</span> <span class="n">non_col</span>
-<span class="k">assert</span> <span class="n">col</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;images&#39;</span><span class="p">,</span> <span class="s1">&#39;licenses&#39;</span><span class="p">,</span> <span class="s1">&#39;annotations&#39;</span><span class="p">,</span> <span class="s1">&#39;categories&#39;</span><span class="p">],</span> <span class="n">col</span>
+<span class="k">assert</span> <span class="n">col</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;annotations&#39;</span><span class="p">,</span> <span class="s1">&#39;categories&#39;</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">,</span> <span class="s1">&#39;licenses&#39;</span><span class="p">],</span> <span class="n">col</span>
 </pre></div>
 
     </div>
@@ -612,13 +667,14 @@ nb_path: "nbs/01_coco.ipynb"
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">CocoObjectDetectionDataset</span><span class="p">(</span>
     <span class="n">info</span><span class="o">=</span><span class="n">CocoInfo</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2017</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;1.0&#39;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;COCO 2017 Dataset&#39;</span><span class="p">,</span> <span class="n">contributor</span><span class="o">=</span><span class="s1">&#39;COCO Consortium&#39;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="s1">&#39;http://cocodataset.org&#39;</span><span class="p">,</span> <span class="n">date_created</span><span class="o">=</span><span class="s1">&#39;2017/09/01&#39;</span><span class="p">),</span>
-    <span class="n">images</span><span class="o">=</span><span class="p">[</span><span class="n">CocoImage</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">362343</span><span class="p">,</span> <span class="n">coco_url</span><span class="o">=</span><span class="s1">&#39;http://image&#39;</span><span class="p">)],</span> 
+    <span class="n">images</span><span class="o">=</span><span class="p">[</span><span class="n">CocoImage</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;362343&#39;</span><span class="p">,</span> <span class="n">coco_url</span><span class="o">=</span><span class="s1">&#39;http://image&#39;</span><span class="p">)],</span> 
     <span class="n">annotations</span><span class="o">=</span><span class="p">[</span>
-      <span class="n">CocoObjectDetectionAnnotation</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">402717</span><span class="p">,</span> <span class="n">image_id</span><span class="o">=</span><span class="mi">362343</span><span class="p">,</span> <span class="n">category_id</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="p">(</span><span class="mf">196.7</span><span class="p">,</span> <span class="mf">254.52</span><span class="p">,</span> <span class="mf">9.89</span><span class="p">,</span> <span class="mf">23.19</span><span class="p">),</span> <span class="n">iscrowd</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+      <span class="n">CocoObjectDetectionAnnotation</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;402717&#39;</span><span class="p">,</span> <span class="n">image_id</span><span class="o">=</span><span class="s1">&#39;362343&#39;</span><span class="p">,</span> <span class="n">category_id</span><span class="o">=</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="p">(</span><span class="mf">196.7</span><span class="p">,</span> <span class="mf">254.52</span><span class="p">,</span> <span class="mf">9.89</span><span class="p">,</span> <span class="mf">23.19</span><span class="p">),</span> <span class="n">iscrowd</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
     <span class="p">],</span>
-    <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="n">CocoObjectDetectionCategory</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;person&quot;</span><span class="p">)],</span>
+    <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="n">CocoObjectDetectionCategory</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;person&quot;</span><span class="p">)],</span>
 <span class="p">)</span>
 
+<span class="k">assert</span> <span class="n">dataset</span><span class="o">.</span><span class="n">is_valid</span><span class="p">()</span>
 <span class="n">dataset</span><span class="o">.</span><span class="n">to_dict_skip_nulls</span><span class="p">()</span>
 </pre></div>
 
@@ -634,7 +690,12 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>{&#39;images&#39;: [{&#39;id&#39;: 362343, &#39;coco_url&#39;: &#39;http://image&#39;}],
+<pre>{&#39;annotations&#39;: [{&#39;id&#39;: &#39;402717&#39;,
+   &#39;image_id&#39;: &#39;362343&#39;,
+   &#39;category_id&#39;: &#39;10&#39;,
+   &#39;bbox&#39;: (196, 254, 9, 23),
+   &#39;iscrowd&#39;: 0}],
+ &#39;images&#39;: [{&#39;id&#39;: &#39;362343&#39;, &#39;coco_url&#39;: &#39;http://image&#39;}],
  &#39;info&#39;: {&#39;year&#39;: 2017,
   &#39;version&#39;: &#39;1.0&#39;,
   &#39;description&#39;: &#39;COCO 2017 Dataset&#39;,
@@ -642,12 +703,7 @@ nb_path: "nbs/01_coco.ipynb"
   &#39;url&#39;: &#39;http://cocodataset.org&#39;,
   &#39;date_created&#39;: &#39;2017/09/01&#39;},
  &#39;licenses&#39;: [],
- &#39;annotations&#39;: [{&#39;id&#39;: 402717,
-   &#39;image_id&#39;: 362343,
-   &#39;category_id&#39;: 10,
-   &#39;bbox&#39;: (196.7, 254.52, 9.89, 23.19),
-   &#39;iscrowd&#39;: 0}],
- &#39;categories&#39;: [{&#39;id&#39;: 10, &#39;name&#39;: &#39;person&#39;}]}</pre>
+ &#39;categories&#39;: [{&#39;id&#39;: &#39;10&#39;, &#39;name&#39;: &#39;person&#39;}]}</pre>
 </div>
 
 </div>
@@ -698,7 +754,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&#39;CocoObjectDetectionDataset(images=1, licenses=0, annotations=1, categories=1)&#39;</pre>
+<pre>&#39;CocoObjectDetectionDataset(annotations=1, categories=1, images=1, licenses=0)&#39;</pre>
 </div>
 
 </div>
@@ -723,7 +779,7 @@ nb_path: "nbs/01_coco.ipynb"
   <span class="s1">&#39;url&#39;</span><span class="p">:</span> <span class="s1">&#39;http://cocodataset.org&#39;</span><span class="p">,</span>
   <span class="s1">&#39;date_created&#39;</span><span class="p">:</span> <span class="s1">&#39;2017/09/01&#39;</span><span class="p">},</span>
  <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="p">[</span>
-     <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">204800</span><span class="p">,</span>
+     <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;204800&#39;</span><span class="p">,</span>
       <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="mi">1920</span><span class="p">,</span>
       <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="mi">2560</span><span class="p">,</span>
       <span class="s1">&#39;file_name&#39;</span><span class="p">:</span> <span class="s1">&#39;e2e76667-f7e.jpg&#39;</span><span class="p">,</span>
@@ -731,9 +787,9 @@ nb_path: "nbs/01_coco.ipynb"
       <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://e2e76667-f7e.jpg&#39;</span><span class="p">,</span>
       <span class="s1">&#39;date_captured&#39;</span><span class="p">:</span> <span class="s1">&#39;2021-01-05 13:18:13&#39;</span><span class="p">},</span>
  <span class="p">],</span>
- <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">402717</span><span class="p">,</span>
-   <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="mi">362343</span><span class="p">,</span>
-   <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+ <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;402717&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;362343&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span>
    <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">196.7</span><span class="p">,</span> <span class="mf">254.52</span><span class="p">,</span> <span class="mf">9.89</span><span class="p">,</span> <span class="mf">23.19</span><span class="p">),</span>
    <span class="s1">&#39;iscrowd&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}],</span>
     <span class="s1">&#39;categories&#39;</span><span class="p">:[]}</span>
@@ -753,7 +809,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>CocoObjectDetectionDataset(images=[CocoImage(id=204800, coco_url=&#39;https://e2e76667-f7e.jpg&#39;, width=1920, height=2560, license=1, file_name=&#39;e2e76667-f7e.jpg&#39;, flickr_url=None, date_captured=&#39;2021-01-05 13:18:13&#39;)], info=CocoInfo(year=2017, version=&#39;1.0&#39;, description=&#39;COCO 2017 Dataset&#39;, contributor=&#39;COCO Consortium&#39;, url=&#39;http://cocodataset.org&#39;, date_created=&#39;2017/09/01&#39;), licenses=None, annotations=[CocoObjectDetectionAnnotation(id=402717, image_id=362343, category_id=10, bbox=(196.7, 254.52, 9.89, 23.19), supercategory=None, area=None, iscrowd=0)], categories=[])</pre>
+<pre>CocoObjectDetectionDataset(annotations=[CocoObjectDetectionAnnotation(id=&#39;402717&#39;, image_id=&#39;362343&#39;, category_id=&#39;10&#39;, bbox=(196, 254, 9, 23), supercategory=None, area=None, iscrowd=0)], images=[CocoImage(id=&#39;204800&#39;, coco_url=&#39;https://e2e76667-f7e.jpg&#39;, width=1920, height=2560, license=1, file_name=&#39;e2e76667-f7e.jpg&#39;, flickr_url=None, date_captured=&#39;2021-01-05 13:18:13&#39;)], info=CocoInfo(year=2017, version=&#39;1.0&#39;, description=&#39;COCO 2017 Dataset&#39;, contributor=&#39;COCO Consortium&#39;, url=&#39;http://cocodataset.org&#39;, date_created=&#39;2017/09/01&#39;), licenses=[], categories=[])</pre>
 </div>
 
 </div>
@@ -772,7 +828,7 @@ nb_path: "nbs/01_coco.ipynb"
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">raw</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">204800</span><span class="p">,</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s1">&#39;204800&#39;</span><span class="p">,</span>
     <span class="s2">&quot;license&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
     <span class="s2">&quot;coco_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://e2e76667-f7e.jpg&quot;</span><span class="p">,</span>
     <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">1920</span><span class="p">,</span>
@@ -804,7 +860,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_text output_subarea ">
-<pre>CocoImage(id=204800, coco_url=&#39;https://outforz.s3.amazonaws.com/media/public/content/2021/01/05/e2e76667-f7e.jpg&#39;, width=1920, height=2560, license=1, file_name=&#39;e2e76667-f7e.jpg&#39;, flickr_url=None, date_captured=&#39;2021-01-05 13:18:13&#39;)</pre>
+<pre>CocoImage(id=&#39;204800&#39;, coco_url=&#39;https://e2e76667-f7e.jpg&#39;, width=1920, height=2560, license=1, file_name=&#39;e2e76667-f7e.jpg&#39;, flickr_url=None, date_captured=&#39;2021-01-05 13:18:13&#39;)</pre>
 </div>
 
 </div>
@@ -814,7 +870,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_text output_subarea ">
-<pre>CocoImage(id=204800, coco_url=&#39;https://outforz.s3.amazonaws.com/media/public/content/2021/01/05/e2e76667-f7e.jpg&#39;, width=1920, height=2560, license=1, file_name=&#39;e2e76667-f7e.jpg&#39;, flickr_url=None, date_captured=None)</pre>
+<pre>CocoImage(id=&#39;204800&#39;, coco_url=&#39;https://e2e76667-f7e.jpg&#39;, width=1920, height=2560, license=1, file_name=&#39;e2e76667-f7e.jpg&#39;, flickr_url=None, date_captured=None)</pre>
 </div>
 
 </div>
@@ -836,7 +892,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="get_dataset_class" class="doc_header"><code>get_dataset_class</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L191" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_dataset_class</code>(<strong><code>coco_kind</code></strong>:<code>str</code>)</p>
+<h4 id="get_dataset_class" class="doc_header"><code>get_dataset_class</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L235" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>get_dataset_class</code>(<strong><code>coco_kind</code></strong>:<code>str</code>)</p>
 </blockquote>
 
 </div>
@@ -900,7 +956,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="merge_datasets" class="doc_header"><code>merge_datasets</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L199" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>merge_datasets</code>(<strong><code>d1</code></strong>:<a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a>, <strong><code>d2</code></strong>:<a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a>)</p>
+<h4 id="merge_datasets" class="doc_header"><code>merge_datasets</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L243" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>merge_datasets</code>(<strong><code>d1</code></strong>:<a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a>, <strong><code>d2</code></strong>:<a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a>, <strong><code>update</code></strong>:<code>bool</code>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -927,26 +983,35 @@ nb_path: "nbs/01_coco.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="p">{},</span>
- <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image1.jpg&#39;</span><span class="p">}],</span>
- <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-   <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-   <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-   <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)}],</span>
- <span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;human&#39;</span><span class="p">}]}</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d1</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="p">{},</span>
+  <span class="s1">&#39;licenses&#39;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image1.jpg&#39;</span><span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)}</span>
+  <span class="p">],</span>
+  <span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;human&#39;</span><span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
 
-<span class="n">d2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="p">{},</span>
- <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image1.jpg&#39;</span><span class="p">},</span>
-            <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image2.jpg&#39;</span><span class="p">}],</span>
- <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-   <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-   <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-   <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)},</span>
- <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
-   <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-   <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-   <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)}],</span>
- <span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;animal&#39;</span><span class="p">}]}</span>
+<span class="n">d2</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="p">{},</span>
+  <span class="s1">&#39;licenses&#39;</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image1.jpg&#39;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image2.jpg&#39;</span><span class="p">}</span>
+  <span class="p">],</span>
+ <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">[</span>
+   <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)},</span>
+   <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)}</span>
+  <span class="p">],</span>
+ <span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="p">[</span>
+   <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;animal&#39;</span><span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
 </pre></div>
 
     </div>
@@ -967,16 +1032,16 @@ nb_path: "nbs/01_coco.ipynb"
                        <span class="n">CocoObjectDetectionDataset</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">d2</span><span class="p">))</span>
 <span class="n">res</span> <span class="o">=</span> <span class="n">d_res</span><span class="o">.</span><span class="n">to_dict_skip_nulls</span><span class="p">()</span>
 <span class="n">display</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">res</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image1.jpg&#39;</span><span class="p">},</span>
-  <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image2.jpg&#39;</span><span class="p">}],</span>
+<span class="k">assert</span> <span class="n">res</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image1.jpg&#39;</span><span class="p">},</span>
+  <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image2.jpg&#39;</span><span class="p">}],</span>
  <span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="p">{},</span>
  <span class="s1">&#39;licenses&#39;</span><span class="p">:</span> <span class="p">[],</span>
- <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-   <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-   <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+ <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+   <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
    <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)},</span>
-  <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span> <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)}],</span>
- <span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;human&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;animal&#39;</span><span class="p">}]},</span> <span class="n">res</span>
+  <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)}],</span>
+ <span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;human&#39;</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;animal&#39;</span><span class="p">}]},</span> <span class="n">res</span>
 </pre></div>
 
     </div>
@@ -991,16 +1056,16 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_text output_subarea ">
-<pre>{&#39;images&#39;: [{&#39;id&#39;: 1, &#39;coco_url&#39;: &#39;https://image1.jpg&#39;},
-  {&#39;id&#39;: 2, &#39;coco_url&#39;: &#39;https://image2.jpg&#39;}],
+<pre>{&#39;annotations&#39;: [{&#39;id&#39;: &#39;10&#39;,
+   &#39;image_id&#39;: &#39;1&#39;,
+   &#39;category_id&#39;: &#39;1&#39;,
+   &#39;bbox&#39;: (4, 3, 2, 1)},
+  {&#39;id&#39;: &#39;11&#39;, &#39;image_id&#39;: &#39;2&#39;, &#39;category_id&#39;: &#39;2&#39;, &#39;bbox&#39;: (1, 2, 3, 4)}],
+ &#39;images&#39;: [{&#39;id&#39;: &#39;1&#39;, &#39;coco_url&#39;: &#39;https://image1.jpg&#39;},
+  {&#39;id&#39;: &#39;2&#39;, &#39;coco_url&#39;: &#39;https://image2.jpg&#39;}],
  &#39;info&#39;: {},
  &#39;licenses&#39;: [],
- &#39;annotations&#39;: [{&#39;id&#39;: 10,
-   &#39;image_id&#39;: 1,
-   &#39;category_id&#39;: 1,
-   &#39;bbox&#39;: (4, 3, 2, 1)},
-  {&#39;id&#39;: 11, &#39;image_id&#39;: 2, &#39;category_id&#39;: 2, &#39;bbox&#39;: (1, 2, 3, 4)}],
- &#39;categories&#39;: [{&#39;id&#39;: 1, &#39;name&#39;: &#39;human&#39;}, {&#39;id&#39;: 2, &#39;name&#39;: &#39;animal&#39;}]}</pre>
+ &#39;categories&#39;: [{&#39;id&#39;: &#39;1&#39;, &#39;name&#39;: &#39;human&#39;}, {&#39;id&#39;: &#39;2&#39;, &#39;name&#39;: &#39;animal&#39;}]}</pre>
 </div>
 
 </div>
@@ -1045,6 +1110,60 @@ nb_path: "nbs/01_coco.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">expected_merge_update_result</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="p">{},</span>
+    <span class="s1">&#39;licenses&#39;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image1.jpg&#39;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image2.jpg&#39;</span><span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">102</span><span class="p">,</span> <span class="mi">103</span><span class="p">)},</span>
+        <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)}</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;human&#39;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;animal&#39;</span><span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">actual_merge_update_result</span> <span class="o">=</span> <span class="n">merge_datasets</span><span class="p">(</span>
+    <span class="n">CocoObjectDetectionDataset</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">d1</span><span class="p">),</span>
+    <span class="n">CocoObjectDetectionDataset</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">d2</span><span class="p">),</span>
+    <span class="n">update</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to_dict_skip_nulls</span><span class="p">()</span>
+<span class="k">assert</span> <span class="n">actual_merge_update_result</span> <span class="o">==</span> <span class="n">expected_merge_update_result</span><span class="p">,</span> <span class="n">actual_merge_update_result</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>Updating &#39;annotations&#39; of id=10: &#39;{&#39;id&#39;: &#39;10&#39;, &#39;image_id&#39;: &#39;1&#39;, &#39;category_id&#39;: &#39;1&#39;, &#39;bbox&#39;: [4, 3, 2, 1], &#39;supercategory&#39;: None, &#39;area&#39;: None, &#39;iscrowd&#39;: None}&#39; -&gt; &#39;{&#39;id&#39;: &#39;10&#39;, &#39;image_id&#39;: &#39;1&#39;, &#39;category_id&#39;: &#39;1&#39;, &#39;bbox&#39;: [100, 101, 102, 103], &#39;supercategory&#39;: None, &#39;area&#39;: None, &#39;iscrowd&#39;: None}&#39;
+Updating &#39;annotations&#39; of id=10: &#39;{&#39;id&#39;: &#39;10&#39;, &#39;image_id&#39;: &#39;1&#39;, &#39;category_id&#39;: &#39;1&#39;, &#39;bbox&#39;: [4, 3, 2, 1], &#39;supercategory&#39;: None, &#39;area&#39;: None, &#39;iscrowd&#39;: None}&#39; -&gt; &#39;{&#39;id&#39;: &#39;10&#39;, &#39;image_id&#39;: &#39;1&#39;, &#39;category_id&#39;: &#39;1&#39;, &#39;bbox&#39;: [100, 101, 102, 103], &#39;supercategory&#39;: None, &#39;area&#39;: None, &#39;iscrowd&#39;: None}&#39;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="n">merge_datasets</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">CocoObjectDetectionDataset</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">d2</span><span class="p">))</span> <span class="o">==</span> <span class="n">CocoObjectDetectionDataset</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">d2</span><span class="p">)</span>
 </pre></div>
 
@@ -1066,7 +1185,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="shuffle" class="doc_header"><code>shuffle</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L245" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>shuffle</code>(<strong><code>arr</code></strong>)</p>
+<h4 id="shuffle" class="doc_header"><code>shuffle</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L304" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>shuffle</code>(<strong><code>arr</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -1110,7 +1229,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>([1, 2, 3, 4, 5], [4, 2, 1, 5, 3])</pre>
+<pre>([1, 2, 3, 4, 5], [5, 1, 3, 4, 2])</pre>
 </div>
 
 </div>
@@ -1132,7 +1251,7 @@ nb_path: "nbs/01_coco.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="cut_annotations_per_category" class="doc_header"><code>cut_annotations_per_category</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L249" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>cut_annotations_per_category</code>(<strong><code>coco</code></strong>:<a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a>, <strong><code>max_annotations_per_category</code></strong>:<code>int</code>)</p>
+<h4 id="cut_annotations_per_category" class="doc_header"><code>cut_annotations_per_category</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L308" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>cut_annotations_per_category</code>(<strong><code>coco</code></strong>:<a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a>, <strong><code>max_annotations_per_category</code></strong>:<code>int</code>)</p>
 </blockquote>
 <p>Returns a copy of the input dataset where each class (category)
 contains up to <code>max_crops_per_class</code> crops (annotations)</p>
@@ -1164,21 +1283,129 @@ contains up to <code>max_crops_per_class</code> crops (annotations)</p>
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">cut_annotations_per_category</span><span class="p">(</span>
     <span class="n">CocoObjectDetectionDataset</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
         <span class="p">{</span><span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="p">{},</span>
-         <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image1.jpg&#39;</span><span class="p">}],</span>
+         <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image1.jpg&#39;</span><span class="p">}],</span>
          <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">[</span>
-             <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)},</span>
-             <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span> <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)},</span>
-             <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)},</span>
-             <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span> <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)},</span>
+             <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)},</span>
+             <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;11&#39;</span><span class="p">,</span> <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)},</span>
+             <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;12&#39;</span><span class="p">,</span> <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)},</span>
+             <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;13&#39;</span><span class="p">,</span> <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)},</span>
          <span class="p">],</span>
          <span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="p">[</span>
-             <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;animal&#39;</span><span class="p">},</span>
-             <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;animal&#39;</span><span class="p">},</span>
+             <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;animal&#39;</span><span class="p">},</span>
+             <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;animal&#39;</span><span class="p">},</span>
          <span class="p">]}</span>
     <span class="p">),</span>
     <span class="n">max_annotations_per_category</span><span class="o">=</span><span class="mi">1</span>
 <span class="p">)</span>
 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">to_dict_skip_nulls</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="remove_invalid_elements" class="doc_header"><code>remove_invalid_elements</code><a href="https://github.com/neuro-inc/cocoreprcocorepr/coco.py#L333" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>remove_invalid_elements</code>(<strong><code>coco</code></strong>:<a href="/cocorepr/coco.html#CocoDataset"><code>CocoDataset</code></a>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="p">{},</span>
+ <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image1.jpg&#39;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image2.jpg&#39;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span><span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://valid-but-unused&#39;</span><span class="p">},</span>
+           <span class="p">],</span>
+ <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">[</span>
+     <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)},</span>
+     <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)},</span>
+     <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;ANN-01&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)},</span>
+     <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)},</span>
+     <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">)},</span>
+     <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)},</span>
+ <span class="p">],</span>
+ <span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="p">[</span>
+     <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;animal&#39;</span><span class="p">},</span>
+     <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;nobody&#39;</span><span class="p">},</span>
+ <span class="p">]}</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">CocoObjectDetectionDataset</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">c2</span> <span class="o">=</span> <span class="n">remove_invalid_elements</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="n">d2</span> <span class="o">=</span> <span class="n">c2</span><span class="o">.</span><span class="n">to_dict_skip_nulls</span><span class="p">()</span>
+<span class="k">assert</span> <span class="n">d2</span> <span class="o">==</span> <span class="p">{</span>
+    <span class="s1">&#39;annotations&#39;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;10&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;ANN-01&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;image_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;category_id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;bbox&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+      <span class="p">},</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;images&#39;</span><span class="p">:</span> <span class="p">[</span>
+         <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;coco_url&#39;</span><span class="p">:</span> <span class="s1">&#39;https://image1.jpg&#39;</span><span class="p">}],</span>
+     <span class="s1">&#39;info&#39;</span><span class="p">:</span> <span class="p">{},</span>
+     <span class="s1">&#39;licenses&#39;</span><span class="p">:</span> <span class="p">[],</span>
+     <span class="s1">&#39;categories&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;animal&#39;</span><span class="p">}],</span>
+<span class="p">},</span> <span class="n">d2</span>
 </pre></div>
 
     </div>

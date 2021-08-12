@@ -240,7 +240,7 @@ def get_dataset_class(coco_kind: str):
 
 # Cell
 
-def merge_datasets(d1: CocoDataset, d2: CocoDataset) -> CocoDataset:
+def merge_datasets(d1: CocoDataset, d2: CocoDataset, update: bool=False) -> CocoDataset:
     if d1 is None:
         return d2
     if d2 is None:
@@ -265,12 +265,24 @@ def merge_datasets(d1: CocoDataset, d2: CocoDataset) -> CocoDataset:
             v_res = {}
             for i in v1:
                 if i in v2 and v1[i] != v2[i]:
-                    raise ValueError(f'Invalid "{k}" of id={i}: {v1[i]} != {v2[i]}')
-                v_res[i] = v1[i]
+                    if update:
+                        logger.warning(f"Updating '{k}' of id={i}: '{v1[i]}' -> '{v2[i]}'")
+                        v_res[i] = v2[i]
+                    else:
+                        raise ValueError(f'Invalid "{k}" of id={i}: {v1[i]} != {v2[i]}. Consider --update.')
+                else:
+                    v_res[i] = v1[i]
             for i in v2:
+                if i in v_res:
+                    continue
                 if i in v1 and v2[i] != v1[i]:
-                    raise ValueError(f'Invalid "{k}" of id={i}: {v2[i]} != {v1[i]}')
-                v_res[i] = v2[i]
+                    if update:
+                        logger.warning(f"Updating '{k}' of id={i}: '{v1[i]}' -> '{v2[i]}'")
+                        v_res[i] = v2[i]
+                    else:
+                        raise ValueError(f'Invalid "{k}" of id={i}: {v2[i]} != {v1[i]}. Consider --update.')
+                else:
+                    v_res[i] = v2[i]
             res[k] = sorted(v_res.values(), key=lambda x: str(x['id']))
             # we are converting ID to str since sometimes its integer
         else:
@@ -281,9 +293,11 @@ def merge_datasets(d1: CocoDataset, d2: CocoDataset) -> CocoDataset:
             elif not v2:
                 res[k] = v1
             else:
-                assert v1 == v2, f'key={k}: unexpectedly: {v1} != {v2}'
-                res[k] = v1
-
+                if v1 != v2 and not update:
+                    raise ValueError(f'key={k}: unexpectedly: {v1} != {v2}. Consider --update.')
+                elif v1 != v2 and update:
+                    logger.warning(f"Updating '{k}': '{v1}' -> '{v2}'")
+                res[k] = v2
     return t1.from_dict(res)
 
 # Cell
