@@ -49,12 +49,12 @@ def load_crop_tree(
 
     with measure_time() as timer1:
         for count1, ann_dir in enumerate(crops_dir.iterdir(), 1):
-            cat_id = int(ann_dir.name.split('--')[-1])
+            cat_id = str(ann_dir.name.split('--')[-1])
             cat = catid2cat[cat_id]
 
             with measure_time() as timer2:
                 for count2, ann_file in enumerate(ann_dir.glob('*.png'), 1):
-                    ann_id = int(ann_file.stem)
+                    ann_id = str(ann_file.stem)
                     ann = annid2ann[ann_id]
                     img_id = annid2imgid[ann_id]
                     img = imgid2img[img_id]
@@ -131,11 +131,11 @@ def _process_image(img, anns, images_dir, crops_dir, catid2cat, anns_failed_file
 
         if image is None:
             image = read_image(image_file, download_url=img.coco_url)
-        box = cut_bbox(image, ann.bbox)
         try:
+            box = cut_bbox(image, ann.bbox)
             write_image(box, ann_file)
         except ValueError as e:
-            logger.error(e)
+            logger.error(f"{e}. Img({img.coco_url}), BBox({ann.bbox})")
             with anns_failed_file.open('a') as f:
                 f.write(json.dumps(ann.to_dict(), ensure_ascii=False) + '\n')
 

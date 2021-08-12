@@ -12,20 +12,16 @@ import random
 from abc import abstractmethod
 from datetime import datetime
 from dataclasses_json import dataclass_json
-from dataclasses import dataclass, fields, asdict, field, replace
+from dataclasses import fields, asdict, field, replace
+from pydantic.dataclasses import dataclass
 from typing import *
 from pathlib import Path
-
 from .utils import sanitize_filename
-
-# Type helpers:
-X, Y, W, H = Type[int], int, int, int
 
 # Cell
 logger = logging.getLogger()
 
 # Cell
-
 @dataclass_json
 @dataclass
 class CocoElement:
@@ -136,7 +132,7 @@ class CocoAnnotation(CocoElement):
 @dataclass
 class CocoObjectDetectionAnnotation(CocoAnnotation):
     category_id: str
-    bbox: Tuple[X, Y, W, H]
+    bbox: Optional[Tuple[int, ...]]
     supercategory: Optional[str] = None
     area: Optional[int] = None
     iscrowd: Optional[int] = None
@@ -155,6 +151,7 @@ class CocoObjectDetectionAnnotation(CocoAnnotation):
         except:
             return False
 
+
 # Cell
 
 @dataclass
@@ -171,6 +168,7 @@ class CocoCategory(CocoElement):
             return True
         except:
             return False
+
 
 @dataclass
 class CocoObjectDetectionCategory(CocoCategory):
@@ -242,7 +240,7 @@ def get_dataset_class(coco_kind: str):
 
 # Cell
 
-def merge_datasets(d1: CocoDataset, d2: CocoDataset) -> CocoDataset:
+def merge_datasets(d1: CocoDataset, d2: CocoDataset, update: bool=False) -> CocoDataset:
     if d1 is None:
         return d2
     if d2 is None:
@@ -267,13 +265,26 @@ def merge_datasets(d1: CocoDataset, d2: CocoDataset) -> CocoDataset:
             v_res = {}
             for i in v1:
                 if i in v2 and v1[i] != v2[i]:
-                    raise ValueError(f'Invalid "{k}" of id={i}: {v1[i]} != {v2[i]}')
-                v_res[i] = v1[i]
+                    if update:
+                        logger.warning(f"Updating '{k}' of id={i}: '{v1[i]}' -> '{v2[i]}'")
+                        v_res[i] = v2[i]
+                    else:
+                        raise ValueError(f'Invalid "{k}" of id={i}: {v1[i]} != {v2[i]}. Consider --update.')
+                else:
+                    v_res[i] = v1[i]
             for i in v2:
+                if i in v_res:
+                    continue
                 if i in v1 and v2[i] != v1[i]:
-                    raise ValueError(f'Invalid "{k}" of id={i}: {v2[i]} != {v1[i]}')
-                v_res[i] = v2[i]
-            res[k] = sorted(v_res.values(), key=lambda x: x['id'])
+                    if update:
+                        logger.warning(f"Updating '{k}' of id={i}: '{v1[i]}' -> '{v2[i]}'")
+                        v_res[i] = v2[i]
+                    else:
+                        raise ValueError(f'Invalid "{k}" of id={i}: {v2[i]} != {v1[i]}. Consider --update.')
+                else:
+                    v_res[i] = v2[i]
+            res[k] = sorted(v_res.values(), key=lambda x: str(x['id']))
+            # we are converting ID to str since sometimes its integer
         else:
             v1 = D1[k] or {}
             v2 = D2[k] or {}
@@ -282,9 +293,11 @@ def merge_datasets(d1: CocoDataset, d2: CocoDataset) -> CocoDataset:
             elif not v2:
                 res[k] = v1
             else:
-                assert v1 == v2, f'key={k}: unexpectedly: {v1} != {v2}'
-                res[k] = v1
-
+                if v1 != v2 and not update:
+                    raise ValueError(f'key={k}: unexpectedly: {v1} != {v2}. Consider --update.')
+                elif v1 != v2 and update:
+                    logger.warning(f"Updating '{k}': '{v1}' -> '{v2}'")
+                res[k] = v2
     return t1.from_dict(res)
 
 # Cell
@@ -335,9 +348,9 @@ def remove_invalid_elements(coco: CocoDataset) -> CocoDataset:
 
     coco = replace(
         coco,
-        annotations=sorted(annid2ann_used.values(), key=lambda x: x.id),
-        images=sorted(imgid2img_used.values(), key=lambda x: x.id),
-        categories=sorted(catid2cat_used.values(), key=lambda x: x.id),
+        annotations=sorted(annid2ann_used.values(), key=lambda x: str(x.id)),
+        images=sorted(imgid2img_used.values(), key=lambda x: str(x.id)),
+        categories=sorted(catid2cat_used.values(), key=lambda x: str(x.id)),
     )
 
     # TODO: filter also licenses

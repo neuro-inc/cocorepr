@@ -18,7 +18,6 @@ from collections import OrderedDict
 from pathlib import Path
 from typing import *
 
-
 # Cell
 
 @dataclass(frozen=False)
@@ -104,6 +103,13 @@ def download_image(image_path: Union[str, Path], download_url: str):
 
 def cut_bbox(image, bbox):
     x, y, w, h = map(int, bbox)
+    if y+h <= image.shape[0] and x+w <= image.shape[1]:
+        pass
+    elif y+h <= image.shape[1] and x+w <= image.shape[0]:
+        logger.warning(f"Messed up dimentions in bbox {bbox}, swapping X+W with Y+H")
+        x, y, w, h = y, x, h, w
+    else:
+        raise ValueError("Unable to fit bbox into the image, skipping")
     crop = image[y:(y+h), x:(x+w)]
     return crop
 

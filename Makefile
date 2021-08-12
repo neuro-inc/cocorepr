@@ -7,6 +7,9 @@ all: build docs
 diff:
 	nbdev_diff_nbs
 
+setup:
+	pip install nbdev
+
 clean_nbs:
 	nbdev_clean_nbs
 
